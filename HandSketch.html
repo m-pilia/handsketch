@@ -59,16 +59,19 @@
                                 
                                 <!-- New options -->
                                 <ul class="dropdown-menu">
+                                    
                                     <!-- File->New->Blank -->
                                     <li><a id="new-blank" tabindex="0"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> Blank</a></li>
+                                    
                                     <!-- File->New->From file -->
                                     <li><a id="new-from-file" tabindex="0"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> From file</a></li>
+                                    
                                 </ul>
                             </li>
                             
                             <!-- File->Open -->
                             <li>
-                                <a id="open-file" tabindex="0"><span class="glyphicon glyphicon-open-file" aria-hidden="true"></span> Open</a>
+                                <a id="open-file" tabindex="0"><span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> Open</a>
                             </li>
                             
                             <!-- File->Exit -->
@@ -104,12 +107,12 @@
                             
                             <!-- Edit->Copy -->
                             <li>
-                                <a id="copy" tabindex="0"><span class="glyphicon glyphicon-copy" aria-hidden="true"></span>Copy</a>
+                                <a id="copy" tabindex="0"><span class="glyphicon glyphicon-copy" aria-hidden="true"></span> Copy</a>
                             </li>
                             
                             <!-- Edit->Paste -->
                             <li>
-                                <a id="paste" tabindex="0"><span class="glyphicon glyphicon-paste" aria-hidden="true"></span>Paste</a>
+                                <a id="paste" tabindex="0"><span class="glyphicon glyphicon-paste" aria-hidden="true"></span> Paste</a>
                             </li>
                         </ul>
                     </li>
@@ -123,6 +126,15 @@
                         <!-- Select submenu -->
                         <ul class="dropdown-menu">
                             
+                            <!-- Select->all -->
+                            <li>
+                                <a id="select-all" tabindex="0"><span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span> All</a>
+                            </li>
+                            
+                            <!-- Select->nothing -->
+                            <li>
+                                <a id="undo" tabindex="0"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span> Nothing</a>
+                            </li>
                             
                         </ul>
                     </li>
@@ -135,8 +147,46 @@
                         
                         <!-- Picture submenu -->
                         <ul class="dropdown-menu">
+                            <!-- Picture->rotate -->
+                            <li class="dropdown-submenu">
+                                
+                                
+                                <a tabindex="0"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Rotate</a>
+                                
+                                <!-- Rotate options -->
+                                <ul class="dropdown-menu">
+                                    
+                                    <!-- Picture->rotate->clockwise -->
+                                    <li><a id="rotate-clockwise" tabindex="0">
+                                            <span class="glyphicon glyphicon-copyright-mark" aria-hidden="true"></span> Clockwise</a>
+                                    </li>
+                                    
+                                    <!-- Picture->rotate->anticlockwise  -->
+                                    <li><a id="rotate-anticlockwise" tabindex="0">
+                                            <span class="glyphicon glyphicon-registration-mark" aria-hidden="true"></span> Anticlockwise</a>
+                                    </li>
+                                </ul>
+                            </li>
                             
-                            
+                            <!-- Picture->transform -->
+                            <li class="dropdown-submenu">
+                                
+                                
+                                <a tabindex="0"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span> Transform</a>
+                                
+                                <!-- Transform options -->
+                                <ul class="dropdown-menu">
+                                    
+                                    <!-- Picture->transform->flip vertically -->
+                                    <li><a id="flip-vertically" tabindex="0">
+                                            <span class="glyphicon glyphicon-resize-vertical" aria-hidden="true"></span> Flip Vertically</a>
+                                    </li>
+                                    <!-- Picture->transform->flip horizontally  -->
+                                    <li><a id="flip-horizontally" tabindex="0">
+                                            <span class="glyphicon glyphicon-resize-horizontal" aria-hidden="true"></span> Flip Horizontally</a>
+                                    </li>
+                                </ul>
+                            </li>
                         </ul>
                     </li>
                     
@@ -149,6 +199,15 @@
                         <!-- Tools submenu -->
                         <ul class="dropdown-menu">
                             
+                            <!-- Tools->colour balance -->
+                            <li>
+                                <a id="colour-balance" tabindex="0"><span class="glyphicon glyphicon-tint" aria-hidden="true"></span> Color balance</a>
+                            </li>
+                            
+                            <!-- Tools->brightness -->
+                            <li>
+                                <a id="brightness" tabindex="0"><span class="glyphicon glyphicon-adjust" aria-hidden="true"></span> Brightness</a>
+                            </li>
                             
                         </ul>
                     </li>
@@ -163,6 +222,15 @@
                         <!-- Help submenu -->
                         <ul class="dropdown-menu">
                             
+                            <!-- Help->about -->
+                            <li>
+                                <a id="about" tabindex="0"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> About</a>
+                            </li>
+                            
+                            <!-- Help->help -->
+                            <li>
+                                <a id="help" tabindex="0"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Help</a>
+                            </li>
                             
                         </ul>
                     </li>
