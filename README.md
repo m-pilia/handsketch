@@ -63,3 +63,13 @@ Comment your code in a way that everybody can understand what's happening or, if
 The indentation is of 4 spaces (convert tab to spaces in your code).
 
 Keep it simple and try to not reinvent the weel.
+
+Using git
+=========
+
+1. fork the repo here on github
+2. clone your repo with ```git clone *repo_address*```
+3. cd to the project folder and make a new branch with ```git checkout -b *feature-branch-name*```
+4. work on the feature
+5. when ready send your code with ```git push -u origin *feature-branch-name*```
+6. send a pull request
