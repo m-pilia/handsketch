@@ -7,8 +7,12 @@
 
         <!-- Bootstrap -->
         <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        
         <!-- Bootstrap submenus -->
         <link href="bootstrap-plugins/bootstrap-submenu/css/bootstrap-submenu.css" rel="stylesheet">
+        
+        <!-- Botstrap slider -->
+        <link href="bootstrap-plugins/bootstrap-slider/css/bootstrap-slider.css" rel="stylesheet">
 
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -240,7 +244,26 @@
             </div>
         </nav>
         <!-- End of menu bar -->
-
+        
+        <!-- Color selector -->
+        <div id="color-selector" class="slider-fan-selector color-fan-selector">
+            
+            <!-- Red slider -->
+            <input id="red-slider" class="slider color-slider" data-slider-id='red-slider'
+                   type="text" data-slider-min="0" data-slider-max="255" data-slider-step="1" data-slider-value="255" data-slider-orientation="vertical"/>
+            
+            <!-- Green slider -->
+            <input id="green-slider" class="slider color-slider" data-slider-id='green-slider'
+                   type="text" data-slider-min="0" data-slider-max="255" data-slider-step="1" data-slider-value="255" data-slider-orientation="vertical"/>
+            
+            <!-- Blue slider -->
+            <input id="blue-slider" class="slider color-slider" data-slider-id='blue-slider'
+                   type="text" data-slider-min="0" data-slider-max="255" data-slider-step="1" data-slider-value="255" data-slider-orientation="vertical"/>
+            
+            <!-- Alpha slider -->
+            <input id="alpha-slider" class="slider color-slider" data-slider-id='alpha-slider'
+                   type="text" data-slider-min="0" data-slider-max="255" data-slider-step="1" data-slider-value="255" data-slider-orientation="vertical"/>
+        </div>
 
 
 
@@ -250,8 +273,11 @@
         <!-- Include all compiled plugins (below), or include individual files as needed -->
         <script src="bootstrap/js/bootstrap.min.js"></script>
 
-        <!-- Submenus -->
+        <!-- Bootstrap submenus -->
         <script src="bootstrap-plugins/bootstrap-submenu/js/bootstrap-submenu.min.js"></script>
+        
+        <!-- Bootstrap slider -->
+        <script src="bootstrap-plugins/bootstrap-slider/js/bootstrap-slider.min.js"></script>
 
         <!-- Main function -->
         <script src="js/main.js" defer></script>
