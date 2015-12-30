@@ -1,0 +1,223 @@
+<!-- Menu bar -->
+<nav class="navbar navbar-default">
+
+    <!-- Menu bar header -->
+    <div class="navbar-header">
+        <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+
+        <a class="navbar-brand">HandSketch</a>
+    </div>
+
+    <!-- Menu bar content -->
+    <div class="collapse navbar-collapse">
+
+        <!-- List of menu entries -->
+        <ul class="nav navbar-nav">
+
+            <!-- File -->
+            <li class="dropdown">
+                <a tabindex="0" data-toggle="dropdown" data-submenu>
+                    File<span class="caret"></span>
+                </a>
+
+                <!-- File submenu -->
+                <ul class="dropdown-menu">
+
+
+                    <!-- File->New -->
+                    <li class="dropdown-submenu">
+
+
+                        <a tabindex="0"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> New</a>
+
+                        <!-- New options -->
+                        <ul class="dropdown-menu">
+
+                            <!-- File->New->Blank -->
+                            <li><a id="new-blank" tabindex="0"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> Blank</a></li>
+
+                            <!-- File->New->From file -->
+                            <li><a id="new-from-file" tabindex="0"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> From file</a></li>
+
+                        </ul>
+                    </li>
+
+                    <!-- File->Open -->
+                    <li>
+                        <a id="open-file" tabindex="0"><span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> Open</a>
+                    </li>
+
+                    <!-- File->Exit -->
+                    <li>
+                        <a id="exit" tabindex="0"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span> Exit</a>
+                    </li>
+                </ul>
+            </li>
+
+            <!-- Edit -->
+            <li class="dropdown">
+                <a tabindex="0" data-toggle="dropdown" data-submenu>
+                    Edit<span class="caret"></span>
+                </a>
+
+                <!-- Edit submenu -->
+                <ul class="dropdown-menu">
+
+                    <!-- Edit->Undo -->
+                    <li>
+                        <a id="undo" tabindex="0"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Undo</a>
+                    </li>
+
+                    <!-- Edit->Redo -->
+                    <li>
+                        <a id="redo" tabindex="0"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span> Redo</a>
+                    </li>
+
+                    <!-- Edit->Cut -->
+                    <li>
+                        <a id="cut" tabindex="0"><span class="glyphicon glyphicon-scissors" aria-hidden="true"></span> Cut</a>
+                    </li>
+
+                    <!-- Edit->Copy -->
+                    <li>
+                        <a id="copy" tabindex="0"><span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span> Copy</a>
+                    </li>
+
+                    <!-- Edit->Paste -->
+                    <li>
+                        <a id="paste" tabindex="0"><span class="glyphicon glyphicon-paste" aria-hidden="true"></span> Paste</a>
+                    </li>
+                </ul>
+            </li>
+
+            <!-- Select -->
+            <li class="dropdown">
+                <a tabindex="0" data-toggle="dropdown" data-submenu>
+                    Select<span class="caret"></span>
+                </a>
+
+                <!-- Select submenu -->
+                <ul class="dropdown-menu">
+
+                    <!-- Select->all -->
+                    <li>
+                        <a id="select-all" tabindex="0"><span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span> All</a>
+                    </li>
+
+                    <!-- Select->nothing -->
+                    <li>
+                        <a id="select-nothing" tabindex="0"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span> Nothing</a>
+                    </li>
+
+                </ul>
+            </li>
+
+            <!-- Picture -->
+            <li class="dropdown">
+                <a tabindex="0" data-toggle="dropdown" data-submenu>
+                    Picture<span class="caret"></span>
+                </a>
+
+                <!-- Picture submenu -->
+                <ul class="dropdown-menu">
+                    <!-- Picture->rotate -->
+                    <li class="dropdown-submenu">
+
+
+                        <a tabindex="0"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Rotate</a>
+
+                        <!-- Rotate options -->
+                        <ul class="dropdown-menu">
+
+                            <!-- Picture->rotate->clockwise -->
+                            <li><a id="rotate-clockwise" tabindex="0">
+                                    <span class="glyphicon glyphicon-copyright-mark" aria-hidden="true"></span> Clockwise</a>
+                            </li>
+
+                            <!-- Picture->rotate->anticlockwise  -->
+                            <li><a id="rotate-anticlockwise" tabindex="0">
+                                    <span class="glyphicon glyphicon-registration-mark" aria-hidden="true"></span> Anticlockwise</a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <!-- Picture->transform -->
+                    <li class="dropdown-submenu">
+
+
+                        <a tabindex="0"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span> Transform</a>
+
+                        <!-- Transform options -->
+                        <ul class="dropdown-menu">
+
+                            <!-- Picture->transform->flip vertically -->
+                            <li><a id="flip-vertically" tabindex="0">
+                                    <span class="glyphicon glyphicon-resize-vertical" aria-hidden="true"></span> Flip Vertically</a>
+                            </li>
+                            <!-- Picture->transform->flip horizontally  -->
+                            <li><a id="flip-horizontally" tabindex="0">
+                                    <span class="glyphicon glyphicon-resize-horizontal" aria-hidden="true"></span> Flip Horizontally</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+
+            <!-- Tools -->
+            <li class="dropdown">
+                <a tabindex="0" data-toggle="dropdown" data-submenu>
+                    Tools<span class="caret"></span>
+                </a>
+
+                <!-- Tools submenu -->
+                <ul class="dropdown-menu">
+
+                    <!-- Tools->colour balance -->
+                    <li>
+                        <a id="colour-balance" tabindex="0"><span class="glyphicon glyphicon-tint" aria-hidden="true"></span> Color balance</a>
+                    </li>
+
+                    <!-- Tools->brightness -->
+                    <li>
+                        <a id="brightness" tabindex="0"><span class="glyphicon glyphicon-adjust" aria-hidden="true"></span> Brightness</a>
+                    </li>
+
+                </ul>
+            </li>
+
+
+            <!-- Help -->
+            <li class="dropdown">
+                <a tabindex="0" data-toggle="dropdown" data-submenu>
+                    Help<span class="caret"></span>
+                </a>
+
+                <!-- Help submenu -->
+                <ul class="dropdown-menu">
+
+                    <!-- Help->about -->
+                    <li>
+                        <a id="about" tabindex="0"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> About</a>
+                    </li>
+
+                    <!-- Help->help -->
+                    <li>
+                        <a id="help" tabindex="0"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Help</a>
+                    </li>
+
+                </ul>
+            </li>
+        </ul>
+
+        <!-- End of menu bar content -->
+    </div>
+
+    <!-- Enable submenus -->
+    <script src="js/menubar.js" defer></script>
+</nav>
+<!-- End of menu bar -->
