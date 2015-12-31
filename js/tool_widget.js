@@ -10,18 +10,23 @@
 // selector entries
 var items = $(".tool-selector li");
 
+// angular separation between entries (in degs)
+var sep = 1;
+
 // angular amplitude of each selector entry
-var angleRad = 2 * Math.PI / items.length;
-var angle = angleRad  * 180 / Math.PI;
+var angle = 360 / items.length - sep;
 
 // draw the path in the svg to clip the selector entry
+var angleRad = angle * Math.PI / 180;
 var x = 0.5 + 0.5 * Math.cos(angleRad);
 var y = 0.5 - 0.5 * Math.sin(angleRad);
 $(".sector").attr("d", "M0.5,0.5 l0.5,0 A0.5,0.5 0 0,0 " + x + "," + y + " z");
 
 // clip-path and rotate each selector entry
 items.each(function (i) {
-    var rot = angle * i;
+    // (angle + sep) * i is occupated by the previous i entries, (sep / 2) is
+    // for actual separation from the previous entry
+    var rot = (angle + sep) * i + (sep / 2);
 
     // clip-path the entry
     $(this).css("clip-path", "url(#sector)");
