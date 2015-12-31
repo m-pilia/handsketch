@@ -25,6 +25,7 @@ items.each(function (i) {
 
     // clip-path the entry
     $(this).css("clip-path", "url(#sector)");
+    $(this).css("-webkit-clip-path", "url(#sector)");
 
     // rotate to its final position
     $(this).css("transform", "rotate(" + rot + "deg)");
