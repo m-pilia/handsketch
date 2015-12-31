@@ -1,267 +1,73 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Handsketch</title>
+        <title>HandSketch</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <!-- Bootstrap -->
-        <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
-        
+
+        <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css">
+
         <!-- Bootstrap submenus -->
-        <link href="bootstrap-plugins/bootstrap-submenu/css/bootstrap-submenu.css" rel="stylesheet">
+        <link rel="stylesheet" href="lib/bootstrap-plugins/bootstrap-submenu/css/bootstrap-submenu.css">
         
         <!-- Botstrap slider -->
         <link href="bootstrap-plugins/bootstrap-slider/css/bootstrap-slider.css" rel="stylesheet">
 
-        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-        <!--[if lt IE 9]>
-          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-        <![endif]-->
+        <!-- Custom stylesheets -->
+        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="css/tool_widget.css">
 
-
-    </head>
-    <body>
-        <!-- Menu bar -->
-        <nav class="navbar navbar-default">
-            
-            <!-- Menu bar header -->
-            <div class="navbar-header">
-                <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-            
-                <a class="navbar-brand">HandSketch</a>
-            </div>
-
-            <!-- Menu bar content -->
-            <div class="collapse navbar-collapse">
-                
-                <!-- List of menu entries -->
-                <ul class="nav navbar-nav">
-                    
-                    <!-- File -->
-                    <li class="dropdown">
-                        <a tabindex="0" data-toggle="dropdown" data-submenu>
-                            File<span class="caret"></span>
-                        </a>
-                        
-                        <!-- File submenu -->
-                        <ul class="dropdown-menu">
-
-                            
-                            <!-- File->New -->
-                            <li class="dropdown-submenu">
-                                
-                                
-                                <a tabindex="0"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> New</a>
-                                
-                                <!-- New options -->
-                                <ul class="dropdown-menu">
-                                    
-                                    <!-- File->New->Blank -->
-                                    <li><a id="new-blank" tabindex="0"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> Blank</a></li>
-                                    
-                                    <!-- File->New->From file -->
-                                    <li><a id="new-from-file" tabindex="0"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> From file</a></li>
-                                    
-                                </ul>
-                            </li>
-                            
-                            <!-- File->Open -->
-                            <li>
-                                <a id="open-file" tabindex="0"><span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> Open</a>
-                            </li>
-                            
-                            <!-- File->Exit -->
-                            <li>
-                                <a id="exit" tabindex="0"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span> Exit</a>
-                            </li>
-                        </ul>
-                    </li>
-                    
-                    <!-- Edit -->
-                    <li class="dropdown">
-                        <a tabindex="0" data-toggle="dropdown" data-submenu>
-                            Edit<span class="caret"></span>
-                        </a>
-                        
-                        <!-- Edit submenu -->
-                        <ul class="dropdown-menu">
-                            
-                            <!-- Edit->Undo -->
-                            <li>
-                                <a id="undo" tabindex="0"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Undo</a>
-                            </li>
-                            
-                            <!-- Edit->Redo -->
-                            <li>
-                                <a id="redo" tabindex="0"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span> Redo</a>
-                            </li>
-                            
-                            <!-- Edit->Cut -->
-                            <li>
-                                <a id="cut" tabindex="0"><span class="glyphicon glyphicon-scissors" aria-hidden="true"></span> Cut</a>
-                            </li>
-                            
-                            <!-- Edit->Copy -->
-                            <li>
-                                <a id="copy" tabindex="0"><span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span> Copy</a>
-                            </li>
-                            
-                            <!-- Edit->Paste -->
-                            <li>
-                                <a id="paste" tabindex="0"><span class="glyphicon glyphicon-paste" aria-hidden="true"></span> Paste</a>
-                            </li>
-                        </ul>
-                    </li>
-                    
-                    <!-- Select -->
-                    <li class="dropdown">
-                        <a tabindex="0" data-toggle="dropdown" data-submenu>
-                            Select<span class="caret"></span>
-                        </a>
-                        
-                        <!-- Select submenu -->
-                        <ul class="dropdown-menu">
-                            
-                            <!-- Select->all -->
-                            <li>
-                                <a id="select-all" tabindex="0"><span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span> All</a>
-                            </li>
-                            
-                            <!-- Select->nothing -->
-                            <li>
-                                <a id="select-nothing" tabindex="0"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span> Nothing</a>
-                            </li>
-                            
-                        </ul>
-                    </li>
-                    
-                    <!-- Picture -->
-                    <li class="dropdown">
-                        <a tabindex="0" data-toggle="dropdown" data-submenu>
-                            Picture<span class="caret"></span>
-                        </a>
-                        
-                        <!-- Picture submenu -->
-                        <ul class="dropdown-menu">
-                            <!-- Picture->rotate -->
-                            <li class="dropdown-submenu">
-                                
-                                
-                                <a tabindex="0"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Rotate</a>
-                                
-                                <!-- Rotate options -->
-                                <ul class="dropdown-menu">
-                                    
-                                    <!-- Picture->rotate->clockwise -->
-                                    <li><a id="rotate-clockwise" tabindex="0">
-                                            <span class="glyphicon glyphicon-copyright-mark" aria-hidden="true"></span> Clockwise</a>
-                                    </li>
-                                    
-                                    <!-- Picture->rotate->anticlockwise  -->
-                                    <li><a id="rotate-anticlockwise" tabindex="0">
-                                            <span class="glyphicon glyphicon-registration-mark" aria-hidden="true"></span> Anticlockwise</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            
-                            <!-- Picture->transform -->
-                            <li class="dropdown-submenu">
-                                
-                                
-                                <a tabindex="0"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span> Transform</a>
-                                
-                                <!-- Transform options -->
-                                <ul class="dropdown-menu">
-                                    
-                                    <!-- Picture->transform->flip vertically -->
-                                    <li><a id="flip-vertically" tabindex="0">
-                                            <span class="glyphicon glyphicon-resize-vertical" aria-hidden="true"></span> Flip Vertically</a>
-                                    </li>
-                                    <!-- Picture->transform->flip horizontally  -->
-                                    <li><a id="flip-horizontally" tabindex="0">
-                                            <span class="glyphicon glyphicon-resize-horizontal" aria-hidden="true"></span> Flip Horizontally</a>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                    
-                    <!-- Tools -->
-                    <li class="dropdown">
-                        <a tabindex="0" data-toggle="dropdown" data-submenu>
-                            Tools<span class="caret"></span>
-                        </a>
-                        
-                        <!-- Tools submenu -->
-                        <ul class="dropdown-menu">
-                            
-                            <!-- Tools->colour balance -->
-                            <li>
-                                <a id="colour-balance" tabindex="0"><span class="glyphicon glyphicon-tint" aria-hidden="true"></span> Color balance</a>
-                            </li>
-                            
-                            <!-- Tools->brightness -->
-                            <li>
-                                <a id="brightness" tabindex="0"><span class="glyphicon glyphicon-adjust" aria-hidden="true"></span> Brightness</a>
-                            </li>
-                            
-                        </ul>
-                    </li>
-                    
-                    
-                    <!-- Help -->
-                    <li class="dropdown">
-                        <a tabindex="0" data-toggle="dropdown" data-submenu>
-                            Help<span class="caret"></span>
-                        </a>
-                        
-                        <!-- Help submenu -->
-                        <ul class="dropdown-menu">
-                            
-                            <!-- Help->about -->
-                            <li>
-                                <a id="about" tabindex="0"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> About</a>
-                            </li>
-                            
-                            <!-- Help->help -->
-                            <li>
-                                <a id="help" tabindex="0"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Help</a>
-                            </li>
-                            
-                        </ul>
-                    </li>
-                </ul>
-                
-                <!-- End of menu bar content -->
-            </div>
-        </nav>
-        <!-- End of menu bar -->
-        
-
-
-
-
-        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-        <script src="js/jquery.min.js"></script>
+        <!-- jQuery (also necessary for Bootstrap's JavaScript plugins) -->
+        <script src="lib/jquery/jquery.min.js"></script>
 
         <!-- Include all compiled plugins (below), or include individual files as needed -->
-        <script src="bootstrap/js/bootstrap.min.js"></script>
-
-        <!-- Bootstrap submenus -->
-        <script src="bootstrap-plugins/bootstrap-submenu/js/bootstrap-submenu.min.js"></script>
+        <script src="lib/bootstrap/js/bootstrap.min.js"></script>
         
+        <!-- Submenus -->
+        <script src="lib/bootstrap-plugins/bootstrap-submenu/js/bootstrap-submenu.min.js"></script>
+
         <!-- Bootstrap slider -->
         <script src="bootstrap-plugins/bootstrap-slider/js/bootstrap-slider.min.js"></script>
 
-        <!-- Main function -->
-        <script src="js/main.js" defer></script>
+        <!-- Script which manages the inclusion of HTML subpages -->
+        <script src="js/inclusion.js"></script>
+    </head>
+    <body>
+        <!-- Menu bar (included via js) -->
+        <div id="menubar-content"></div>
+
+        <div class="body-wrapper row">
+
+            <!-- Left panel -->
+            <div class="side-panel col-md-3">
+
+                <!-- Tool selection widget -->
+                <div class="row tool-widget-wrapper">
+                    <!-- Included via js -->
+                    <div id="tool-widget-content"></div>
+                </div>
+
+                <!-- Tool options widget -->
+                <div class="row options-widget-wrapper">
+                    <!-- Included via js -->
+                    <div id="options-widget-content"></div>
+                </div>
+
+
+                <!-- Color picker widget -->
+                <div class="row color-picker-widget-wrapper">
+                    <!-- Included via js -->
+                    <div id="color-picker-widget-content"></div>
+                </div>
+            </div>
+
+            <!-- Canvas area -->
+            <div class="col-md-9 canvas-area">
+                <!-- Included via js -->
+                <div id="canvas-area-content"></div>
+            </div>
+        </div>
     </body>
 </html>
