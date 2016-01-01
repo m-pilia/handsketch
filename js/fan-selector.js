@@ -1,9 +1,17 @@
+/**
+ * JavaScript code for the fan selector.
+ * This script extends the JQuery function to define a fan selector.
+ * To do this it counts the n entries in the selector and places them in a 
+ * fan disposition.
+ * @author Fabio Colella <fcole90@gmail.com>
+ * @date 2016-01-01
+ */
+
 /** Fan selector definition: extending jQuery function **/
 jQuery.fn.extend({
     fanSelector: function (angle) {
         /** The maximum aperture angle of the fan **/
         var maxFanAngle = 160; /* degrees */
-        var turnAngle = 360;
         
         if (angle === undefined)
         {
@@ -11,39 +19,26 @@ jQuery.fn.extend({
         }
         
         /** Get the children and count them **/
-        var sliders = $(this).children("input");
-        var size = sliders.size();
+        var items = $(this).children(".fan-selector-item");
+        var size = items.size();
  
         /** The increment of each step **/
         var increment = Math.floor(angle, size - 1);
         
-        var startAngle = turnAngle - ((size / 2) * increment);
+        /** The starting angle **/
+        var startAngle = - ((size / 2) * increment);
+        
+        /** The angle of rotation **/
+        rotAngle = startAngle;
+        
+        /** Apply the rotation to all the items **/
+        items.each(function(){
+            $(this).css("transform", "rotate(" + rotAngle + "deg)");
+            $(this).css("-webkit-transform", "rotate(" + rotAngle + "deg)");
+            rotAngle += increment;
+        });
 
-        for (var i = 0; i++; i<= size)
-        {
-            /** Left elements **/
-            if (i < 0)
-            {
-                
-            }
-            
-            /** The central element is not rotated **/
-            if (i === centralSlider)
-            {
-                continue;
-            }
-
-
-
-        }
+        /** Needed for JQuery chaining **/
         return $(this);
     }
 });
-
-
-/** Color sliders **/
-$('.color-slider').slider({
-        /** Set the max at the top and min at the bottom **/
-        reversed: true,
-});
-
