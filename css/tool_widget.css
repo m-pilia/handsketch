@@ -1,3 +1,19 @@
+/* a class is used here because a lower precedence than id is needed, in order
+ * to be able to override the opacity value adding another class */
+.tool-selector-hint {
+    width: 60px;
+    height: 60px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    opacity: 0.4;
+}
+
+/* this class is toggled to control the opacity */
+.highlighted-selector {
+    opacity: 1;
+}
+
 #tool-selector {
     list-style: none;
     position: relative;
@@ -15,19 +31,21 @@
     width: 100%;
     height: 100%;
 }
+
 #tool-selector li a {
     display: block;
     width: 100%;
     height: 100%;
 }
-#tool-selector li:hover {
+
+#tool-selector .selected-tool {
     background-color: green;
 }
 
 .tool-entry {
     position: absolute;
     right: 15%;
-    top: 30%;
+    top: 20%;
     color: blue;
     font-size: 25px;
 }
