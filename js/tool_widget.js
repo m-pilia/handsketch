@@ -8,7 +8,7 @@
  */
 
 // selector entries
-var items = $(".tool-selector li");
+var items = $("#tool-selector li");
 
 // angular separation between entries (in degs)
 var sep = 1;

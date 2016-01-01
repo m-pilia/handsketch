@@ -1,4 +1,4 @@
-.tool-selector {
+#tool-selector {
     list-style: none;
     position: relative;
     margin: 20px auto;
@@ -7,7 +7,7 @@
     height: 200px;
 }
 
-.tool-selector li {
+#tool-selector li {
     background-color: #A5E2F3; /* TEMP */
     position: absolute;
     top: 0;
@@ -15,12 +15,12 @@
     width: 100%;
     height: 100%;
 }
-.tool-selector li a {
+#tool-selector li a {
     display: block;
     width: 100%;
     height: 100%;
 }
-.tool-selector li:hover {
+#tool-selector li:hover {
     background-color: green;
 }
 
