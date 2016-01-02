@@ -27,6 +27,8 @@ html, body, {
 
 .canvas-wrapper {
     right: 0;
+    padding-right: 0;
+    padding-left: 0;
 }
 
 .tool-widget-wrapper, .options-widget-wrapper, .color-picker-widget-wrapper {
