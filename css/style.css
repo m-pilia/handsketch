@@ -62,5 +62,6 @@ html, body, {
 }
 
 #canvas {
+    position: absolute;
     background-color: white;
 }
