@@ -11,12 +11,22 @@
         <!-- Bootstrap submenus -->
         <link rel="stylesheet" href="lib/bootstrap-plugins/bootstrap-submenu/css/bootstrap-submenu.css">
 
+        <!-- Rulers library stylesheet -->
+        <link rel="stylesheet" href="lib/jqueryui-ruler/css/jquery.ui.ruler.css">
+
         <!-- Custom stylesheets -->
         <link rel="stylesheet" href="css/style.css">
         <link rel="stylesheet" href="css/tool_widget.css">
+        <link rel="stylesheet" href="css/canvas_area.css">
 
         <!-- jQuery (also necessary for Bootstrap's JavaScript plugins) -->
         <script src="lib/jquery/jquery.min.js"></script>
+
+        <!-- jQuery UI (needed for rulers lib) -->
+        <script src="lib/jquery-ui/jquery-ui.min.js"></script>
+
+        <!-- Library for canvas rulers -->
+        <script src="lib/jqueryui-ruler/js/jquery.ui.ruler.js"></script>
 
         <!-- Include all compiled plugins (below), or include individual files as needed -->
         <script src="lib/bootstrap/js/bootstrap.min.js"></script>
@@ -29,35 +39,42 @@
 
         <!-- Gesture recognition -->
         <script src="js/gesture_recognition.js"></script>
+
+        <!-- Dynamic view settings -->
+        <script src="js/dynamic_view.js" defer></script>
     </head>
     <body>
         <!-- Menu bar (included via XMLHttpRequest) -->
         <!-- #include menubar.html -->
 
-        <div class="body-wrapper row">
+        <div class="body-wrapper container-fluid">
 
-            <!-- Left panel -->
-            <div class="side-panel col-md-3">
+            <!-- Bootstrap grid row -->
+            <div class="row">
 
-                <!-- Tool selection widget -->
-                <div class="row tool-widget-wrapper">
-                    <!-- #include tool_widget.html -->
+                <!-- Left panel -->
+                <div class="col-xs-3 side-panel">
+
+                    <!-- Tool selection widget -->
+                    <div class="row tool-widget-wrapper">
+                        <!-- #include tool_widget.html -->
+                    </div>
+
+                    <!-- Tool options widget -->
+                    <div class="row options-widget-wrapper">
+                        <!-- #include options_widget.html -->
+                    </div>
+
+                    <!-- Color picker widget -->
+                    <div class="row color-picker-widget-wrapper">
+                        <!-- #include color_picker_widget.html -->
+                    </div>
                 </div>
 
-                <!-- Tool options widget -->
-                <div class="row options-widget-wrapper">
-                    <!-- #include options_widget.html -->
+                <!-- Canvas area -->
+                <div class="col-xs-9 canvas-wrapper">
+                    <!-- #include canvas_area.html -->
                 </div>
-
-                <!-- Color picker widget -->
-                <div class="row color-picker-widget-wrapper">
-                    <!-- #include color_picker_widget.html -->
-                </div>
-            </div>
-
-            <!-- Canvas area -->
-            <div class="col-md-9 canvas-area">
-                <!-- #include canvas_area.html -->
             </div>
         </div>
     </body>
