@@ -1,12 +1,66 @@
-html, body, .body-wrapper {
+html, body, {
     height: 100%;
 }
 
-.side-panel, .canvas-area {
-    height: 100%;
-    border: 1px solid black;
+.row {
+    margin: 0 !important; /* overriding bootstrap's negative margin (wtf?) */
+}
+
+.body-wrapper {
+    position: absolute;
+    top: 50px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.side-panel, .canvas-wrapper {
+    border: 1px solid lightgrey;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+}
+
+.side-panel {
+    left: 0;
+}
+
+.canvas-wrapper {
+    right: 0;
 }
 
 .tool-widget-wrapper, .options-widget-wrapper, .color-picker-widget-wrapper {
-    border: 1px solid black;
+    margin: 5px !important;
+    border: 1px solid lightgrey;
+    border-radius: 10px;
+    height: 32%;
+    position: absolute;
+    left: 0;
+    right: 0;
+    overflow: hidden;
+}
+
+.tool-widget-wrapper {
+    top: 0;
+}
+
+.options-widget-wrapper {
+    top: 33%;
+}
+
+.color-picker-widget-wrapper {
+    top: 66%;
+}
+
+#canvas-area {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #bbb;
+}
+
+#canvas {
+    background-color: white;
 }
