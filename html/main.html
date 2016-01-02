@@ -39,13 +39,15 @@
         <!-- Color picker widget -->
         <script src="js/color-picker-widget.js" defer></script>
 
-        <!-- Script which manages the inclusion of HTML subpages -->
-        <script src="js/inclusion.js"></script>
-        
+        <!-- Leap Motion support -->
+        <script src="lib/leapjs/leap-0.6.4.min.js"></script>
+
+        <!-- Gesture recognition -->
+        <script src="js/gesture_recognition.js"></script>
     </head>
     <body>
-        <!-- Menu bar (included via js) -->
-        <div id="menubar-content"></div>
+        <!-- Menu bar (included via XMLHttpRequest) -->
+        <!-- #include menubar.html -->
 
         <div class="body-wrapper row">
 
@@ -54,28 +56,24 @@
 
                 <!-- Tool selection widget -->
                 <div class="row tool-widget-wrapper">
-                    <!-- Included via js -->
-                    <div id="tool-widget-content"></div>
+                    <!-- #include tool_widget.html -->
                 </div>
 
                 <!-- Tool options widget -->
                 <div class="row options-widget-wrapper">
-                    <!-- Included via js -->
-                    <div id="options-widget-content"></div>
+                    <!-- #include options_widget.html -->
                 </div>
 
 
                 <!-- Color picker widget -->
                 <div class="row color-picker-widget-wrapper">
-                    <!-- Included via js -->
-                    <div id="color-picker-widget-content"></div>
+                    <!-- #include color_picker_widget.html -->
                 </div>
             </div>
 
             <!-- Canvas area -->
             <div class="col-md-9 canvas-area">
-                <!-- Included via js -->
-                <div id="canvas-area-content"></div>
+                <!-- #include canvas_area.html -->
             </div>
         </div>
     </body>
