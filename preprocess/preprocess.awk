@@ -8,7 +8,7 @@
 	print $0;
 }
 
-/<!--\s*#include\s*(.*)\s*-->/ {
+/<!--[ \t]*#include[ \t]*(.*)[ \t]*-->/ {
 	while((getline line < $3) > 0 ) {
 		print line
 	}
