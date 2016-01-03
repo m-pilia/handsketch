@@ -38,6 +38,7 @@ function updateColorValues(color)
     {
         $("#alpha-value").val(color.alpha);
     }
+    $(".color-value").trigger("color-change");
 }
 
 /**
@@ -98,6 +99,19 @@ function updateColorSliders(color)
     }
 }
 
+/**
+ * Returns the updated color CSS rule.
+ * Used as event handler on in conjunction with event handlers.
+ * 
+ * @param Object color an object containing colors as keys and their values.
+ * @return String rgba CSS rule.
+ */
+function updateColorRule(color)
+{
+    return "rgba(" + color.red + ", " + color.green + ", " +
+            color.blue + ", " + color.alpha/255 + ")";    
+}
+
 
 /** Create the color sliders and set their variable**/
 $('.color-slider').each(function(){
@@ -127,19 +141,30 @@ $('.color-slider').on('slide', function(){
 /** Bind color values to its setters **/
 $('.color-value').change(function(){
     updateColorSelectors({
-        red: $("#red-value").val(),
-        green: $("#green-value").val(),
-        blue: $("#blue-value").val(),
-        alpha: $("#alpha-value").val()
-    });
+           red: $("#red-value").val(),
+           green: $("#green-value").val(),
+           blue: $("#blue-value").val(),
+           alpha: $("#alpha-value").val()
+       });
 });
 
 /** Update the values of the sliders **/
 $('.color-value').change(function(){
     updateColorSliders({
-        red: $("#red-value").val(),
-        green: $("#green-value").val(),
-        blue: $("#blue-value").val(),
-        alpha: $("#alpha-value").val()
-    });
+           red: $("#red-value").val(),
+           green: $("#green-value").val(),
+           blue: $("#blue-value").val(),
+           alpha: $("#alpha-value").val()
+       });
+});
+
+/** Update the value of the fg-element **/
+$('.color-value').on("color-change", function(){
+    var css = updateColorRule({
+           red: $("#red-value").val(),
+           green: $("#green-value").val(),
+           blue: $("#blue-value").val(),
+           alpha: $("#alpha-value").val()
+       });
+    $("#fg-color").css("background", css);
 });
