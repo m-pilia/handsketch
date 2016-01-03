@@ -10,3 +10,46 @@ html, body, .body-wrapper {
 .tool-widget-wrapper, .options-widget-wrapper, .color-picker-widget-wrapper {
     border: 1px solid black;
 }
+
+#color-selector
+{
+    margin-top: 20px;
+    margin-left: 100px;
+    width: 500px;
+    height: 600px
+}
+
+.fan-selector-item{
+    display: inline-block;
+    width: auto;
+    height: auto;
+    margin: 0px;
+}
+
+/** Red slider **/
+#red-slider .slider-handle { background: red; }
+
+#red-slider .slider-track-high { background: darkred; }
+
+#red-slider .slider-selection { background: lightpink; }
+
+/** Green slider **/
+#green-slider .slider-handle { background: green; }
+
+#green-slider .slider-track-high { background: darkgreen; }
+
+#green-slider .slider-selection { background: lightgreen; }
+
+/** Blue slider **/
+#blue-slider .slider-handle { background: blue; }
+
+#blue-slider .slider-track-high { background: darkblue; }
+
+#blue-slider .slider-selection { background: lightblue; }
+
+/** Alpha slider **/
+#alpha-slider .slider-handle { background: gray; }
+
+#alpha-slider .slider-track-high { background: dimgray; }
+
+#alpha-slider .slider-selection { background: lightgray; }
