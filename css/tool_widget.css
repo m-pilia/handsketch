@@ -15,12 +15,12 @@
 }
 
 #tool-selector {
-    list-style: none;
-    position: relative;
-    margin: 20px auto;
+    /* NOTE: height, width, top and left are dynamically set via js */
+    position: absolute;
     padding: 0;
-    width: 200px;
-    height: 200px;
+    max-width: 200px;
+    max-height: 200px;
+    list-style: none;
 }
 
 #tool-selector li {
