@@ -1,3 +1,9 @@
+#color-picker-selector {
+    position: absolute;
+    min-width: 180px;
+    min-height: 180px;
+}
+
 #color-selector {
     margin-top: 20px;
     margin-left: 70px;
@@ -11,8 +17,10 @@
 }
 
 #fg-color {
-    height: 50px;
-    width: 50px;
+    height: 35px;
+    width: 100px;
+    margin-left: auto;
+    margin-right: auto;
     background: rgba(255,255,255, 255);
     border-color: dimgray;
     border-style: solid;
@@ -29,11 +37,11 @@
     padding: 5px;
 }
 
-#color-picker-widget input[type=number]::-webkit-inner-spin-button {
+#color-picker-selector input[type=number]::-webkit-inner-spin-button {
     opacity: 1
 }
 
-#color-picker-widget label {
+#color-picker-selector label {
     display: block;
 }
 

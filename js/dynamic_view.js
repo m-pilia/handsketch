@@ -9,27 +9,33 @@
  * Fit the size of a selector in order to fill the available space in the
  * wrapper. The selector is expanded as much as possible, and its top and
  * left css attributes are set in order to center it.
- * @param  {string} key  Identifier of the selector's class and id.
+ * @param  {string} key     Identifier of the selector's class and id.
+ * @param  {bool}   expand  If true, the selector is expanded as most as
+ *                          possible to fit the wrapper.
  */
-function fitSelector(key) {
+function fitSelector(key, expand) {
     var margin = 10;
     var wrapper = $("." + key + "-widget-wrapper");
-    var wWidth = parseInt(wrapper.width());
-    var wHeight = parseInt(wrapper.height());
+    var wWidth = wrapper.width();
+    var wHeight = wrapper.height();
     var selector = $("#" + key + "-selector");
 
-    // set width and height
-    var size = Math.min(wWidth, wHeight) - 2 * margin;
-    selector.width(size + "px");
-    selector.height(size + "px");
+    if (expand) {
+        // set width and height
+        var size = Math.min(wWidth, wHeight) - 2 * margin;
+        selector.width(size + "px");
+        selector.height(size + "px");
+    }
 
     // set top
-    var top = (wHeight - parseInt(selector.height())) / 2;
+    var top = (wHeight - selector.height()) / 2;
+    top = Math.max(0, top);
     selector.css("top", top);
 
     // set left
-    var left = (wWidth - $("#tool-selector-hint").outerWidth(true)
+    var left = (wWidth - $("#" + key + "-selector-hint").outerWidth(true)
         - selector.width()) / 2;
+    left = Math.max(0, left);
     selector.css("left", left);
 }
 
@@ -68,9 +74,9 @@ function fitCanvas() {
  */
 function fitSizes() {
     fitCanvas();
-    fitSelector("tool");
-    //fitSelector("options");
-    //fitSelector("color-picker");
+    fitSelector("tool", true);
+    //fitSelector("options", true);
+    fitSelector("color-picker", false);
 }
 
 /*

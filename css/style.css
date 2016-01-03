@@ -54,16 +54,18 @@ html, body {
     top: 66%;
 }
 
-#canvas-area {
+/* a class is used here because a lower precedence than id is needed, in order
+ * to be able to override the opacity value adding another class */
+.selector-hint {
+    width: 60px;
+    height: 60px;
     position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: #bbb;
+    top: 10px;
+    right: 10px;
+    opacity: 0.4;
 }
 
-#canvas {
-    position: absolute;
-    background-color: white;
+/* this class is toggled to control the opacity */
+.highlighted-selector {
+    opacity: 1;
 }
