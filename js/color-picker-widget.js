@@ -106,7 +106,7 @@ function updateColorRule(color) {
 
 /** Create the color sliders and set their variable**/
 $('.color-slider').each(function (i) {
-    sliders.push($(this).slider({
+    sliders.push($(this).bootstrapSlider({
         reversed: true,
         /** Sets a different id with trailing "-x" **/
         id: $(this).attr("id") + "-x"
