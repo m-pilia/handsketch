@@ -17,7 +17,6 @@
     border-color: dimgray;
     border-style: solid;
     border-width: 1px;
-
 }
 
 .color-item input {
@@ -42,6 +41,11 @@
     position: absolute;
     z-index: -1;
     color: red;
+}
+
+/* maximum height of the sliders' bar */
+.slider.slider-vertical {
+    max-height: 120px;
 }
 
 /** Red slider **/
