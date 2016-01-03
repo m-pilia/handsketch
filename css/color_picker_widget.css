@@ -1,34 +1,29 @@
-#color-selector
-{
+#color-selector {
     margin-top: 20px;
     margin-left: 70px;
 }
 
-.fan-selector-item{
+.fan-selector-item {
     display: inline-block;
     width: auto;
     height: auto;
     margin: 0px;
 }
 
-#fg-color
-{
+#fg-color {
     height: 50px;
     width: 50px;
     background: rgba(255,255,255, 255);
     border-color: dimgray;
     border-style: solid;
     border-width: 1px;
-       
 }
 
-.color-item input
-{
+.color-item input {
     width: 50px;
 }
 
-.color-item
-{
+.color-item {
     position: center;
     text-align: center;
     padding: 5px;
@@ -38,16 +33,19 @@
     opacity: 1
 }
 
-#color-picker-widget label
-{
+#color-picker-widget label {
     display: block;
 }
 
-.tooltip
-{
+.tooltip {
     position: absolute;
     z-index: -1;
     color: red;
+}
+
+/* maximum height of the sliders' bar */
+.slider.slider-vertical {
+    max-height: 120px;
 }
 
 /** Red slider **/
