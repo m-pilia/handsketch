@@ -1,5 +1,4 @@
-#color-selector
-{
+#color-selector {
     margin-top: 20px;
     margin-left: 70px;
 }
@@ -11,8 +10,7 @@
     margin: 0px;
 }
 
-#fg-color
-{
+#fg-color {
     height: 50px;
     width: 50px;
     background: rgba(255,255,255, 255);
@@ -22,13 +20,11 @@
 
 }
 
-.color-item input
-{
+.color-item input {
     width: 50px;
 }
 
-.color-item
-{
+.color-item {
     position: center;
     text-align: center;
     padding: 5px;
@@ -38,13 +34,11 @@
     opacity: 1
 }
 
-#color-picker-widget label
-{
+#color-picker-widget label {
     display: block;
 }
 
-.tooltip
-{
+.tooltip {
     position: absolute;
     z-index: -1;
     color: red;
