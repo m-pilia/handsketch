@@ -22,11 +22,9 @@ jQuery.fn.extend({
         /** Get the children and count them **/
         var items = $(this).children(".fan-selector-item");
         var size = items.size();
-        console.log("size:" + size);
 
         /** The increment of each step **/
         var increment = Math.floor(angle / (size));
-        console.log("increment:" + increment);
 
         /** The starting angle **/
         var startAngle = - ((size / 2) * increment);
@@ -41,13 +39,11 @@ jQuery.fn.extend({
 
         /** Apply the rotation to all the items **/
         items.each(function(){
-            console.log(this.toString());
             /** Apply the rotation with center in center bottom**/
             $(this).css("transform-origin", "center bottom");
             $(this).css("-webkit-transform-origin", "center bottom");
             $(this).css("transform", "rotate(" + rotAngle + "deg)");
             $(this).css("-webkit-transform", "rotate(" + rotAngle + "deg)");
-            console.log(rotAngle + "deg");
             rotAngle += increment;
         });
 
