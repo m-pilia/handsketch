@@ -15,8 +15,6 @@ html, body, .body-wrapper {
 {
     margin-top: 20px;
     margin-left: 100px;
-    width: 500px;
-    height: 600px
 }
 
 .fan-selector-item{
@@ -26,30 +24,58 @@ html, body, .body-wrapper {
     margin: 0px;
 }
 
+.color-item input
+{
+    width: 50px;
+}
+
+.color-item
+{
+    position: center;
+    text-align: center;
+    padding: 5px;
+}
+
+#color-picker-widget input[type=number]::-webkit-inner-spin-button {
+    opacity: 1
+}
+
+#color-picker-widget label
+{
+    display: block;
+}
+
+.tooltip
+{
+    position: absolute;
+    z-index: -1;
+    color: red;
+}
+
 /** Red slider **/
-#red-slider .slider-handle { background: red; }
+#red-slider-x .slider-handle { background: red; }
 
-#red-slider .slider-track-high { background: darkred; }
+#red-slider-x .slider-track-high { background: darkred; }
 
-#red-slider .slider-selection { background: lightpink; }
+#red-slider-x .slider-selection { background: lightpink; }
 
 /** Green slider **/
-#green-slider .slider-handle { background: green; }
+#green-slider-x .slider-handle { background: green; }
 
-#green-slider .slider-track-high { background: darkgreen; }
+#green-slider-x .slider-track-high { background: darkgreen; }
 
-#green-slider .slider-selection { background: lightgreen; }
+#green-slider-x .slider-selection { background: lightgreen; }
 
 /** Blue slider **/
-#blue-slider .slider-handle { background: blue; }
+#blue-slider-x .slider-handle { background: blue; }
 
-#blue-slider .slider-track-high { background: darkblue; }
+#blue-slider-x .slider-track-high { background: darkblue; }
 
-#blue-slider .slider-selection { background: lightblue; }
+#blue-slider-x .slider-selection { background: lightblue; }
 
 /** Alpha slider **/
-#alpha-slider .slider-handle { background: gray; }
+#alpha-slider-x .slider-handle { background: gray; }
 
-#alpha-slider .slider-track-high { background: dimgray; }
+#alpha-slider-x .slider-track-high { background: dimgray; }
 
-#alpha-slider .slider-selection { background: lightgray; }
+#alpha-slider-x .slider-selection { background: lightgray; }
