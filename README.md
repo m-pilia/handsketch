@@ -83,6 +83,7 @@ The maximum length for code lines is peremptorily of 80 characters for JavaScrip
 | jQuery UI         | jQuery Foundation                    | [jQuery](https://github.com/jquery/jquery-ui/blob/master/LICENSE.txt) | https://jqueryui.com/ |
 | bootstrap         | Mark Otto, Jacob Thornton, core team | MIT        | http://getbootstrap.com/ |
 | bootstrap submenu | Vasily A.                            | MIT        | https://github.com/vsn4ik/bootstrap-submenu |
+| bootstrap slider  | Kyle J. Kemp                         | MIT        | https://github.com/seiyria/bootstrap-slider |
 | jQueryUI.Ruler    | Emanuel Fernandes                    | MIT        | https://github.com/efernandesng/jquery-ui.ruler |
 | LeapJS            | Leap Motion, Inc                     | Apache 2.0 | https://github.com/leapmotion/leapjs |
 

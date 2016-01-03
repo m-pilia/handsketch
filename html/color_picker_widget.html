@@ -1,1 +1,42 @@
-<p>Color picker widget placeholder</p>
+<div id="color-picker-widget">
+    
+    <!-- Color selector -->
+    <div id="color-selector" class="slider-fan-selector color-fan-selector">
+
+        <div class="fan-selector-item">
+            <!-- Red slider -->
+            <input id="red-slider" class="slider color-slider red-setting" data-slider-id='red-slider'
+                   type="text" data-slider-min="0" data-slider-max="255" data-slider-step="1" data-slider-value="255" data-slider-orientation="vertical"/>
+        </div>
+
+        <div class="fan-selector-item">
+            <!-- Green slider -->
+            <input id="green-slider" class="slider color-slider green-setting" data-slider-id='green-slider'
+                   type="text" data-slider-min="0" data-slider-max="255" data-slider-step="1" data-slider-value="255" data-slider-orientation="vertical"/>
+        </div>
+
+        <div class="fan-selector-item">
+            <!-- Blue slider -->
+            <input id="blue-slider" class="slider color-slider blue-setting" data-slider-id='blue-slider'
+                   type="text" data-slider-min="0" data-slider-max="255" data-slider-step="1" data-slider-value="255" data-slider-orientation="vertical"/>
+        </div>
+
+        <div class="fan-selector-item">
+            <!-- Alpha slider -->
+            <input id="alpha-slider" class="slider color-slider alpha-setting" data-slider-id='alpha-slider'
+                   type="text" data-slider-min="0" data-slider-max="255" data-slider-step="1" data-slider-value="255" data-slider-orientation="vertical"/>
+        </div>
+
+    </div>
+    <div id="color-display">
+        <table>
+            <tr>
+                <td class="color-item"><label>Red</label><input id="red-value" class="color-value" type="number" min="0" max="255" value="255"></td>
+                <td class="color-item"><label>Green</label><input id="green-value" class="color-value" type="number" min="0" max="255" value="255"></td>
+                <td class="color-item"><label>Blue</label><input id="blue-value" class="color-value" type="number" min="0" max="255" value="255"></td>
+                <td class="color-item"><label>Alpha</label><input id="alpha-value" class="color-value" type="number" min="0" max="255" value="255"></td>
+            </tr>
+        </table>
+    </div>
+    <div id="fg-color"></div>
+</div>

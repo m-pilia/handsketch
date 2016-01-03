@@ -1,0 +1,77 @@
+#color-selector {
+    margin-top: 20px;
+    margin-left: 70px;
+}
+
+.fan-selector-item {
+    display: inline-block;
+    width: auto;
+    height: auto;
+    margin: 0px;
+}
+
+#fg-color {
+    height: 50px;
+    width: 50px;
+    background: rgba(255,255,255, 255);
+    border-color: dimgray;
+    border-style: solid;
+    border-width: 1px;
+}
+
+.color-item input {
+    width: 50px;
+}
+
+.color-item {
+    position: center;
+    text-align: center;
+    padding: 5px;
+}
+
+#color-picker-widget input[type=number]::-webkit-inner-spin-button {
+    opacity: 1
+}
+
+#color-picker-widget label {
+    display: block;
+}
+
+.tooltip {
+    position: absolute;
+    z-index: -1;
+    color: red;
+}
+
+/* maximum height of the sliders' bar */
+.slider.slider-vertical {
+    max-height: 120px;
+}
+
+/** Red slider **/
+#red-slider-x .slider-handle { background: red; }
+
+#red-slider-x .slider-track-high { background: darkred; }
+
+#red-slider-x .slider-selection { background: lightpink; }
+
+/** Green slider **/
+#green-slider-x .slider-handle { background: green; }
+
+#green-slider-x .slider-track-high { background: darkgreen; }
+
+#green-slider-x .slider-selection { background: lightgreen; }
+
+/** Blue slider **/
+#blue-slider-x .slider-handle { background: blue; }
+
+#blue-slider-x .slider-track-high { background: darkblue; }
+
+#blue-slider-x .slider-selection { background: lightblue; }
+
+/** Alpha slider **/
+#alpha-slider-x .slider-handle { background: gray; }
+
+#alpha-slider-x .slider-track-high { background: dimgray; }
+
+#alpha-slider-x .slider-selection { background: lightgray; }
