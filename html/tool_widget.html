@@ -1,1 +1,39 @@
-<p>Tool widget placeholder</p>
+<!-- image providing an hint for the gesture -->
+<img id="tool-selector-hint" class="selector-hint" src="img/rot1.svg" />
+
+<!-- the tool selector -->
+<!-- just add or remove the entries here (as <li> items), all the style is
+     automatically adapted to fit the selector's size -->
+<ul id="tool-selector">
+     <li>
+         <a><span class="tool-entry">1</span></a>
+     </li>
+
+     <li>
+         <a><span class="tool-entry">2</span></a>
+     </li>
+
+     <li>
+         <a><span class="tool-entry">3</span></a>
+     </li>
+
+     <li>
+         <a><span class="tool-entry">4</span></a>
+     </li>
+
+     <li>
+         <a><span class="tool-entry">5</span></a>
+     </li>
+</ul>
+
+<!-- svg path used to clip the menu item -->
+<!-- the actual path is drawn dynamically by the js -->
+<svg height="0" width="0">
+    <defs>
+        <clipPath clipPathUnits="objectBoundingBox" id="sector">
+            <path fill="none" stroke="#111" stroke-width="1" class="sector"></path>
+        </clipPath>
+    </defs>
+</svg>
+
+<script type="text/javascript" src="js/tool_widget.js"></script>
