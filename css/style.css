@@ -1,0 +1,12 @@
+html, body, .body-wrapper {
+    height: 100%;
+}
+
+.side-panel, .canvas-area {
+    height: 100%;
+    border: 1px solid black;
+}
+
+.tool-widget-wrapper, .options-widget-wrapper, .color-picker-widget-wrapper {
+    border: 1px solid black;
+}
