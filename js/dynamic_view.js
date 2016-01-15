@@ -79,6 +79,27 @@ function fitSizes() {
     fitSelector("color-picker", false);
 }
 
+/**
+ * Search for theme stilesheet files, and append one menu entry for each one
+ * in the menubar's theme submenu.
+ */
+function collectThemes() {
+    $("link[data-theme]").each(function () {
+        var theme = $(this).attr("data-theme");
+        $("#themes-submenu").append(`
+            <li>
+                <a  id="` + theme + `-theme"
+                    tabindex="0"
+                    onclick="applyTheme('` + theme + `')">
+                        <span class="glyphicon glyphicon-eye-open"
+                              aria-hidden="true"></span>&nbsp;` +
+                        theme + `
+                </a>
+            </li>`
+        );
+    });
+}
+
 /*
  * A function wich is executed when the document is ready and which does all
  * the dynamic settings needed.
@@ -86,6 +107,9 @@ function fitSizes() {
 $(document).ready(function () {
     // enable submenus
     $('[data-submenu]').submenupicker();
+
+    // add themes in the menubar
+    collectThemes();
 
     // add rulers to the canvas area
     $("#canvas-area").ruler();
