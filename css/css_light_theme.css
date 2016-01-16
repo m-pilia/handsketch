@@ -1,0 +1,87 @@
+html, body {
+  height: 100%;
+  background: #e7e7e7;
+  color: #303030;
+}
+
+.navbar-header {
+    width: 150px;
+    background-image: url('logo-light.png');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#menu-bar {
+  background: #e7e7e7;
+}
+
+.navbar-default {
+  border-color: #e7e7e7;
+}
+
+.navbar-default .navbar-brand {
+  color: #DDD;
+}
+
+.navbar-default .navbar-nav > li > a {
+  color: #3f3f3f;
+}
+
+.navbar-default .navbar-nav > li > a:focus, .navbar-default .navbar-nav > li > a:hover {
+    color: black;
+}
+
+.dropdown-menu {
+    background-color: #e7e7e7;
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.71)
+}
+
+.dropdown-menu > li > a {
+    color: #3f3f3f;
+}
+
+.side-panel, .canvas-wrapper {
+  border: 2px solid #727270;
+}
+
+.tool-widget-wrapper, .options-widget-wrapper, .color-picker-widget-wrapper {
+  border: 2px solid #727270;
+}
+
+#canvas-area {
+  background-color: #868686;
+}
+
+#tool-selector li {
+  background-color: #727270;
+}
+
+#tool-selector .selected-tool {
+  background-color: #242424;
+}
+
+.tool-entry {
+  color: #e7e7e7;
+}
+
+.color-item input {
+  color: black;
+}
+
+.ef-ruler .top {
+    color: #3f3f3f;
+    background-color: #e7e7e7;
+    border-bottom: 1px solid #3f3f3f;
+}
+
+.ef-ruler .left {
+    color: #3f3f3f;
+    background-color: #e7e7e7;
+    border-right: 1px solid #3f3f3f;
+}
+
+.ef-ruler .corner {
+    background-color: #e7e7e7;
+    border-right: #e7e7e7;
+    border-bottom: #e7e7e7;
+}
