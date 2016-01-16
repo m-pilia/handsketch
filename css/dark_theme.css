@@ -19,7 +19,11 @@ html, body {
   border-color: #3f3f3c;
 }
 
-.navbar-default .navbar-brand {
+.navbar-brand {
+    visibility: hidden;
+}
+
+.navbar-default {
   color: #DDD;
 }
 
@@ -92,7 +96,7 @@ html, body {
 .ef-ruler .top-line {
     border-left: 1px solid #DDD;
 }
-    
+
 .ef-ruler .left-line {
     border-top: 1px solid #DDD;
 }
