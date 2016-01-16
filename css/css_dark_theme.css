@@ -1,0 +1,98 @@
+html, body {
+  height: 100%;
+  background: #3f3f3c;
+  color: #D2D2D2;
+}
+
+.navbar-header {
+    width: 150px;
+    background-image: url('../img/logo-dark.png');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#menu-bar {
+  background: #3f3f3c;
+}
+
+.navbar-default {
+  border-color: #3f3f3c;
+}
+
+.navbar-default .navbar-brand {
+  color: #DDD;
+}
+
+.navbar-default .navbar-nav > li > a {
+  color: #DDD;
+}
+
+.navbar-default .navbar-nav > li > a:focus, .navbar-default .navbar-nav > li > a:hover {
+    color: #0CF;
+}
+
+.dropdown-menu {
+    background-color: #3f3f3f;
+}
+
+.dropdown-menu > li > a {
+    color: #FFFAFA;
+}
+
+.side-panel, .canvas-wrapper {
+  border: 2px solid #515151;
+}
+
+.tool-widget-wrapper, .options-widget-wrapper, .color-picker-widget-wrapper {
+  border: 2px solid #515151;
+}
+
+#canvas-area {
+  background-color: #696969;
+}
+
+#tool-selector li {
+  background-color: #CCC;
+}
+
+#tool-selector .selected-tool {
+  background-color: #0CF;
+}
+
+.tool-entry {
+  color: #3C3C3C;
+}
+
+.color-item input {
+  color: black;
+}
+
+.ef-ruler .top {
+    color: #DDD;
+    background-color: #3f3f3c;
+    border-bottom: 1px solid #DDD;
+}
+
+.ef-ruler .left {
+    color: #DDD;
+    background-color: #3f3f3c;
+    border-right: 1px solid #DDD;
+}
+
+.ef-ruler .corner {
+    background-color: #3f3f3c;
+    border-right: #3f3f3c;
+    border-bottom: #3f3f3c;
+}
+
+.ef-ruler .tick {
+    background-color: #DDD;
+}
+
+.ef-ruler .top-line {
+    border-left: 1px solid #DDD;
+}
+    
+.ef-ruler .left-line {
+    border-top: 1px solid #DDD;
+}
