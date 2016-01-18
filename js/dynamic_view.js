@@ -70,6 +70,21 @@ function fitCanvas() {
 }
 
 /**
+ * Place the popup at the center of the viewport.
+ */
+function fitPopup() {
+    var popup = $(".popup");
+
+    // compute top and left distances
+    var top = Math.max(0, ($(window).height() - popup.outerHeight(true)) / 2);
+    var left = Math.max(0, ($(window).width() - popup.outerWidth(true)) / 2);
+
+    // apply style
+    popup.css("top", top);
+    popup.css("left", left);
+}
+
+/**
  * Fit all the sizes which need a dynamic adjustment.
  */
 function fitSizes() {
@@ -77,6 +92,7 @@ function fitSizes() {
     fitSelector("tool", true);
     //fitSelector("options", true);
     fitSelector("color-picker", false);
+    fitPopup();
 }
 
 /**

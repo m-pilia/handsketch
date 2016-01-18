@@ -23,6 +23,7 @@
         <link rel="stylesheet" href="css/tool_widget.css">
         <link rel="stylesheet" href="css/color_picker_widget.css">
         <link rel="stylesheet" href="css/canvas_area.css">
+        <link rel="stylesheet" href="css/popup.css">
 
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="css/light_theme.css" data-theme="Light" data-theme-default="true">
@@ -67,6 +68,12 @@
 
         <!-- Theme selector -->
         <script src="js/theme_selector.js" defer></script>
+
+        <!-- Drawing tools -->
+        <script src="js/drawing.js" defer></script>
+
+        <!-- Overlay popup -->
+        <script src="js/popup.js" defer></script>
     </head>
     <body>
         <!-- Menu bar (included via XMLHttpRequest) -->
@@ -102,5 +109,8 @@
                 </div>
             </div>
         </div>
+
+        <!-- Overlay popup for canvas size input -->
+        <!-- #include size_popup.html -->
     </body>
 </html>
