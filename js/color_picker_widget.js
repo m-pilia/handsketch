@@ -24,27 +24,38 @@ function updateColorPreview() {
 // create slider objects
 $(".color-slider").each(function () {
     var color = $(this).data("slider-id");
+
     $(this).bootstrapSlider({
         reversed: true,
         id: $(this).attr("id") + "-x" /** Different id with trailing "-x" **/
     });
 
-    // bind sliders to spinboxes
+    // bind sliders to spinboxes and save value into local storage
     $(this).on("slide change", function () {
-        $("#" + color + "-value").val($("#" + color + "-slider").val());
+        var value = $("#" + color + "-slider").val();
+        $("#" + color + "-value").val(value);
+        localStorage.setItem(color + "-value", value);
         updateColorPreview();
     });
 });
 
-// bind spinbox values to sliders and reset initial value
 $(".color-value").each(function () {
     var color = $(this).data("color");
+    var slider = $("#" + color + "-slider");
+
+    // bind spinbox values to sliders and save value into local storage
     $(this).on("input", function () {
         var value = parseInt($(this).val());
-        $("#" + color + "-slider").bootstrapSlider("setValue", value);
+        slider.bootstrapSlider("setValue", value);
+        localStorage.setItem(color + "-value", value);
         updateColorPreview();
     });
-    $(this).val(255); // reset initial value (useful on refresh)
+
+    // initial configuration: load value from storage and set it to sliders
+    var value = localStorage.getItem(color + "-value");
+    $(this).val(value);
+    slider.bootstrapSlider("setValue", parseInt(value));
+    updateColorPreview();
 });
 
 // create the fan selector
