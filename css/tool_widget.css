@@ -1,26 +1,10 @@
-/* a class is used here because a lower precedence than id is needed, in order
- * to be able to override the opacity value adding another class */
-.tool-selector-hint {
-    width: 60px;
-    height: 60px;
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    opacity: 0.4;
-}
-
-/* this class is toggled to control the opacity */
-.highlighted-selector {
-    opacity: 1;
-}
-
 #tool-selector {
-    list-style: none;
-    position: relative;
-    margin: 20px auto;
+    /* NOTE: height, width, top and left are dynamically set via js */
+    position: absolute;
     padding: 0;
-    width: 200px;
-    height: 200px;
+    max-width: 200px;
+    max-height: 200px;
+    list-style: none;
 }
 
 #tool-selector li {
