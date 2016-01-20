@@ -69,3 +69,7 @@ html, body {
 .highlighted-selector {
     opacity: 1;
 }
+
+.inactive-button {
+    opacity: 0.4;
+}

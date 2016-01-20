@@ -14,11 +14,14 @@
  */
 function selectTool(i) {
     $("#tool-selector .selected-tool").removeClass("selected-tool");
-    $("#tool-selector li:nth-child(" + i + ")").addClass("selected-tool");
+    var toolLi = $("#tool-selector li:nth-child(" + i + ")");
+    toolLi.addClass("selected-tool");
+    setTool(window[toolLi.attr('data-tool')]);
 }
 
 /**
- *
+ * Toggle highlighting of the selector's hint picture.
+ * @param {bool} val True to highlight, false to remove highlighting.
  */
 function hintHighlight(val) {
     if (val)

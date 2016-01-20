@@ -5,17 +5,10 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <!-- Bootstrap -->
-
+        <!-- Library stylesheets -->
         <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css">
-
-        <!-- Bootstrap submenus -->
         <link rel="stylesheet" href="lib/bootstrap-plugins/bootstrap-submenu/css/bootstrap-submenu.css">
-
-        <!-- Botstrap slider -->
         <link rel="stylesheet" href="lib/bootstrap-plugins/bootstrap-slider/css/bootstrap-slider.css">
-
-        <!-- Rulers library stylesheet -->
         <link rel="stylesheet" href="lib/jqueryui-ruler/css/jquery.ui.ruler.css">
 
         <!-- Custom stylesheets -->
@@ -31,49 +24,15 @@
         <link rel="stylesheet" href="css/white_theme.css" data-theme="White">
 
 
-        <!-- jQuery (also necessary for Bootstrap's JavaScript plugins) -->
+        <!-- Libraries -->
         <script src="lib/jquery/jquery.min.js"></script>
-
-        <!-- jQuery UI (needed for rulers lib) -->
-        <script src="lib/jquery-ui/jquery-ui.min.js"></script>
-
-        <!-- Library for canvas rulers -->
+        <script src="lib/jquery-ui/jquery-ui.min.js"></script> <!-- needed by rulers lib -->
         <script src="lib/jqueryui-ruler/js/jquery.ui.ruler.js"></script>
-
-        <!-- Include all compiled plugins (below), or include individual files as needed -->
-
-        <!-- Bootstrap -->
         <script src="lib/bootstrap/js/bootstrap.min.js" defer></script>
-
-        <!-- Submenus -->
         <script src="lib/bootstrap-plugins/bootstrap-submenu/js/bootstrap-submenu.min.js" defer></script>
-
-        <!-- Bootstrap slider -->
         <script src="lib/bootstrap-plugins/bootstrap-slider/js/bootstrap-slider.min.js" defer></script>
-
-        <!-- Fan selector widget -->
-        <script src="js/fan_selector.js" defer></script>
-
-        <!-- Color picker widget -->
-        <script src="js/color_picker_widget.js" defer></script>
-
-        <!-- Leap Motion support -->
         <script src="lib/leapjs/leap-0.6.4.min.js"></script>
 
-        <!-- Gesture recognition -->
-        <script src="js/gesture_recognition.js"></script>
-
-        <!-- Dynamic view settings -->
-        <script src="js/dynamic_view.js" defer></script>
-
-        <!-- Theme selector -->
-        <script src="js/theme_selector.js" defer></script>
-
-        <!-- Drawing tools -->
-        <script src="js/drawing.js" defer></script>
-
-        <!-- Overlay popup -->
-        <script src="js/popup.js" defer></script>
     </head>
     <body>
         <!-- Menu bar (included via XMLHttpRequest) -->
@@ -113,4 +72,14 @@
         <!-- Overlay popup for canvas size input -->
         <!-- #include size_popup.html -->
     </body>
+
+    <!-- Custom js (order matters) -->
+    <script src="js/fan_selector.js" defer></script>
+    <script src="js/color_picker_widget.js" defer></script>
+    <script src="js/gesture_recognition.js"></script>
+    <script src="js/dynamic_view.js"></script>
+    <script src="js/theme_selector.js"></script>
+    <script src="js/drawing.js"></script>
+    <script src="js/popup.js"></script>
+    <script src="js/tool_widget.js"></script>
 </html>

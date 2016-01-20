@@ -5,6 +5,11 @@
  * @date 2016-01-02
  */
 
+"use strict";
+
+// bounding client rectangle for the canvas
+var canvasBCR = null;
+
 /**
  * Fit the size of a selector in order to fill the available space in the
  * wrapper. The selector is expanded as much as possible, and its top and
@@ -67,6 +72,9 @@ function fitCanvas() {
     container.ruler("option", "startY", -top);
     container.ruler("option", "startX", -left);
     container.ruler("refresh");
+
+    // update bounding client rectangle
+    canvasBCR = canvas[0].getBoundingClientRect();
 }
 
 /**
