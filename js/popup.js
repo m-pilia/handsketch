@@ -13,7 +13,10 @@
  */
 function openPopup(popupName) {
     $('#' + popupName).addClass('popup-visible');
-    $('.body-wrapper').addClass('overlay').click(function () {
+    $('.body-wrapper')
+            .addClass('overlay')
+            .add('.popup-cancel')
+            .click(function () {
         closePopup();
     });
 }

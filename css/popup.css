@@ -8,6 +8,7 @@
     width: 25%;
     padding: 10px;
     display: none;
+    background-color: white;
     box-shadow: 1px 2px 3px 1px rgb(170, 170, 170);
     text-align: center;
     border: 1px solid grey;
@@ -52,4 +53,14 @@ label.popup-column {
     position: absolute;
     bottom: -20px;
     right: -20px;
+}
+
+.popup-cancel {
+    background: url('../img/cross.svg') no-repeat;
+    background-size: 40px 40px;
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    bottom: -20px;
+    right: 20px;
 }
