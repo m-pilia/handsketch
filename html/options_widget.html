@@ -1,1 +1,124 @@
-<p>Option widget placeholder</p>
+<div id="options-widget">
+    <!-- Brush: opacity, size, shape -->
+    <div id="brush-options" class="tool-options">
+        <table>
+            <tr>
+                <td class="left-td">
+                    <div id="brush-shape" class="dropdown">
+                        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                            <img id="brush-selected-shape" src="img/brush-shapes/circle.png">
+                        <span class="caret"></span></button>
+                        <ul class="dropdown-menu shapes-menu">
+                            <li class="brush-shapes" data-shape="circle"><img src="img/brush-shapes/circle.png"></li>
+                            <li class="brush-shapes" data-shape="diamond"><img src="img/brush-shapes/diamond.png"></li>
+                            <li class="brush-shapes" data-shape="square"><img src="img/brush-shapes/square.png"></li>
+                        </ul>
+                    </div>
+                </td>
+                <td>
+                    <label>Opacity</label>
+                    <input id="brush-alpha" class="alpha color-value" type="number" min="0" max="255" value="255" data-color="alpha">
+                    <label>Size</label>
+                    <input id="brush-size" class="size" type="number" min="0" max="100" value="25">
+                </td>
+            </tr>
+        </table>
+    </div>
+    <!-- Rubber: opacity, size, shape -->
+    <div id="rubber-options" class="tool-options">
+        <table>
+            <tr>
+                <td class="left-td">
+                    <div id="rubber-shape" class="dropdown">
+                        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                            <img id="rubber-selected-shape" src="img/brush-shapes/circle.png">
+                        <span class="caret"></span></button>
+                        <ul class="dropdown-menu shapes-menu">
+                            <li class="rubber-shapes" data-shape="circle"><img src="img/brush-shapes/circle.png"></li>
+                            <li class="rubber-shapes" data-shape="diamond"><img src="img/brush-shapes/diamond.png"></li>
+                            <li class="rubber-shapes" data-shape="square"><img src="img/brush-shapes/square.png"></li>
+                        </ul>
+                    </div>
+                </td>
+                <td>
+                    <label>Opacity</label>
+                    <input id="rubber-alpha" class="alpha color-value" type="number" min="0" max="255" value="255" data-color="alpha">
+                    <label>Size</label>
+                    <input id="rubber-size" class="size" type="number" min="0" max="100" value="25">
+                </td>
+            </tr>
+        </table>
+    </div>
+    <!-- Color-picker: size, shape -->
+    <div id="color-picker-options" class="tool-options">
+        <table>
+            <tr>
+                <td class="left-td">
+                    <div id="color-picker-shape" class="dropdown">
+                        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                            <img id="color-picker-selected-shape" src="img/brush-shapes/circle.png">
+                        <span class="caret"></span></button>
+                        <ul class="dropdown-menu shapes-menu">
+                            <li class="color-picker-shapes" data-shape="circle"><img src="img/brush-shapes/circle.png"></li>
+                            <li class="color-picker-shapes" data-shape="diamond"><img src="img/brush-shapes/diamond.png"></li>
+                            <li class="color-picker-shapes" data-shape="square"><img src="img/brush-shapes/square.png"></li>
+                        </ul>
+                    </div>
+                </td>
+                <td>
+                    <label>Sample Average</label>
+                    <input id="color-picker-sample-average" type="checkbox">
+                    <label>Range</label>
+                    <input id="color-picker-range" type="number" min="0" max="300" value="5" disabled>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <!-- Fill: size, shape -->
+    <div id="fill-options" class="tool-options">
+        <table>
+            <tr>
+                <td class="left-td">
+                    <!-- Empty -->
+                </td>
+                <td>
+                    <label>Threshold</label>
+                    <input id="fill-threshold" type="number" min="0" max="300" value="5">
+                </td>
+            </tr>
+        </table>
+    </div>
+    <!-- Aerograph: density, opacity, size, shape -->
+    <div id="aerograph-options" class="tool-options">
+        <table>
+            <tr>
+                <td class="left-td">
+                    <div id="aerograph-shape" class="dropdown">
+                        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                            <img id="aerograph-selected-shape" src="img/brush-shapes/circle.png">
+                        <span class="caret"></span></button>
+                        <ul class="dropdown-menu shapes-menu">
+                            <li class="aerograph-shapes" data-shape="circle"><img src="img/brush-shapes/circle.png"></li>
+                            <li class="aerograph-shapes" data-shape="diamond"><img src="img/brush-shapes/diamond.png"></li>
+                            <li class="aerograph-shapes" data-shape="square"><img src="img/brush-shapes/square.png"></li>
+                        </ul>
+                    </div>
+                </td>
+                <td>
+                    <label>Opacity</label>
+                    <input id="aerograph-alpha" class="alpha color-value" type="number" min="0" max="255" value="255" data-color="alpha">
+                </td>
+            </tr>
+            <tr>
+                <td class="left-td">
+                    <label>Size</label>
+                    <input id="aerograph-size" class="size" type="number" min="0" max="100" value="25">
+                </td>
+                <td>
+                    <label>Density</label>
+                    <input id="aerograph-density" class="density" type="number" min="0" max="100" value="25">
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
