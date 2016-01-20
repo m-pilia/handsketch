@@ -1,3 +1,7 @@
+.navbar-header{
+color:#10102B;
+}
+
 #tool-selector {
     /* NOTE: height, width, top and left are dynamically set via js */
     position: absolute;
@@ -8,7 +12,7 @@
 }
 
 #tool-selector li {
-    background-color: #A5E2F3; /* TEMP */
+    background-color: #1A4969; /* TEMP */
     position: absolute;
     top: 0;
     left: 0;
@@ -23,7 +27,7 @@
 }
 
 #tool-selector .selected-tool {
-    background-color: green;
+    background-color: #157A8C;
 }
 
 .tool-entry {

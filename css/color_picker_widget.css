@@ -1,12 +1,12 @@
 #color-picker-selector {
     position: absolute;
-    min-width: 180px;
-    min-height: 180px;
+    min-width: 10px;
+    min-height: 10px;
 }
 
 #color-selector {
-    margin-top: 20px;
-    margin-left: 70px;
+    margin-top: 15px;
+    margin-left: 90px;
 }
 
 .fan-selector-item {
@@ -17,8 +17,8 @@
 }
 
 #fg-color {
-    height: 35px;
-    width: 100px;
+    height: 25px;
+    width: 230px;
     margin-left: auto;
     margin-right: auto;
     background: rgba(255,255,255, 255);
@@ -53,7 +53,7 @@
 
 /* maximum height of the sliders' bar */
 .slider.slider-vertical {
-    max-height: 120px;
+    max-height: 80px;
 }
 
 /** Red slider **/
@@ -83,3 +83,44 @@
 #alpha-slider-x .slider-track-high { background: dimgray; }
 
 #alpha-slider-x .slider-selection { background: lightgray; }
+
+
+@media screen and ( min-width: 1024px ) {
+  #color-selector {
+      margin-top: 15px;
+      margin-left: 50px;
+  }
+
+}
+@media screen and ( min-width: 1920px ) {
+  #color-selector {
+      margin-top: 15px;
+      margin-left: 50px;
+  }
+  #color-picker-selector {
+      position: absolute;
+      min-width: 100px;
+      min-height: 100px;
+  }
+  .color-item input {
+      width: 100px;
+  }
+  #fg-color {
+      height: 25px;
+      width: 430px;
+      margin-left: auto;
+      margin-right: auto;
+      background: rgba(255,255,255, 255);
+      border-color: dimgray;
+      border-style: solid;
+      border-width: 1px;
+  }
+  .slider.slider-vertical {
+      max-height: 150px;
+  }
+  #color-selector {
+      margin-top: 15px;
+      margin-left: 150px;
+  }
+
+}

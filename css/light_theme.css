@@ -64,10 +64,6 @@ html, body {
   background-color: #242424;
 }
 
-.tool-entry {
-  color: #e7e7e7;
-}
-
 .color-item input {
   color: black;
 }
@@ -88,4 +84,57 @@ html, body {
     background-color: #e7e7e7;
     border-right: #e7e7e7;
     border-bottom: #e7e7e7;
+}
+.bucket{
+	content:url('../icon/light/stock-tool-bucket-fill-22.png');
+  width:22px;
+  height:22px;
+}
+.eraser{
+	content:url('../icon/light/stock-tool-eraser-22.png');
+  width:22px;
+  height:22px;
+}
+.paintbrush{
+	content:url('../icon/light/stock-tool-paintbrush-22.png');
+  width:22px;
+  height:22px;
+}
+.airbrush{
+	content:url('../icon/light/stock-tool-airbrush-22.png');
+  width:22px;
+  height:22px;
+}
+.colorpicker{
+	content:url('../icon/light/stock-tool-color-picker-22.png');
+  width:22px;
+  height:22px;
+}
+
+/*  for firefox compatibility*/
+
+.bucket::after{
+	content:url('../icon/light/stock-tool-bucket-fill-22.png');
+  width:22px;
+  height:22px;
+}
+.eraser::after{
+	content:url('../icon/light/stock-tool-eraser-22.png');
+  width:22px;
+  height:22px;
+}
+.paintbrush::after{
+	content:url('../icon/light/stock-tool-paintbrush-22.png');
+  width:22px;
+  height:22px;
+}
+.airbrush::after{
+	content:url('../icon/light/stock-tool-airbrush-22.png');
+  width:22px;
+  height:22px;
+}
+.colorpicker::after{
+	content:url('../icon/light/stock-tool-color-picker-22.png');
+  width:22px;
+  height:22px;
 }

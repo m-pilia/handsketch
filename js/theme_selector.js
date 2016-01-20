@@ -18,7 +18,9 @@ function applyTheme(t) {
     $("link[data-theme][data-theme!=\"" + t + "\"]").prop("disabled", "true");
     $("link[data-theme=\"" + t + "\"]").removeProp("disabled");
     localStorage.setItem(themeStorageName, t);
+   document.getElementById("tool-entry").src="icon/light/stock-tool-bucket-fill-22.png";
 }
+
 
 // check for saved settings, or use default theme as fallback
 var theme = localStorage.getItem(themeStorageName);

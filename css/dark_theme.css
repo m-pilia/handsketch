@@ -100,3 +100,54 @@ html, body {
 .ef-ruler .left-line {
     border-top: 1px solid #DDD;
 }
+.bucket{
+	content:url('../icon/dark/stock-tool-bucket-fill-22.png');
+  width:22px;
+  height:22px;
+}
+.eraser{
+	content:url('../icon/dark/stock-tool-eraser-22.png');
+  width:22px;
+  height:22px;
+}
+.paintbrush{
+	content:url('../icon/dark/stock-tool-paintbrush-22.png');
+  width:22px;
+  height:22px;
+}
+.airbrush{
+	content:url('../icon/dark/stock-tool-airbrush-22.png');
+  width:22px;
+  height:22px;
+}
+.colorpicker{
+	content:url('../icon/dark/stock-tool-color-picker-22.png');
+  width:22px;
+  height:22px;
+}
+/*  for firefox compatibility */
+.bucket::after{
+	content:url('../icon/dark/stock-tool-bucket-fill-22.png');
+  width:22px;
+  height:22px;
+}
+.eraser::after{
+	content:url('../icon/dark/stock-tool-eraser-22.png');
+  width:22px;
+  height:22px;
+}
+.paintbrush::after{
+	content:url('../icon/dark/stock-tool-paintbrush-22.png');
+  width:22px;
+  height:22px;
+}
+.airbrush::after{
+	content:url('../icon/dark/stock-tool-airbrush-22.png');
+  width:22px;
+  height:22px;
+}
+.colorpicker::after{
+	content:url('../icon/dark/stock-tool-color-picker-22.png');
+  width:22px;
+  height:22px;
+}
