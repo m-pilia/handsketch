@@ -1,0 +1,40 @@
+.tool-options
+{
+  display: none;
+}
+
+#brush-options
+{
+  display: block;
+}
+
+#options-widget table td
+{
+  width: 400px;
+  padding-left: 15px;
+}
+
+#options-widget
+{
+  padding: 10px;
+}
+
+#options-widget td
+{
+  vertical-align: top;
+}
+
+#options-widget input[type=number]::-webkit-inner-spin-button {
+    opacity: 1;
+}
+
+#options-widget input
+{
+  width: 50px;
+}
+
+#options-widget label
+{
+  padding-top: 10px;
+  display: block;
+}

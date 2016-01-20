@@ -87,6 +87,12 @@ The maximum length for code lines is peremptorily of 80 characters for JavaScrip
 | jQueryUI.Ruler    | Emanuel Fernandes                    | MIT        | https://github.com/efernandesng/jquery-ui.ruler |
 | LeapJS            | Leap Motion, Inc                     | Apache 2.0 | https://github.com/leapmotion/leapjs |
 
+# Third party graphics
+| Graphics          | Authors or maintainers               | License    | Link |
+|-------------------|:------------------------------------:|:----------:|:----:|
+| Glyphicons        | Jan Kovarik                          | [Glyphicons](http://glyphicons.com/license/) | http://glyphicons.com/ |
+| Gimp Dark Icons   | Andrew Pullins                       | [Attribution 3.0 Unported (CC BY 3.0)](http://creativecommons.org/licenses/by/3.0/) | http://android272.deviantart.com/art/Flat-GIMP-icon-Theme-V-2-1-375010811 |
+
 # License
 The project is licensed under GPL 3. See [LICENSE](/LICENSE) file for the full
 license.
