@@ -20,14 +20,14 @@ var canvasBCR = null;
  */
 function fitSelector(key, expand) {
     var margin = 10;
-    var wrapper = $("." + key + "-widget-wrapper");
+    var selector = $("#" + key + "-selector");
+    var wrapper = selector.parent();
     var wWidth = wrapper.width();
     var wHeight = wrapper.height();
-    var selector = $("#" + key + "-selector");
+    var size = Math.min(wWidth, wHeight) - 2 * margin;;
 
     if (expand) {
         // set width and height
-        var size = Math.min(wWidth, wHeight) - 2 * margin;
         selector.width(size + "px");
         selector.height(size + "px");
     }
@@ -38,10 +38,20 @@ function fitSelector(key, expand) {
     selector.css("top", top);
 
     // set left
-    var left = (wWidth - $("#" + key + "-selector-hint").outerWidth(true)
+    var left = (wWidth - $(".selector-hint").outerWidth(true)
         - selector.width()) / 2;
     left = Math.max(0, left);
     selector.css("left", left);
+
+    // set entries position
+    var entries = $("#" + key + "-selector .selector-entry");
+    var n = entries.length;
+    entries.each(function () {
+        var x = ($(this).outerWidth() * 50 / size);
+        var y = ($(this).outerHeight() * 50 / size);
+        $(this).css("right", (100 / n - x | 0).toString() + "%");
+        $(this).css("top", (25 - y).toString() + "%");
+    });
 }
 
 /**
@@ -98,7 +108,11 @@ function fitPopup() {
 function fitSizes() {
     fitCanvas();
     fitSelector("tool", true);
-    //fitSelector("options", true);
+    fitSelector("brush", true);
+    fitSelector("airbrush", true);
+    fitSelector("eraser", true);
+    fitSelector("picker", true);
+    fitSelector("filler", true);
     fitSelector("color-picker", false);
     fitPopup();
 }
@@ -137,6 +151,14 @@ $(document).ready(function () {
 
     // add rulers to the canvas area
     $("#canvas-area").ruler();
+
+    // setup selectors
+    setupSelector("tool", setTool);
+    setupSelector("brush", null);
+    setupSelector("airbrush", null);
+    setupSelector("eraser", null);
+    setupSelector("filler", null);
+    setupSelector("picker", null);
 
     // fit sizes on load and on resize
     fitSizes();

@@ -31,7 +31,7 @@ html, body {
     padding-left: 0;
 }
 
-.tool-widget-wrapper, .options-widget-wrapper, .color-picker-widget-wrapper {
+.tool-widget-wrapper, .option-widget-wrapper, .color-picker-widget-wrapper {
     margin: 5px !important;
     border: 1px solid lightgrey;
     border-radius: 10px;
@@ -46,7 +46,7 @@ html, body {
     top: 0;
 }
 
-.options-widget-wrapper {
+.option-widget-wrapper {
     top: 33%;
 }
 

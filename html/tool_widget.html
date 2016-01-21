@@ -4,25 +4,25 @@
 <!-- the tool selector -->
 <!-- just add or remove the entries here (as <li> items), all the style is
      automatically adapted to fit the selector's size -->
-<ul id="tool-selector">
-     <li data-tool="brush">
-         <a><span class="tool-entry">1</span></a>
+<ul id="tool-selector" class="circular-selector">
+     <li data-entry="brush">
+         <a><span class="selector-entry">1</span></a>
      </li>
 
-     <li data-tool="eraser">
-         <a><span class="tool-entry">2</span></a>
+     <li data-entry="eraser">
+         <a><span class="selector-entry">2</span></a>
      </li>
 
-     <li data-tool="airbrush">
-         <a><span class="tool-entry">3</span></a>
+     <li data-entry="airbrush">
+         <a><span class="selector-entry">3</span></a>
      </li>
 
-     <li data-tool="filler">
-         <a><span class="tool-entry">4</span></a>
+     <li data-entry="filler">
+         <a><span class="selector-entry">4</span></a>
      </li>
 
-     <li data-tool="picker">
-         <a><span class="tool-entry">5</span></a>
+     <li data-entry="picker">
+         <a><span class="selector-entry">5</span></a>
      </li>
 </ul>
 
@@ -30,8 +30,8 @@
 <!-- the actual path is drawn dynamically by the js -->
 <svg height="0" width="0">
     <defs>
-        <clipPath clipPathUnits="objectBoundingBox" id="sector">
-            <path fill="none" stroke="#111" stroke-width="1" class="sector"></path>
+        <clipPath clipPathUnits="objectBoundingBox" id="tool-sector">
+            <path fill="none" stroke="#111" stroke-width="1" class="tool-sector"></path>
         </clipPath>
     </defs>
 </svg>

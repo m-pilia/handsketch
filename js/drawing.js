@@ -1,5 +1,5 @@
 /**
- * Drawing instruments and canvas management.
+ * Drawing tools.
  *
  * @author Martino Pilia <martino.pilia@gmail.com>
  * @date 2016-01-17
@@ -28,25 +28,23 @@ var scrollLeft = 0;
 var red = $('input#red-value');
 var green = $('input#green-value');
 var blue = $('input#blue-value');
+var alpha = $('input#alpha-value');
 
 // is false while dragging a tool
 var notDragging = true;
 
+// maximum opacity and thereshold value
+const OPACITY_MAX = 100;
+const THERESH_MAX = 100;
+const DENSITY_MAX = 100;
+
 // current tool and its properties
 var tool = null;
-var thickness = 8;
-var density = 0.25;
-var shape = circle;
-var opacity = 0.75;
-var thereshold = 60;
-var pickMode = 'average';
-
-// undo and redo stacks
-const UNDO_STACK = [];
-const REDO_STACK = [];
-
-const UNDO_BUTTON = $('#undo');
-const REDO_BUTTON = $('#redo');
+var thickness = null;
+var density = null;
+var shape = null;
+var opacity = null;
+var thereshold = null;
 
 /**
  * Get canvas coordinates from a mouse event.
@@ -178,6 +176,27 @@ function interpolation(x, y) {
 }
 
 /**
+ * Perform alpha blending on the selected pixel.
+ * @param  {number} k Index of the pixel in the data array.
+ */
+function alphaBlend(k) {
+    // alpha blending
+    var m = k * 4;
+    var a = alpha.val() / 255 * opacity / OPACITY_MAX;
+    var na = (1 - a) * data[m + 3] / 255;
+    var da = a + na; // computed alpha
+    data[m + 3] = 255 * da | 0;
+    if (da) {
+        data[m + 0] = (data[m + 0] * na + red.val() * a) | 0;
+        data[m + 1] = (data[m + 1] * na + green.val() * a) | 0;
+        data[m + 2] = (data[m + 2] * na + blue.val() * a) | 0;
+    }
+    else {
+        data[m] = data[m + 1] = data[m + 2] = 0;
+    }
+}
+
+/**
  * Pixel action for the brush tool.
  * @param  {number} i X coordinate of the pixel.
  * @param  {number} j Y coordinate of the pixel
@@ -187,12 +206,7 @@ function interpolation(x, y) {
 function brush(i, j, x, y) {
     var k = canvas.width * i + j;
     if (shape(j, i, x, y) && !done[k]) {
-        var m = k * 4;
-        var a = opacity;
-        var na = 1 - a;
-        data[m + 0] = (data[m + 0] * na + red.val() * a) | 0;
-        data[m + 1] = (data[m + 1] * na + green.val() * a) | 0;
-        data[m + 2] = (data[m + 2] * na + blue.val() * a) | 0;
+        alphaBlend(k);
         done[k] = true;
     }
 }
@@ -207,13 +221,8 @@ function brush(i, j, x, y) {
 function airbrush(i, j, x, y) {
     var k = canvas.width * i + j;
     if (shape(j, i, x, y) && !done[k]) {
-        if (Math.random() < density) {
-            var m = k * 4;
-            var a = opacity;
-            var na = 1 - a;
-            data[m + 0] = (data[m + 0] * na + red.val() * a) | 0;
-            data[m + 1] = (data[m + 1] * na + green.val() * a) | 0;
-            data[m + 2] = (data[m + 2] * na + blue.val() * a) | 0;
+        if (Math.random() < density / DENSITY_MAX) {
+            alphaBlend(k);
         }
         done[k] = true;
     }
@@ -230,7 +239,7 @@ function eraser(i, j, x, y) {
     var k = canvas.width * i + j;
     if (shape(j, i, x, y) && !done[k]) {
         var m = k * 4;
-        data[m + 3] = (data[m + 3] * (1 - opacity)) | 0;
+        data[m + 3] = (data[m + 3] * (1 - opacity / OPACITY_MAX)) | 0;
         done[k] = true;
     }
 }
@@ -267,14 +276,16 @@ function filler(x, y) {
     const R0 = data[m + 0];
     const G0 = data[m + 1];
     const B0 = data[m + 2];
+    const A0 = data[m + 3];
 
     // fill color
     const RR = red.val();
     const GG = green.val();
     const BB = blue.val();
+    const AA = alpha.val() * opacity / OPACITY_MAX;
 
     // squared thereshold for the color distance
-    const THERESHOLD = thereshold * thereshold;
+    const THERESHOLD = thereshold * thereshold * 260100 / THERESH_MAX / THERESH_MAX;
 
     // variable for the pixel
     var p = {'x': x, 'y': y};
@@ -297,12 +308,14 @@ function filler(x, y) {
         da = (data[m + 0] - R0);
         db = (data[m + 1] - G0);
         dc = (data[m + 2] - B0);
+        da = (data[m + 3] - A0);
 
-        if (da * da + db * db + dc * dc < THERESHOLD) {
+        if (da * da + db * db + dc * dc + da * da < THERESHOLD) {
             // color the point
             data[m + 0] = RR;
             data[m + 1] = GG;
             data[m + 2] = BB;
+            data[m + 3] = AA;
 
             // add its neighbours to the fifo if needed
             // the code inlining here actually provides a performance gain
@@ -344,13 +357,13 @@ function picker(x, y) {
     var k = canvas.width * y + x;
     var m = k * 4;
 
-    switch (pickMode) {
-    // pick the average color from an area
-    case 'average':
+    if (thickness > 1) {
+        // pick the average color from an area
         var n = 0;
         var r = 0;
         var g = 0;
         var b = 0;
+        var a = 0;
 
         var y0 = Math.max(0, y - thickness);
         var y1 = Math.min(canvas.height, y + thickness);
@@ -364,6 +377,7 @@ function picker(x, y) {
                     r += data[m + 0];
                     g += data[m + 1];
                     b += data[m + 2];
+                    a += data[m + 3];
                     ++n;
                 }
             }
@@ -372,15 +386,13 @@ function picker(x, y) {
         red.val((r / n) | 0);
         green.val((g / n) | 0);
         blue.val((b / n) | 0);
-
-        break;
-
-    // pick the color from an exact point
-    case 'exact':
+        alpha.val((a / n) | 0);
+    }
+    else {
         red.val(data[m + 0]);
         green.val(data[m + 1]);
         blue.val(data[m + 2]);
-        break
+        alpha.val(data[m + 3]);
     }
 
     // trigger event to update the sliders
@@ -406,191 +418,3 @@ function toolAction(x, y) {
     }
     ctx.putImageData(imageData, 0, 0);
 }
-
-/**
- * Set the tool function.
- * @param {function} f Selected tool function.
- */
-function setTool(f) {
-    if (f !== undefined && f!== null && $.type(f) === "function") {
-        tool = f;
-    }
-    else {
-        console.log("Error: invalid tool function " + f);
-    }
-}
-
-/**
- * Undo a tool action, restoring the canvas before the action itself.
- */
-function undoTool() {
-    if (UNDO_STACK.length < 1) {
-        return;
-    }
-
-    // keep a copy of undone action for redo
-    REDO_STACK.push(new ImageData(data.slice(), canvas.width, canvas.height));
-
-    // restore canvas
-    imageData = UNDO_STACK.pop();
-    data = imageData.data;
-    ctx.putImageData(imageData, 0, 0);
-
-    // set button activity
-    REDO_BUTTON.removeClass('inactive-button');
-    if (UNDO_STACK.length < 1)
-        UNDO_BUTTON.addClass('inactive-button');
-}
-
-/**
- * Redo an undone action.
- */
-function redoTool() {
-    if (REDO_STACK.length < 1) {
-        return;
-    }
-
-    // keep a copy of redone image for undo
-    UNDO_STACK.push(new ImageData(data.slice(), canvas.width, canvas.height));
-
-    // restore canvas
-    imageData = REDO_STACK.pop();
-    data = imageData.data;
-    ctx.putImageData(imageData, 0, 0);
-
-    // set button activity
-    UNDO_BUTTON.removeClass('inactive-button');
-    if (REDO_STACK.length < 1)
-        REDO_BUTTON.addClass('inactive-button');
-}
-
-// prepare default white canvas on loading
-$(document).ready(function (e) {
-    canvasResize(canvas.width, canvas.height);
-});
-
-// update scroll amount on scrolling
-$(document).ready(function (e) {
-    var ruledArea = $('.ef-ruler');
-    ruledArea.scroll(function (e) {
-        scrollTop = ruledArea.scrollTop();
-        scrollLeft = ruledArea.scrollLeft();
-    });
-});
-
-// set undo action
-UNDO_BUTTON.click(function (e) {
-    undoTool();
-});
-
-// set redo action
-REDO_BUTTON.click(function (e) {
-    redoTool();
-});
-
-// disable undo and redo buttons on startup
-UNDO_BUTTON.addClass('inactive-button');
-REDO_BUTTON.addClass('inactive-button');
-
-// keyboard event handler
-$(document).keypress(function (e) {
-    switch (e.which) {
-    case 90: // Z key (= shift + z key)
-        if (e.ctrlKey)
-            redoTool();
-        break;
-    case 122: // z key
-        if (e.ctrlKey)
-            undoTool();
-        break;
-    }
-});
-
-// new image from menu
-$('#new-image').click(function (e) {
-    // open overlay popup to get size
-    openPopup('size-popup');
-});
-
-// create new image with input size
-$('#size-popup .popup-exit').click(function (e) {
-    var width = $('#size-popup input[name="width"]').val();
-    var height = $('#size-popup input[name="height"]').val();
-    canvasResize(width, height);
-    closePopup();
-});
-
-// open image from menu
-$('#open-file').click(function (e) {
-    var inputImage = $('#image-file');
-    inputImage.val(null);
-    inputImage.trigger('click');
-});
-
-// put the opened image into the canvas
-$('#image-file').on('change', function (e) {
-    var img = new Image();
-    img.src = window.URL.createObjectURL(e.target.files[0]);
-    img.style.display = 'none';
-    img.onload = function() {
-        canvasResize(img.width, img.height, img);
-    }
-});
-
-// event handler to draw on mouse clik
-$('#canvas').on('mousedown', function (e) {
-    // forbid input when a popup is open or with buttons different than left
-    if (isPopupOpen() || e.which !== 1) {
-        return;
-    }
-
-    // keep a copy for undo and forbid redo
-    UNDO_STACK.push(new ImageData(data.slice(), canvas.width, canvas.height));
-    REDO_STACK.length = 0;
-
-    // set undo/redo button activity
-    UNDO_BUTTON.removeClass('inactive-button');
-    REDO_BUTTON.addClass('inactive-button');
-
-    done.fill(false);
-    var p = getCoord(e);
-
-    switch (tool) {
-    // non-draggable tools
-    case picker:
-    case filler:
-        tool(p.x, p.y);
-        break;
-
-    // draggable tools
-    case brush:
-    case airbrush:
-    case eraser:
-        notDragging = false;
-        toolAction(p.x, p.y);
-        lastX = p.x;
-        lastY = p.y;
-        break;
-    }
-});
-
-// event handler to stop drawing on mouse release
-$('#canvas').on('mouseup mouseleave', function (e) {
-    if (notDragging)
-        return;
-    var p = getCoord(e);
-    toolAction(p.x, p.y);
-    notDragging = true;
-    lastX = lastY = null;
-});
-
-// event handler to draw dragging the mouse
-$('#canvas').on('mousemove', function (e) {
-    if (notDragging)
-        return;
-    var p = getCoord(e);
-    toolAction(p.x, p.y);
-    interpolation(p.x, p.y);
-    lastX = p.x;
-    lastY = p.y;
-});
