@@ -1,0 +1,29 @@
+#tool-selector li .selector-entry {
+    width: 30px;
+    height: 30px;
+}
+
+#tool-selector li[data-entry="brush"] .selector-entry {
+	background: url('../img/icon/white/brush.png') no-repeat;
+    background-size: contain;
+}
+
+#tool-selector li[data-entry="eraser"] .selector-entry {
+	background: url('../img/icon/white/eraser.png') no-repeat;
+    background-size: contain;
+}
+
+#tool-selector li[data-entry="airbrush"] .selector-entry {
+	background: url('../img/icon/white/airbrush.png') no-repeat;
+    background-size: contain;
+}
+
+#tool-selector li[data-entry="filler"] .selector-entry {
+	background: url('../img/icon/white/filler.png') no-repeat;
+    background-size: contain;
+}
+
+#tool-selector li[data-entry="picker"] .selector-entry {
+	background: url('../img/icon/white/picker.png') no-repeat;
+    background-size: contain;
+}

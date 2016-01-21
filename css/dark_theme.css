@@ -100,3 +100,29 @@ html, body {
 .ef-ruler .left-line {
     border-top: 1px solid #DDD;
 }
+
+#tool-selector li .selector-entry {
+    background-size: 22px 22px;
+    width: 22px;
+    height: 22px;
+}
+
+#tool-selector li[data-entry="brush"] .selector-entry {
+	background: url('../img/icon/dark/brush.png') no-repeat;
+}
+
+#tool-selector li[data-entry="eraser"] .selector-entry {
+	background: url('../img/icon/dark/eraser.png') no-repeat;
+}
+
+#tool-selector li[data-entry="airbrush"] .selector-entry {
+	background: url('../img/icon/dark/airbrush.png') no-repeat;
+}
+
+#tool-selector li[data-entry="filler"] .selector-entry {
+	background: url('../img/icon/dark/filler.png') no-repeat;
+}
+
+#tool-selector li[data-entry="picker"] .selector-entry {
+	background: url('../img/icon/dark/picker.png') no-repeat;
+}

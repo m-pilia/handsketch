@@ -89,3 +89,29 @@ html, body {
     border-right: #e7e7e7;
     border-bottom: #e7e7e7;
 }
+
+#tool-selector li .selector-entry {
+    background-size: 22px 22px;
+    width: 22px;
+    height: 22px;
+}
+
+#tool-selector li[data-entry="brush"] .selector-entry {
+	background: url('../img/icon/light/brush.png') no-repeat;
+}
+
+#tool-selector li[data-entry="eraser"] .selector-entry {
+	background: url('../img/icon/light/eraser.png') no-repeat;
+}
+
+#tool-selector li[data-entry="airbrush"] .selector-entry {
+	background: url('../img/icon/light/airbrush.png') no-repeat;
+}
+
+#tool-selector li[data-entry="filler"] .selector-entry {
+	background: url('../img/icon/light/filler.png') no-repeat;
+}
+
+#tool-selector li[data-entry="picker"] .selector-entry {
+	background: url('../img/icon/light/picker.png') no-repeat;
+}
