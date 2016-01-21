@@ -49,8 +49,8 @@ function fitSelector(key, expand) {
     entries.each(function () {
         var x = ($(this).outerWidth() * 50 / size);
         var y = ($(this).outerHeight() * 50 / size);
-        $(this).css("right", (100 / n - x | 0).toString() + "%");
-        $(this).css("top", (25 - y).toString() + "%");
+        $(this).css("right", (3 + 100 / n - x | 0).toString() + "%");
+        $(this).css("top", (3 + 25 - y).toString() + "%");
     });
 }
 
@@ -88,6 +88,14 @@ function fitCanvas() {
 }
 
 /**
+ * Fit the canvas area to occupy the available horizontal space.
+ */
+function fitColumns() {
+    var width = $(window).width() - $(".side-panel").outerWidth();
+    $(".canvas-wrapper").css("width", width);
+}
+
+/**
  * Place the popup at the center of the viewport.
  */
 function fitPopup() {
@@ -106,6 +114,7 @@ function fitPopup() {
  * Fit all the sizes which need a dynamic adjustment.
  */
 function fitSizes() {
+    fitColumns();
     fitCanvas();
     fitSelector("tool", true);
     fitSelector("brush", true);

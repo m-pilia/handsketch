@@ -23,12 +23,16 @@ html, body {
 
 .side-panel {
     left: 0;
+    width: 25%;
+    min-width: 335px;
+    min-height: 600px;
 }
 
 .canvas-wrapper {
     right: 0;
     padding-right: 0;
     padding-left: 0;
+    width: 75%;
 }
 
 .tool-widget-wrapper, .option-widget-wrapper, .color-picker-widget-wrapper {
