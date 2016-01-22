@@ -34,7 +34,10 @@ function setTool(f) {
         // re-fit entries
         fitSelector(f);
         // restore settings
-        selector.find('li[data-entry="shape"] img:not(.inactive)').trigger('click');
+        var prevShape = selector
+                .find('li[data-entry="shape"] img:not(.inactive)')
+                .attr('data-shape')
+        setShape(prevShape);
         selector.find('li[data-entry] input').trigger('input');
     }
     catch (e) {
