@@ -37,7 +37,9 @@ function setTool(f) {
         var prevShape = selector
                 .find('li[data-entry="shape"] img:not(.inactive)')
                 .attr('data-shape')
-        setShape(prevShape);
+        if (prevShape !== undefined && prevShape !== null) {
+            setShape(prevShape);
+        }
         selector.find('li[data-entry] input').trigger('input');
     }
     catch (e) {
