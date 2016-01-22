@@ -53,6 +53,9 @@ $(".color-value").each(function () {
 
     // initial configuration: load value from storage and set it to sliders
     var value = localStorage.getItem(color + "-value");
+    if (value === null) {
+        value = $(this).attr('value');
+    }
     $(this).val(value);
     slider.bootstrapSlider("setValue", parseInt(value));
     updateColorPreview();
