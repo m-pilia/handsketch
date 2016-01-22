@@ -55,11 +55,11 @@ html, body {
   background-color: #696969;
 }
 
-#tool-selector li {
+.circular-selector li {
   background-color: #CCC;
 }
 
-#tool-selector .selected-tool {
+.circular-selector .selected-tool {
   background-color: #0CF;
 }
 

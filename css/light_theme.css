@@ -56,11 +56,11 @@ html, body {
   background-color: #868686;
 }
 
-#tool-selector li {
+.circular-selector li {
   background-color: #727270;
 }
 
-#tool-selector .selected-tool {
+#circular-selector .selected-tool {
   background-color: #242424;
 }
 
