@@ -47,10 +47,43 @@ function fitSelector(key, expand) {
     var entries = $("#" + key + "-selector .selector-entry");
     var n = entries.length;
     entries.each(function () {
+        // very provisional and horrible
+        var k = 4 * (1 - (size - 185) / (262 - 185)) | 0
         var x = ($(this).outerWidth() * 50 / size);
         var y = ($(this).outerHeight() * 50 / size);
-        $(this).css("right", (3 + 100 / n - x | 0).toString() + "%");
-        $(this).css("top", (3 + 25 - y).toString() + "%");
+        $(this).css("right", (k + 100 / n - x | 0).toString() + "%");
+        $(this).css("top", (k + 25 - y).toString() + "%");
+    });
+
+    // place labels tangent to sectors
+    var sectors = $("#" + key + "-selector li[data-entry]")
+    sectors.each(function (i) {
+        var val = $(this).attr("data-entry");
+        var label = $(this).parent().find("span[data-label=" + val + "]" );
+        if (label.attr("data-label")) {
+            var size = $(this).parent().outerWidth()
+            var angle = - (180 / n + 360 / n * (i - 1))
+            const conv = Math.PI / 180;
+
+            // translate to the centre of the circle
+            var x0 = (size - label.outerWidth()) / 2;
+            var y0 = (size - label.outerHeight()) / 2;
+
+            // move to its position
+            var x = 0.5 * (size + label.outerHeight()) * Math.cos(conv * angle);
+            var y = 0.5 * (size + label.outerHeight()) * Math.sin(conv * angle);
+
+            label.css("position", "absolute");
+            label.css("top", y0 - y);
+            label.css("left", x0 + x);
+
+            // avoid showing text upside-down in lower sectors
+            if (angle > -180 && angle < 0) {
+                angle += 180
+            }
+
+            label.css("transform", "rotate(" + (90 - angle) + "deg)")
+        }
     });
 }
 
