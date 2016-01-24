@@ -16,6 +16,28 @@ const UNDO_BUTTON = $('#undo');
 const REDO_BUTTON = $('#redo');
 
 /**
+ * Get canvas coordinates from a mouse event.
+ * @param  {event} e Mouse event.
+ * @return {Object}  An object containing the event coordinates {x, y}, whose
+ *                   values are referred to the canvas coordinate system.
+ */
+function getCoord(e) {
+    return {
+        'x': (e.clientX - canvasBCR.left + scrollLeft) | 0,
+        'y': (e.clientY - canvasBCR.top + scrollTop) | 0
+    }
+}
+
+/**
+ * Check if a point is inside the canvas area.
+ * @param  {Object}  p A point whose coordinates are the x and y attributes.
+ * @return {Boolean}   True if the point lies inside the canvas.
+ */
+function isOnCanvas(p) {
+    return p.x >= 0 && p.x < canvas.width && p.y >= 0 && p.y < canvas.height;
+}
+
+/**
  * Set the tool function.
  * @param {string} f Selected tool.
  */
@@ -242,11 +264,15 @@ $('#canvas').on('mousemove', function (e) {
 $('.circular-selector li[data-entry] input').on('input change', function (e) {
     var entry = $(this).closest('li[data-entry]').attr('data-entry');
     window[entry] = parseInt($(this).val());
+    // update cursor
+    setCursor();
 });
 
 // get shape options
 $('.circular-selector li[data-entry="shape"] img').click(function (e) {
     setShape($(this).attr('data-shape'));
+    // update cursor
+    setCursor();
     // highlight selected shape and dim others
     var parent = $(this).closest('li[data-entry=shape]');
     parent.find('[data-shape]').addClass('inactive');
@@ -254,4 +280,6 @@ $('.circular-selector li[data-entry="shape"] img').click(function (e) {
 });
 
 // select circle as default
-$('[data-shape="circle"]').trigger('click');
+$(document).on('ready', function (e) {
+    $('[data-shape="circle"]').trigger('click');
+});

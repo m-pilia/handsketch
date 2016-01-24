@@ -19,6 +19,9 @@ function updateColorPreview() {
             $("#blue-value").val()  + "," +
             $("#alpha-value").val() / 255 + ")"
         );
+
+    // update cursor
+    setCursor();
 }
 
 // create slider objects

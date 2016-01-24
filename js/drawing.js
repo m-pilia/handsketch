@@ -47,19 +47,6 @@ var opacity = null;
 var thereshold = null;
 
 /**
- * Get canvas coordinates from a mouse event.
- * @param  {event} e Mouse event.
- * @return {Object}  An object containing the event coordinates {x, y}, whose
- *                   values are referred to the canvas coordinate system.
- */
-function getCoord(e) {
-    return {
-        'x': (e.clientX - canvasBCR.left + scrollLeft) | 0,
-        'y': (e.clientY - canvasBCR.top + scrollTop) | 0
-    }
-}
-
-/**
  * Clean the canvas, resize it to the input size and optionally draw an
  * image inside it.
  * @param  {number} width  Width for the canvas.

@@ -15,3 +15,9 @@
 #image-file {
     display: none;
 }
+
+#cursor {
+    position: fixed;
+    pointer-events: none;
+    display: none;
+}
