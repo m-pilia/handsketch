@@ -38,6 +38,23 @@ function isOnCanvas(p) {
 }
 
 /**
+ * Set the input inside the container as the active one for gestures.
+ * @param  {Object} o JQuery selection of the container.
+ */
+function activateInput(o) {
+    // activate input field if it is an option or color selector
+    if (o.find('input').length || o.attr('data-entry') == 'shape') {
+        $("[data-active]").removeAttr('data-active');
+        o.attr("data-active", "true");
+    }
+    // activate relative option if it is a tool selector
+    else {
+        var tool = o.attr('data-entry');
+        $('#' + tool + '-selector .selected-tool').trigger('click');
+    }
+}
+
+/**
  * Set the tool function.
  * @param {string} f Selected tool.
  */
@@ -82,6 +99,42 @@ function setShape(s) {
     }
     catch (e) {
         console.log('Error: invalid shape ' + s + '\n' + e);
+    }
+}
+
+/**
+ * Return the shape following the input one.
+ * @param  {string} s Name of the current shape.
+ * @return {string}   Name of the following shape.
+ */
+function nextShape(s) {
+    switch (s) {
+    case 'circle':
+        return 'square';
+    case 'square':
+        return 'diamond';
+    case 'diamond':
+        return 'circle';
+    default:
+        console.log('nextShape: invalid shape');
+    }
+}
+
+/**
+ * Return the shape preceeding the input one.
+ * @param  {string} s Name of the current shape.
+ * @return {string}   Name of the preceeding shape.
+ */
+function prevShape(s) {
+    switch (s) {
+    case 'circle':
+        return 'diamond';
+    case 'square':
+        return 'circle';
+    case 'diamond':
+        return 'square';
+    default:
+        console.log('prevShape: invalid shape');
     }
 }
 
@@ -279,7 +332,15 @@ $('.circular-selector li[data-entry="shape"] img').click(function (e) {
     $(this).removeClass('inactive');
 });
 
-// select circle as default
+// startup
+// select circle as default shape for each tool, and activate the default
+// option for each selector
 $(document).on('ready', function (e) {
     $('[data-shape="circle"]').trigger('click');
+    selectEntry('tool', 1, setTool);
+    selectEntry('airbrush', 1, null);
+    selectEntry('eraser', 1, null);
+    selectEntry('filler', 1, null);
+    selectEntry('picker', 1, null);
+    selectEntry('brush', 1, null);
 });

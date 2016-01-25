@@ -8,12 +8,20 @@
 "use strict";
 
 // capture device options
-var options = {};
+var options = {enableGestures: true};
 
 // main loop
-Leap.loop(options, function (frame) {
-    if (frame.hands.length > 0)
-        frameHandler(frame.hands[0]);
+var controller = Leap.loop(options, function (frame) {
+    if (!frame.valid) {
+        return;
+    }
+
+    if (frame.hands.length > 0) {
+        frameHandler(frame.hands[0], frame.gestures);
+    }
+    else {
+        $('.highlighted-selector').removeClass('highlighted-selector');
+    }
 });
 
 // some useful constants
@@ -21,6 +29,21 @@ const RAD2DEG = 180 / Math.PI;
 const X = 0;
 const Y = 1;
 const Z = 2;
+const THUMB = 0;
+const INDEX = 1;
+const MIDDLE = 2;
+const RING = 3;
+const PINKY = 4;
+
+// get tools and the number of options for each tool
+var OPT_NO = {};
+var TOOLS_STR = {};
+$('#tool-selector li').each(function () {
+    var val = $(this).attr('data-entry');
+    OPT_NO[window[val]] = $('#' + val + '-selector li').length;
+    TOOLS_STR[window[val]] = val;
+});
+const TOOLS_NO = $('#tool-selector li').length;
 
 /**
  * Apply the sign of a variable to another.
@@ -66,21 +89,14 @@ function spread(hand) {
 }
 
 /**
- * Compute a 5x4 matrix (where the row index identifies the finger, the column
- * one the bone) filled with the angles between the bones and the hand palm
- * normal vector.
- * @param  {Hand} hand   The hand to be checked.
- * @return {number[][]} A matrix containing the angles (expressed in degrees).
+ * Angle of the distal phalanx of the finger respect to the palm normal.
+ * @param  {Hand}   hand   Hand containing the finger.
+ * @param  {string} finger Type of the finger.
+ * @return {number}        Angle in degrees.
  */
-function bonesAngle(hand) {
-    var m = Array(5).fill(Array(4));
-    hand.fingers.forEach(function (finger, i) {
-        finger.bones.forEach(function (bone, j) {
-            var dot = Leap.vec3.dot(bone.direction(), hand.palmNormal);
-            m[i][j] = RAD2DEG * Math.acos(dot);
-        });
-    });
-    return m;
+function fingerAngle(hand, finger) {
+    var dot = Leap.vec3.dot(hand[finger].distal.direction(), hand.palmNormal);
+    return RAD2DEG * Math.acos(dot);
 }
 
 /*
@@ -92,20 +108,55 @@ function bonesAngle(hand) {
  */
 const NONE = 0xFFFF; // an unreachable value, used as a null one
 const RANGE = 360;   // the angle range for the knob is from 0 to this value
-var tAngle = 0;      // current angle
+var tAngle = 10;     // current tool angle
 var tFirst = NONE;   // angle of the hand at the start of the interaction
 var tLast = 0;       // value read on the last seen frame
 var tLastN = 1;      // last tool index
 
-function frameHandler(hand) {
-    var m = bonesAngle(hand);
-    var s = spread(hand);
+// as above, for the option selectors
+var oAngle = [];
+var oFirst = [];
+var oLast = [];
+var oLastN = [];
+// init
+for (var e in TOOLS_STR) {
+    oAngle[e] = 10;
+    oFirst[e] = NONE;
+    oLast[e] = 0;
+    oLastN[e] = 1;
+};
 
-    var pinkyAngle = m[4][3];
-    var mediumAngle = m[3][3];
+// as above, for the color picker
+var cAngle = 10;
+var cFirst = NONE;
+var cLast = 0;
+var cLastN = 1;
+
+// stored value for input gestures
+var lastVal = 0;
+
+function frameHandler(hand, gestures) {
+    var s = spread(hand);
+    var d = Array(3);
+    Leap.vec3.sub(
+        d,
+        hand.indexFinger.distal.nextJoint,
+        hand.thumb.distal.nextJoint);
+    d = Leap.vec3.length(d);
+
+    var t = Array(3);
+    Leap.vec3.sub(
+        t,
+        hand.thumb.distal.nextJoint,
+        hand.palmPosition);
+    t = Leap.vec3.length(t);
+
+    var pinkyAngle = fingerAngle(hand, 'pinky');
+    var ringAngle = fingerAngle(hand, 'ringFinger');
+    var middleAngle = fingerAngle(hand, 'middleFinger');
 
     // these values define a rotation of the tool knob
-    if (120 < s && s < 300 && pinkyAngle < 50 && mediumAngle < 50) {
+    if (d > 45 && t > 70 && 120 < s && s < 300 && pinkyAngle < 50 && ringAngle < 50) {
         var r = rotation(hand);
         if (tFirst == NONE)
             tFirst = tLast = r;
@@ -128,13 +179,158 @@ function frameHandler(hand) {
         // obtained projecting the knob angle in that interval
         var n = Math.floor(tAngle * 3 * TOOLS_NO / RANGE) % TOOLS_NO + 1;
         if (n != tLastN) {
-            selectTool(n);
+            selectEntry('tool', n, setTool);
             tLastN = n;
         }
-        hintHighlight(true); // feedback of the detected gesture
+        hintHighlight('tool', true); // feedback of the detected gesture
+        return;
     }
     else {
         tFirst = NONE;
-        hintHighlight(false); // stop feedback of the detected gesture
+        hintHighlight('tool', false); // stop feedback of the detected gesture
     }
+
+    // these values define a rotation of the option knob
+    if (d > 45 && t > 70 && 120 < s && s < 300 && pinkyAngle > 70 && ringAngle > 70 && middleAngle > 70) {
+        var r = rotation(hand);
+        if (oFirst[tool] == NONE)
+            oFirst[tool] = oLast[tool] = r;
+        else {
+            // the rotations below this angle thereshold are ignored
+            if (Math.abs(r - oLast[tool]) > 1) {
+                // update angle
+                oAngle[tool] += r - oLast[tool];
+                // limit the angle into [0,RANGE]
+                oAngle[tool] = (oAngle[tool] < 0 ?
+                    RANGE + oAngle[tool] : oAngle[tool]) % RANGE;
+            }
+            else {
+                oFirst[tool] = r;
+            }
+            oLast[tool] = r;
+        }
+
+        // compute option index
+        var n = Math.floor(oAngle[tool] * 3 * OPT_NO[tool] / RANGE) % OPT_NO[tool] + 1;
+        if (n != oLastN[tool]) {
+            selectEntry(TOOLS_STR[tool], n, null);
+            oLastN[tool] = n;
+        }
+        hintHighlight('option', true); // feedback of the detected gesture
+        return;
+    }
+    else {
+        oFirst[tool] = NONE;
+        hintHighlight('option', false); // stop feedback of the detected gesture
+    }
+
+    // these values define a rotation of the color picker knob
+    if (d > 45 && t > 70 && 120 < s && s < 300 && pinkyAngle > 70 && ringAngle > 70 && middleAngle < 50) {
+        var r = rotation(hand);
+        if (cFirst == NONE)
+            cFirst = cLast = r;
+        else {
+            // the rotations below this angle thereshold are ignored
+            if (Math.abs(r - cLast) > 1) {
+                // update angle
+                cAngle += r - cLast;
+                // limit the angle into [0,RANGE/4]
+                cAngle = cAngle < 0 ? 0 : cAngle;
+                cAngle = cAngle > RANGE / 4 ? RANGE / 4 : cAngle;
+            }
+            else {
+                cFirst = r;
+            }
+            cLast = r;
+        }
+
+        // compute tool index
+        // the index is comprised in the range 1..TOOLS_NO, and it is
+        // obtained projecting the knob angle in that interval
+        var n = Math.floor(cAngle * 3 * 4 / RANGE) % 4;
+
+        var o = null;
+        if (n != cLastN) {
+            switch (n) {
+            case 0:
+                o = $('.color-item.red');
+                break;
+
+            case 1:
+                o = $('.color-item.green');
+                break;
+
+            case 2:
+                o = $('.color-item.blue');
+                break;
+
+            case 3:
+                o = $('.color-item.alpha');
+                break;
+            }
+            activateInput(o);
+            cLastN = n;
+        }
+        // feedback of the detected gesture
+        hintHighlight('color-picker', true);
+        return;
+    }
+    else {
+        cFirst = NONE;
+        // stop feedback of the detected gesture
+        hintHighlight('color-picker', false);
+    }
+
+    // check gesture for input variation
+    gestures.forEach(function (g) {
+        if (g.type != 'circle') {
+            return;
+        }
+        g.pointableIds.forEach(function (id) {
+            var p = controller.frame().pointable(id);
+            if (p.tool || p.type !== INDEX) {
+                return;
+            }
+
+            // sign for the rotation
+            var sign = Leap.vec3.dot(p.direction, g.normal) > 0 ? +1 : -1;
+
+            // active input entry
+            var active = $('[data-active]');
+
+            if (active.attr('data-entry') === 'shape') {
+                var currentShape = active.find('[data-shape]:not(.inactive)');
+
+                if (g.state === 'start') {
+                    lastVal = 0;
+                }
+
+                // change tool once each two finger rotations
+                if (((lastVal + sign * 0.6 * g.progress) | 0) % 2 == 0) {
+                    lastVal += sign;
+                    var f = sign > 0 ? nextShape : prevShape;
+                    var s = f(currentShape.attr('data-shape'));
+                    active.find('[data-shape="' + s + '"]').trigger('click');
+                }
+            }
+            else {
+                var input = active.find('input');
+                var max = parseInt(input.attr('max'));
+                var min = parseInt(input.attr('min'));
+
+                if (g.state === 'start') {
+                    lastVal = parseInt(input.val());
+                }
+
+                var k = max / 10;
+                var v = (lastVal + k * sign * g.progress - (k - 1) * sign) | 0;
+                v = v > max ? max : v;
+                v = v < min ? min : v;
+
+                input.val(v);
+                input.trigger('change');
+                input.trigger('input')
+            }
+        });
+    });
 }

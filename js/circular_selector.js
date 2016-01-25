@@ -17,9 +17,13 @@
  * @param {function} handler Handler for the click events on entries.
  */
 function selectEntry(name, i, handler) {
+    // disable selection from previously selected item, and select current one
     $("#" + name + "-selector .selected-tool").removeClass("selected-tool");
     var li = $("#" + name + "-selector li:nth-child(" + i + ")");
     li.addClass("selected-tool");
+    // remove activity from previously active item, and active current one
+    activateInput(li);
+    // launch handler function if present
     if (handler)
         handler(li.attr('data-entry'));
 }
