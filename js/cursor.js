@@ -113,7 +113,7 @@ $('#canvas,#cursor').on('mousemove', function(e) {
 
 // hide pointer and show cursor image inside the canvas
 $(document).on('mousemove', function (e) {
-    if (isOnCanvas(getCoord(e))) {
+    if (isOnCanvas(getCoord(e)) && $('.popup-visible').length == 0) {
         CURSOR.css('display', 'inline');
         $(document.body).css('cursor', 'none');
     }
