@@ -81,3 +81,7 @@ html, body {
 input[type=number]::-webkit-inner-spin-button {
     opacity: 1
 }
+
+.dropdown {
+    cursor: default;
+}
