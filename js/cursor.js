@@ -23,9 +23,9 @@ var cursTraY = 0;
  */
 function getColor() {
     return '#' +
-        parseInt(red.val()).toString(16) +
-        parseInt(green.val()).toString(16) +
-        parseInt(blue.val()).toString(16);
+        ('00' + parseInt(red.val()).toString(16)).slice(-2) +
+        ('00' + parseInt(green.val()).toString(16)).slice(-2) +
+        ('00' + parseInt(blue.val()).toString(16)).slice(-2);
 }
 
 /**
