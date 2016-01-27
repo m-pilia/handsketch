@@ -211,15 +211,17 @@ UNDO_BUTTON.addClass('inactive-button');
 REDO_BUTTON.addClass('inactive-button');
 
 // keyboard event handler
-$(document).keypress(function (e) {
+$(document).keydown(function (e) {
     switch (e.which) {
-    case 90: // Z key (= shift + z key)
-        if (e.ctrlKey)
-            redoTool();
-        break;
-    case 122: // z key
-        if (e.ctrlKey)
-            undoTool();
+    case 90: // z key
+        if (e.ctrlKey) {
+            if  (e.shiftKey) {
+                redoTool();
+            }
+            else {
+                undoTool();
+            }
+        }
         break;
     }
 });
