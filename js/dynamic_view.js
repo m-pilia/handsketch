@@ -172,6 +172,19 @@ function fitAfford(afford) {
 }
 
 /**
+ * Fit the position of the color picker affordance hint.
+ */
+function fitPickerAfford() {
+    var s = $('#color-picker-selector');
+    var a = $('#color-picker-afford');
+    var w = $('.color-picker-widget-wrapper');
+    var h = $('#color-picker-selector-hint');
+    var pWidth = parseInt(w.css('width'));
+    a.css('width', s.outerWidth() * 0.8 | 0);
+    a.css('left', (w.outerWidth() - a.outerWidth() - h.outerWidth()) / 2 | 0);
+}
+
+/**
  * Fit all the sizes which need a dynamic adjustment.
  */
 function fitSizes() {
@@ -186,6 +199,7 @@ function fitSizes() {
     fitSelector("color-picker", false);
     fitAfford('tool');
     fitAfford('option');
+    fitPickerAfford();
     fitPopup();
 }
 
