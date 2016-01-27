@@ -1,7 +1,6 @@
 /**
  * Dynamic view settings.
  *
- * @author Martino Pilia <martino.pilia@gmail.com>
  * @date 2016-01-02
  */
 
@@ -19,7 +18,7 @@ var canvasBCR = null;
  *                          possible to fit the wrapper.
  */
 function fitSelector(key, expand) {
-    var margin = 10;
+    var margin = 20;
     var selector = $("#" + key + "-selector");
     var wrapper = selector.parent();
     var wWidth = wrapper.width();
@@ -70,8 +69,9 @@ function fitSelector(key, expand) {
             var y0 = (size - label.outerHeight()) / 2;
 
             // move to its position
-            var x = 0.5 * (size + label.outerHeight()) * Math.cos(conv * angle);
-            var y = 0.5 * (size + label.outerHeight()) * Math.sin(conv * angle);
+            var r = size + label.outerHeight() * 1.7;
+            var x = 0.5 * r * Math.cos(conv * angle);
+            var y = 0.5 * r * Math.sin(conv * angle);
 
             label.css("position", "absolute");
             label.css("top", y0 - y);
@@ -85,6 +85,9 @@ function fitSelector(key, expand) {
             label.css("transform", "rotate(" + (90 - angle) + "deg)")
         }
     });
+
+    // set slider height
+    $('.slider').css('height', size * 0.5);
 }
 
 /**
@@ -144,6 +147,31 @@ function fitPopup() {
 }
 
 /**
+ * Fit affordance hints.
+ * @param  {string} afford   Name of the afford hint.
+ * @param  {string} selector Name of the referring selector.
+ */
+function fitAfford(afford) {
+    // get related selector's name
+    var w = $('.option-widget-wrapper');
+    var s = w.find('.circular-selector:not(.hidden-selector)');
+    var name = /([^-]*)-selector/.exec(s.first().attr('id'))[1];
+    var b = $('#' + name + '-selector');
+
+    var d = 6;
+    var a = $('#' + afford + '-afford')
+    var w = b.width()
+    var h = b.height()
+    var p = b.position()
+    a.css({
+        width: w + 2 * d,
+        height: h + 2 * d,
+        top: p.top - d,
+        left: p.left - d,
+    });
+}
+
+/**
  * Fit all the sizes which need a dynamic adjustment.
  */
 function fitSizes() {
@@ -156,6 +184,8 @@ function fitSizes() {
     fitSelector("picker", true);
     fitSelector("filler", true);
     fitSelector("color-picker", false);
+    fitAfford('tool');
+    fitAfford('option');
     fitPopup();
 }
 

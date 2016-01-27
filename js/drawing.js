@@ -1,7 +1,6 @@
 /**
  * Drawing tools.
  *
- * @author Martino Pilia <martino.pilia@gmail.com>
  * @date 2016-01-17
  */
 

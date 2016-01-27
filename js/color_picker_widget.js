@@ -1,7 +1,6 @@
 /**
  * Create slider objects and fan selector.
  *
- * @author Martino Pilia <martino.pilia@gmail.com>
  * @date 2016-01-03
  */
 

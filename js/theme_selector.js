@@ -1,7 +1,6 @@
 /**
  * Set themes dynamically.
  *
- * @author Martino Pilia <martino.pilia@gmail.com>
  * @date 2015-01-15
  */
 

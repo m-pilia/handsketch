@@ -1,7 +1,6 @@
 /**
  * Cursor with the shape of the drawing tool.
  *
- * @author Martino Pilia <martino.pilia@gmail.com>
  * @date 2016-01-24
  */
 

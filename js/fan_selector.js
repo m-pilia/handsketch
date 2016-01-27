@@ -3,7 +3,7 @@
  * This script extends the JQuery function to define a fan selector.
  * To do this it counts the n entries in the selector and places them in a
  * fan disposition.
- * @author Fabio Colella <fcole90@gmail.com>
+ * 
  * @date 2016-01-01
  */
 

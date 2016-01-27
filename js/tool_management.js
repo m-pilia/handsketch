@@ -1,9 +1,10 @@
 /**
  * Drawing tools switch and setup.
  *
- * @author Martino Pilia <martino.pilia@gmail.com>
  * @date 2016-01-20
  */
+
+"use strict";
 
 // undo and redo stacks
 // the whole image data is saved for each entry: quite expensive but easy

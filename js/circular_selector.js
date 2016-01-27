@@ -4,7 +4,6 @@
  * covering 1/n th of the circle and uses it to clip each entry. The entries
  * are then disposed around the circle with proper rotations.
  *
- * @author Martino Pilia <martino.pilia@gmail.com>
  * @date 2015-12-31
  */
 
@@ -26,6 +25,43 @@ function selectEntry(name, i, handler) {
     // launch handler function if present
     if (handler)
         handler(li.attr('data-entry'));
+    // set input afford
+    setInputAfford(findInput());
+}
+
+function findInput() {
+    var tool = $('#tool-selector .selected-tool').attr('data-entry');
+    var opt = $('#' + tool + '-selector .selected-tool');
+    if (opt.length == 0) {
+        return null;
+    }
+    var o = opt.find('input');
+    if (o.length == 0) {
+        o = opt.find('.shape-entry');
+    }
+    return o;
+}
+
+/**
+ * Set the input afford position and size for the selected input.
+ * @param {number} o    JQuery object for the selected entry.
+ */
+function setInputAfford(o) {
+    if (!o) {
+        return;
+    }
+    var p = o.offset();
+    var h = o.outerHeight();
+    var w = o.outerWidth();
+    var size = Math.max(h, w);
+    var d = size * (Math.sqrt(2) - 1) * 0.8;
+    var a = $('#input-afford');
+    a.css({
+        width: size + 2 * d,
+        height: size + 2 * d,
+        left: p.left - d,
+        top: p.top - d
+    })
 }
 
 /**
@@ -35,9 +71,11 @@ function selectEntry(name, i, handler) {
  */
 function hintHighlight(name, val) {
     if (val)
-        $("#" + name + "-selector-hint").addClass("highlighted-selector");
+        $("#" + name + "-selector-hint,#" + name + "-afford")
+            .addClass("highlighted-selector");
     else
-        $("#" + name + "-selector-hint").removeClass("highlighted-selector");
+        $("#" + name + "-selector-hint,#" + name + "-afford")
+            .removeClass("highlighted-selector");
 }
 
 /**

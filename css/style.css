@@ -71,17 +71,56 @@ html, body {
 
 /* this class is toggled to control the opacity */
 .highlighted-selector {
-    opacity: 1;
+    opacity: 1 !important;
 }
 
 .inactive-button {
     opacity: 0.4;
 }
 
-input[type=number]::-webkit-inner-spin-button {
-    opacity: 1
-}
-
 .dropdown {
     cursor: default;
+}
+
+.afford {
+    position: absolute;
+    pointer-events: none;
+    opacity: 0.4;
+}
+
+#input-afford {
+    position: fixed;
+}
+
+#color-picker-afford {
+    position: absolute;
+    top: 15px;
+    left: 60px;
+    width: 150px;
+    transform-origin: 50% 700%;
+}
+
+span[data-label] {
+    font-size: 0.8em;
+}
+
+input[type=number] {
+    width: 30px;
+}
+
+/* no spinbox buttons */
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+/* no spinbox buttons */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    appearance: none;
+    margin: 0;
+}
+
+img[data-shape] {
+    margin: -3px;
 }
