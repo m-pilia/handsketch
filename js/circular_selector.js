@@ -42,12 +42,14 @@ function setInputAfford() {
     var w = o.outerWidth();
     var size = Math.max(h, w);
     var d = size * (Math.sqrt(2) - 1) * 0.8;
+    var dh = 0.5 * Math.max(0, size - h);
+    var dw = 0.5 * Math.max(0, size - w);
     var a = $('#input-afford');
     a.css({
         width: size + 2 * d,
         height: size + 2 * d,
-        left: p.left - d,
-        top: p.top - d
+        left: p.left - d - dw,
+        top: p.top - d - dh
     })
 }
 
