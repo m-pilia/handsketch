@@ -9,8 +9,8 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="375.09375"
-   height="373.4512"
+   width="373.31647"
+   height="373.33023"
    id="svg2"
    version="1.1"
    inkscape:version="0.91 r13725"
@@ -25,20 +25,37 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.98994949"
-     inkscape:cx="-37.649669"
-     inkscape:cy="179.28233"
+     inkscape:cx="104.11113"
+     inkscape:cy="171.43147"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
-     showgrid="false"
+     showgrid="true"
      inkscape:window-width="1920"
      inkscape:window-height="1011"
      inkscape:window-x="0"
      inkscape:window-y="40"
      inkscape:window-maximized="1"
+     showguides="true"
+     inkscape:guide-bbox="true"
+     inkscape:snap-global="false"
      fit-margin-top="0"
      fit-margin-left="0"
      fit-margin-right="0"
-     fit-margin-bottom="0" />
+     fit-margin-bottom="0">
+    <inkscape:grid
+       type="xygrid"
+       id="grid2983"
+       originx="-91.764247"
+       originy="-562.13876" />
+    <sodipodi:guide
+       orientation="1,0"
+       position="188.23576,317.86124"
+       id="guide2985" />
+    <sodipodi:guide
+       orientation="0,1"
+       position="-51.764247,187.86124"
+       id="guide2987" />
+  </sodipodi:namedview>
   <metadata
      id="metadata7">
     <rdf:RDF>
@@ -55,11 +72,28 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-91.78125,-122.45504)">
+     transform="translate(-91.764247,-116.8932)">
+    <ellipse
+       style="fill:none;fill-opacity:1;stroke:none"
+       id="path2991"
+       transform="matrix(0.87143514,0,0,0.88958798,43.803888,48.395758)"
+       cx="270"
+       cy="287.36218"
+       rx="220"
+       ry="215" />
     <path
        style="fill:none;stroke:#0b2abb;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m 254.40625,123.46875 c -50.97411,6.80381 -95.43324,34.19198 -124.75,73.53125 8.6e-4,0.10397 0,0.20832 0,0.3125 0,14.12341 -7.92497,26.38314 -19.59375,32.5625 -11.083707,23.86282 -17.28125,50.45573 -17.28125,78.5 0,40.92732 13.18947,78.77737 35.53125,109.53125 6.43585,4.31867 14.84215,7.52965 20.90625,13.59375 7.11114,7.11114 11.05917,16.694 15.75,24.25 31.5803,24.53677 71.24764,39.15625 114.34375,39.15625 42.02492,0 80.80873,-13.90094 112,-37.34375 4.68489,-7.53508 8.62731,-17.06481 15.71875,-24.15625 6.70057,-6.70057 15.78761,-10.37883 22.90625,-14.9375 22.59531,-30.85384 35.9375,-68.91788 35.9375,-110.09375 0,-28.61987 -6.45287,-55.73251 -17.96875,-79.96875 -10.37447,-6.18038 -17.44652,-17.3004 -17.96875,-30.125 -29.18317,-39.8631 -73.79745,-67.69934 -125.0625,-74.71875 -8.42872,1.63962 -17.03125,4.5625 -25.28125,4.5625 -8.41782,0 -16.96335,-2.95326 -25.1875,-4.65625 z"
+       d="m 253.61932,117.90695 c -50.73127,6.78314 -94.47595,34.08813 -123.65306,73.30792 -0.74172,7.44669 0.18715,13.29755 -5.1042,21.70606 -5.29134,8.40851 -10.6003,11.51359 -16.4069,14.59389 -11.030904,23.79034 -15.690913,47.78477 -15.690913,75.74387 0,40.80302 13.126653,78.53811 35.362003,109.19859 6.40519,4.30555 14.02411,7.89609 20.05932,13.94178 7.07727,7.08954 11.75382,16.25399 16.4223,23.78704 31.42987,24.46224 70.90824,39.03732 113.79907,39.03732 41.82472,0 81.67378,-14.03729 112.71647,-37.4089 4.66257,-7.51219 9.30049,-15.04871 16.35816,-22.1186 6.66865,-6.68022 13.03382,-8.02589 20.11855,-12.57071 22.48768,-30.76013 36.4806,-72.81569 36.4806,-113.86652 0,-28.53294 -4.33835,-52.61628 -15.79937,-76.77892 -8.22443,-3.51897 -14.18437,-13.11079 -18.00654,-18.83638 -3.58297,-5.36726 -8.12851,-14.86596 -6.87437,-21.04213 -29.85709,-39.87852 -68.02925,-61.09923 -119.0501,-68.09732 -8.38857,1.63465 -14.25335,6.26539 -25.76185,6.26539 -11.5085,0 -16.78419,-5.16456 -24.96917,-6.86238 z"
        id="path2985"
-       inkscape:connector-curvature="0" />
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cczcscscscscscscczc" />
+    <ellipse
+       style="fill:none;fill-opacity:1;stroke:none"
+       id="path2989"
+       transform="matrix(1.5886249,0,0,1.4562394,25.137297,-5.1646216)"
+       cx="160"
+       cy="212.36218"
+       rx="110"
+       ry="120" />
   </g>
 </svg>

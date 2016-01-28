@@ -9,78 +9,15 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="145.35455mm"
-   height="148.44427mm"
-   viewBox="0 0 515.03582 525.98365"
+   width="139.20349mm"
+   height="140.79332mm"
+   viewBox="0 0 493.24072 498.87397"
    id="svg2"
    version="1.1"
    inkscape:version="0.91 r13725"
-   sodipodi:docname="rot3.svg"
-   inkscape:export-filename="/home/fabio/Dropbox/Gang of for/IUM/Sketch Hands/Four fingers open hand rotation.png"
-   inkscape:export-xdpi="300"
-   inkscape:export-ydpi="300">
+   sodipodi:docname="Two fingers hand rotation.svg">
   <defs
      id="defs4">
-    <marker
-       inkscape:stockid="TriangleOutM"
-       orient="auto"
-       refY="0"
-       refX="0"
-       id="marker4437"
-       style="overflow:visible"
-       inkscape:isstock="true">
-      <path
-         id="path4318"
-         d="m 5.77,0 -8.65,5 0,-10 8.65,5 z"
-         style="fill:#0b2abb;fill-opacity:1;fill-rule:evenodd;stroke:#0b2abb;stroke-width:1pt;stroke-opacity:1"
-         transform="scale(0.4,0.4)"
-         inkscape:connector-curvature="0" />
-    </marker>
-    <marker
-       inkscape:stockid="TriangleInM"
-       orient="auto"
-       refY="0"
-       refX="0"
-       id="marker4434"
-       style="overflow:visible"
-       inkscape:isstock="true">
-      <path
-         id="path4309"
-         d="m 5.77,0 -8.65,5 0,-10 8.65,5 z"
-         style="fill:#0b2abb;fill-opacity:1;fill-rule:evenodd;stroke:#0b2abb;stroke-width:1pt;stroke-opacity:1"
-         transform="scale(-0.4,-0.4)"
-         inkscape:connector-curvature="0" />
-    </marker>
-    <marker
-       inkscape:stockid="Arrow1Lend"
-       orient="auto"
-       refY="0"
-       refX="0"
-       id="Arrow1Lend"
-       style="overflow:visible"
-       inkscape:isstock="true">
-      <path
-         id="path4176"
-         d="M 0,0 5,-5 -12.5,0 5,5 0,0 Z"
-         style="fill:#0b2abb;fill-opacity:1;fill-rule:evenodd;stroke:#0b2abb;stroke-width:1pt;stroke-opacity:1"
-         transform="matrix(-0.8,0,0,-0.8,-10,0)"
-         inkscape:connector-curvature="0" />
-    </marker>
-    <marker
-       inkscape:stockid="Arrow1Lstart"
-       orient="auto"
-       refY="0"
-       refX="0"
-       id="marker4429"
-       style="overflow:visible"
-       inkscape:isstock="true">
-      <path
-         id="path4173"
-         d="M 0,0 5,-5 -12.5,0 5,5 0,0 Z"
-         style="fill:#0b2abb;fill-opacity:1;fill-rule:evenodd;stroke:#0b2abb;stroke-width:1pt;stroke-opacity:1"
-         transform="matrix(0.8,0,0,0.8,10,0)"
-         inkscape:connector-curvature="0" />
-    </marker>
     <marker
        inkscape:stockid="TriangleOutS"
        orient="auto"
@@ -269,9 +206,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.98994949"
-     inkscape:cx="277.6261"
-     inkscape:cy="215.07264"
+     inkscape:zoom="1.5266878"
+     inkscape:cx="70.353657"
+     inkscape:cy="214.93527"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -300,21 +237,23 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-133.27181,-77.964786)">
+     transform="translate(-133.68281,-121.23693)">
     <path
        style="fill:#4566ff;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:2.77183199;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:8.31549589, 8.31549589;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#DotM)"
        d="M 216.48799,544.51489 398.8939,357.42038"
        id="path23021"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cc"
+       inkscape:export-filename="/home/fabio/Dropbox/Gang of for/IUM/Sketch Hands/Two fingers hand rotation.png"
        inkscape:export-xdpi="300"
        inkscape:export-ydpi="300" />
     <path
        style="opacity:0.85;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m 169.43832,508.56398 c 25.56998,-11.425 42.51916,-72.41958 52.85714,-171.42857 1.62637,-55.53081 -13.92213,-78.89419 -6.73315,-119.22442 -0.20228,-16.08464 17.53661,-11.09858 22.2549,17.95866 1.89527,18.45588 12.3541,39.97538 17.09029,57.81689 6.76874,25.49824 1.847,25.02102 1.847,25.02102 7.80121,-56.73205 33.54189,-97.86715 31.58446,-180.2538 11.3681,-34.57951 32.69703,-0.61784 31.16245,34.37672 4.63511,79.59804 -6.24661,119.39517 -1.80855,146.64212 40.82215,-154.29732 49.52748,-217.75353 55.77046,-223.303471 30.87669,-11.45903 22.67296,59.192161 20.33612,79.364411 -11.51515,90.5506 0.90442,124.19494 -20.0754,164.45901 34.50402,-75.93086 42.10431,-109.55951 56.13645,-150.16874 14.03214,-40.60923 19.00789,-68.48221 30.62134,-71.95999 24.68311,14.39656 17.71181,39.26058 3.00072,92.26182 -7.74354,57.747 -20.25509,98.79275 -20.87791,137.41072 0.4758,48.95102 -1.18818,28.8687 0.30719,-10.203 33.00492,17.57592 36.76279,43.05298 34.96792,63.21761 -2.3642,26.56075 -32.31187,72.58102 -43.80549,80.84041 -58.28067,41.88084 -78.47272,84.623 -108.20737,120.02974"
+       d="m 136.21569,520.24636 c 30.30762,-12.64111 45.25175,-50.29838 58.33375,-113.20376 20.28719,-56.26461 15.28349,-60.6091 51.90519,-67.08465 l -7.00544,7.70483 c 19.45878,-28.29073 56.84547,-15.02748 55.88252,-13.85433 -1.94197,2.3659 -6.8216,7.07486 -10.34154,17.71419 20.04288,-42.50349 74.43384,-30.37804 80.72554,-22.41374 -12.79025,14.21656 -6.89559,8.25269 -14.24621,22.16864 4.59382,-6.43509 39.9018,-69.57426 96.38155,-100.36925 14.85461,-7.78672 23.81354,-11.84187 62.70111,-24.41102 19.21393,-2.87755 25.54792,14.42519 12.85714,25.00001 -99.89961,61.90229 -118.6769,152.8312 -123.4699,224.65771 85.00381,-3.25948 52.21111,9.40505 108.57143,-42.85714 8.61058,-8.90801 27.35337,-8.44423 21.42857,14.28571 -12.24233,25.55005 -27.21097,59.56067 -46.42857,67.14286 -78.10452,18.46568 -143.1225,67.4504 -172.85715,102.85714"
        id="path3347-4"
        inkscape:connector-curvature="0"
-       sodipodi:nodetypes="ccccsccccccczccccssc"
+       sodipodi:nodetypes="ccccsccccccccccc"
+       inkscape:export-filename="/home/fabio/Dropbox/Gang of for/IUM/Sketch Hands/Two fingers hand rotation.png"
        inkscape:export-xdpi="300"
        inkscape:export-ydpi="300" />
     <circle
@@ -322,21 +261,25 @@
        id="path44393"
        cx="0"
        cy="0"
-       r="0" />
+       r="0"
+       inkscape:export-filename="/home/fabio/Dropbox/Gang of for/IUM/Sketch Hands/Two fingers hand rotation.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
     <path
-       style="opacity:0.85;fill:none;stroke:#0b2abb;stroke-width:11.86826801;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-start:url(#marker4434);marker-end:url(#marker4437)"
+       style="opacity:0.85;fill:none;stroke:#0b2abb;stroke-width:11.86826897;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-start:url(#TriangleInM);marker-end:url(#TriangleOutM)"
        id="path38819-6"
        sodipodi:type="arc"
        sodipodi:cx="530.88159"
        sodipodi:cy="-25.191275"
        sodipodi:rx="230.58235"
        sodipodi:ry="220.52257"
-       sodipodi:start="2.3751435"
-       sodipodi:end="0.72559819"
-       d="m 364.77514,127.75914 a 230.58235,220.52257 0 0 1 1.87412,-307.74086 230.58235,220.52257 0 0 1 321.71769,-6.28542 230.58235,220.52257 0 0 1 15.0139,307.41091"
-       transform="matrix(0.75901228,0.70585688,-0.7377724,0.72578969,-18.467734,-44.200238)"
+       sodipodi:start="2.3884777"
+       sodipodi:end="0.76667499"
+       d="m 362.65746,125.62733 a 230.58235,220.52257 0 0 1 7.68825,-309.11613 230.58235,220.52257 0 0 1 323.30137,2.09639 230.58235,220.52257 0 0 1 3.30485,309.18742"
+       transform="matrix(0.71365238,0.70050002,-0.69368184,0.72028155,0,0)"
+       sodipodi:open="true"
+       inkscape:export-filename="/home/fabio/Dropbox/Gang of for/IUM/Sketch Hands/Two fingers hand rotation.png"
        inkscape:export-xdpi="300"
-       inkscape:export-ydpi="300"
-       sodipodi:open="true" />
+       inkscape:export-ydpi="300" />
   </g>
 </svg>
