@@ -105,7 +105,7 @@ span[data-label] {
 }
 
 input[type=number] {
-    width: 30px;
+    width: 3em;
 }
 
 /* no spinbox buttons */
