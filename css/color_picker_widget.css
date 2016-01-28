@@ -1,7 +1,5 @@
 #color-picker-selector {
     position: absolute;
-    min-width: 180px;
-    min-height: 180px;
     text-align: center;
 }
 
@@ -49,11 +47,6 @@
     position: absolute;
     z-index: -1;
     color: red;
-}
-
-/* maximum height of the sliders' bar */
-.slider.slider-vertical {
-    max-height: 120px;
 }
 
 /** Red slider **/

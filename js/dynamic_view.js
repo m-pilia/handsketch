@@ -79,15 +79,44 @@ function fitSelector(key, expand) {
 
             // avoid showing text upside-down in lower sectors
             if (angle > -180 && angle < 0) {
-                angle += 180
+                angle += 180;
             }
 
-            label.css("transform", "rotate(" + (90 - angle) + "deg)")
+            label.css("transform", "rotate(" + (90 - angle) + "deg)");
         }
     });
+}
+
+/**
+ * Fit size and centering of the color picker widget.
+ */
+function fitColorPicker() {
+    var margin = 5;
+    var afford = $("#color-picker-afford");
+    var display = $("#color-display");
+    var selector = $("#color-picker-selector");
+    var wrapper = selector.parent();
+    var wWidth = wrapper.width();
+    var wHeight = wrapper.height();
+    var aHeight = afford.outerHeight();
+
+    // expand height
+    var height = wHeight - aHeight - 2 * margin;
+    selector.css("height", height);
+
+    // set top
+    var top = (wHeight - selector.height() + aHeight) / 2;
+    top = Math.max(0, top);
+    selector.css("top", top);
+
+    // set left
+    var left = (wWidth - $(".selector-hint").outerWidth(true)
+        - selector.width()) / 2;
+    left = Math.max(0, left);
+    selector.css("left", left);
 
     // set slider height
-    $('.slider').css('height', size * 0.5);
+    $('.slider').css('height', selector.outerHeight() - display.outerHeight() - aHeight);
 }
 
 /**
@@ -182,6 +211,7 @@ function fitPickerAfford() {
     var pWidth = parseInt(w.css('width'));
     a.css('width', s.outerWidth() * 0.8 | 0);
     a.css('left', (w.outerWidth() - a.outerWidth() - h.outerWidth()) / 2 | 0);
+    a.css('top', s.position().top - a.outerHeight() / 2);
 }
 
 /**
@@ -196,7 +226,7 @@ function fitSizes() {
     fitSelector("eraser", true);
     fitSelector("picker", true);
     fitSelector("filler", true);
-    fitSelector("color-picker", false);
+    fitColorPicker();
     fitAfford('tool');
     fitAfford('option');
     fitPickerAfford();
