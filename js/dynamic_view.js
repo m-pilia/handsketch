@@ -200,6 +200,7 @@ function fitSizes() {
     fitAfford('tool');
     fitAfford('option');
     fitPickerAfford();
+    setInputAfford();
     fitPopup();
 }
 

@@ -376,7 +376,7 @@ function frameHandler(hand, gestures) {
                 break;
             }
             activateInput(o);
-            setInputAfford(o.find('input'));
+            setInputAfford();
             cLastN = n;
         // }
         // feedback of the detected gesture

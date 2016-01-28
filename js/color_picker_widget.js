@@ -53,6 +53,12 @@ $(".color-value").each(function () {
         updateColorPreview();
     });
 
+    // activate and set inptut afford when focused
+    $(this).on("focus", function () {
+        activateInput($(this).parent('.color-item'));
+        setInputAfford();
+    });
+
     // initial configuration: load value from storage and set it to sliders
     var value = localStorage.getItem(color + "-value");
     if (value === null) {

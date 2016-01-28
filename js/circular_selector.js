@@ -26,28 +26,15 @@ function selectEntry(name, i, handler) {
     if (handler)
         handler(li.attr('data-entry'));
     // set input afford
-    setInputAfford(findInput());
-}
-
-function findInput() {
-    var tool = $('#tool-selector .selected-tool').attr('data-entry');
-    var opt = $('#' + tool + '-selector .selected-tool');
-    if (opt.length == 0) {
-        return null;
-    }
-    var o = opt.find('input');
-    if (o.length == 0) {
-        o = opt.find('.shape-entry');
-    }
-    return o;
+    setInputAfford();
 }
 
 /**
  * Set the input afford position and size for the selected input.
- * @param {number} o    JQuery object for the selected entry.
  */
-function setInputAfford(o) {
-    if (!o) {
+function setInputAfford() {
+    var o = $('[data-active] input, [data-active] .shape-entry');
+    if (!o.length) {
         return;
     }
     var p = o.offset();
