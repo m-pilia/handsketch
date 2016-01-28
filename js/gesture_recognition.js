@@ -209,6 +209,7 @@ function frameHandler(hand, gestures) {
     var t = Leap.vec3.length(tmpv);
 
     // angles of the fingers respect to the palm normal
+    var thumbAngle = fingerAngle(hand, 'thumb');
     var pinkyAngle = fingerAngle(hand, 'pinky');
     var ringAngle = fingerAngle(hand, 'ringFinger');
     var middleAngle = fingerAngle(hand, 'middleFinger');
@@ -219,15 +220,15 @@ function frameHandler(hand, gestures) {
             d > 45 &&
             t > 70 &&
             s > 120 &&
-            s < 300 &&
-            d3 > 50 &&
-            fa[0] < 25 &&
-            fa[1] > 20 && fa[1] < 60 &&
-            fa[2] > 20 && fa[2] < 60 &&
-            fa[3] > 20 && fa[3] < 60 &&
-            fa[4] > 20 && fa[4] < 60 &&
-            pinkyAngle < 50 &&
-            ringAngle < 50) {
+            fa[1] < 15 &&
+            fa[2] < 15 &&
+            fa[3] < 15 &&
+            fa[4] < 15 &&
+            pinkyAngle > 60 &&
+            ringAngle > 60 &&
+            middleAngle > 60 &&
+            indexAngle > 60 &&
+            thumbAngle > 60) {
         var r = rotation(hand);
         if (tFirst == NONE)
             tFirst = tLast = r;
@@ -268,8 +269,6 @@ function frameHandler(hand, gestures) {
     if (
             d > 45 &&
             t > 70 &&
-            s > 120 &&
-            s < 300 &&
             d2 > 30 &&
             d3 > 50 &&
             fa[0] < 25 &&
