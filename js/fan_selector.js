@@ -3,7 +3,7 @@
  * This script extends the JQuery function to define a fan selector.
  * To do this it counts the n entries in the selector and places them in a
  * fan disposition.
- * 
+ *
  * @date 2016-01-01
  */
 
@@ -36,6 +36,13 @@ jQuery.fn.extend({
         if (size % 2 === 0) {
             rotAngle += Math.floor(increment / 2);
         }
+
+        /** Fit color picker size to its children **/
+        var width = 20;
+        items.each(function () {
+            width += $(this).outerWidth();
+        });
+        $(this).css('width', width);
 
         /** Apply the rotation to all the items **/
         items.each(function(){

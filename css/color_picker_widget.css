@@ -2,11 +2,14 @@
     position: absolute;
     min-width: 180px;
     min-height: 180px;
+    text-align: center;
 }
 
 #color-selector {
     margin-top: 20px;
     margin-left: 40px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .fan-selector-item {
