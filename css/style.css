@@ -124,3 +124,8 @@ input[type=number]::-webkit-outer-spin-button {
 img[data-shape] {
     margin: -3px;
 }
+
+#about-popup p {
+    text-align: justify;
+    font-size: 1.2em;
+}

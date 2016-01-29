@@ -227,6 +227,17 @@ $(document).keydown(function (e) {
     }
 });
 
+// open about popup from menu
+$('#about').click(function (e) {
+    // open overlay popup
+    openPopup('about-popup');
+});
+
+// close about popup
+$('#about-popup .popup-exit').click(function (e) {
+    closePopup();
+});
+
 // new image from menu
 $('#new-image').click(function (e) {
     // open overlay popup to get size
