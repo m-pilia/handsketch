@@ -102,9 +102,10 @@ function setupSelector(name, handler) {
 
     // clip-path and rotate each selector entry
     tools.each(function (i) {
-        // (angle + sep) * i is occupated by the previous i entries, (sep / 2)
-        // is for actual separation from the previous entry
-        var rot = (angle + sep) * i + (sep / 2);
+        // (angle + sep) * i is occupied by the previous i entries;
+        // (sep / 2) is for actual separation from the previous entry;
+        // (90 - angle / 2) is to centre the first entry at the top
+        var rot = (angle + sep) * i + (sep / 2) - (90 - angle / 2);
 
         // clip-path the entry
         $(this).css("clip-path", "url(#" + name + "-sector)");
@@ -117,10 +118,10 @@ function setupSelector(name, handler) {
         // counter-rotate the entry's content
         $(this).find(".selector-entry").css(
                 "transform",
-                "rotate(-" + rot + "deg)");
+                "rotate(" + (-rot) + "deg)");
         $(this).find(".selector-entry").css(
                 "-webkit-transform",
-                "rotate(-" + rot + "deg)");
+                "rotate(" + (-rot) + "deg)");
 
         // add event handler on mouse click for the tool selection
         $(this).click(function () {
