@@ -233,7 +233,7 @@ function frameHandler(hand, gestures) {
         if (tFirst == NONE)
             tFirst = tLast = r;
         else {
-            // the rotations below this angle thereshold are ignored
+            // the rotations below this angle threshold are ignored
             if (Math.abs(r - tLast) > 1) {
                 // update angle
                 tAngle += r - tLast;
@@ -282,7 +282,7 @@ function frameHandler(hand, gestures) {
         if (oFirst[tool] == NONE)
             oFirst[tool] = oLast[tool] = r;
         else {
-            // the rotations below this angle thereshold are ignored
+            // the rotations below this angle threshold are ignored
             if (Math.abs(r - oLast[tool]) > 1) {
                 // update angle
                 oAngle[tool] += r - oLast[tool];
@@ -332,7 +332,7 @@ function frameHandler(hand, gestures) {
         if (cFirst == NONE)
             cFirst = cLast = r;
         else {
-            // the rotations below this angle thereshold are ignored
+            // the rotations below this angle threshold are ignored
             if (Math.abs(r - cLast) > 1) {
                 // update angle
                 cAngle += r - cLast;

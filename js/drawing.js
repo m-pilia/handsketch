@@ -32,9 +32,9 @@ var alpha = $('input#alpha-value');
 // is false while dragging a tool
 var notDragging = true;
 
-// maximum opacity and thereshold value
+// maximum opacity and threshold value
 const OPACITY_MAX = 100;
-const THERESH_MAX = 100;
+const THRESH_MAX = 100;
 const DENSITY_MAX = 100;
 
 // current tool and its properties
@@ -43,7 +43,7 @@ var thickness = null;
 var density = null;
 var shape = null;
 var opacity = null;
-var thereshold = null;
+var threshold = null;
 
 /**
  * Clean the canvas, resize it to the input size and optionally draw an
@@ -270,8 +270,8 @@ function filler(x, y) {
     const BB = blue.val();
     const AA = alpha.val() * opacity / OPACITY_MAX;
 
-    // squared thereshold for the color distance
-    const THERESHOLD = thereshold * thereshold * 260100 / THERESH_MAX / THERESH_MAX;
+    // squared threshold for the color distance
+    const THRESHOLD = threshold * threshold * 260100 / THRESH_MAX / THRESH_MAX;
 
     // variable for the pixel
     var p = {'x': x, 'y': y};
@@ -296,7 +296,7 @@ function filler(x, y) {
         dc = (data[m + 2] - B0);
         da = (data[m + 3] - A0);
 
-        if (da * da + db * db + dc * dc + da * da < THERESHOLD) {
+        if (da * da + db * db + dc * dc + da * da < THRESHOLD) {
             // color the point
             data[m + 0] = RR;
             data[m + 1] = GG;
