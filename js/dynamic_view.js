@@ -61,7 +61,8 @@ function fitSelector(key, expand) {
         var label = $(this).parent().find("span[data-label=" + val + "]" );
         if (label.attr("data-label")) {
             var size = $(this).parent().outerWidth()
-            var angle = - (180 / n + 360 / n * (i - 1))
+            var toTop = 90 - 180 / n;
+            var angle = toTop - (180 / n * (2 * i - 1));
             const conv = Math.PI / 180;
 
             // translate to the centre of the circle
