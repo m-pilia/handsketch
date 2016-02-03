@@ -245,7 +245,7 @@ function collectThemes() {
             <li>
                 <a  id="` + theme + `-theme"
                     tabindex="0"
-                    onclick="applyTheme('` + theme + `')">
+                    onclick="applyTheme('` + theme + `'); fitSizes()">
                         <span class="glyphicon glyphicon-eye-open"
                               aria-hidden="true"></span>&nbsp;` +
                         theme + `
