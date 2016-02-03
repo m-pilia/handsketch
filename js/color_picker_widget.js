@@ -4,70 +4,144 @@
  * @date 2016-01-03
  */
 
-"use strict";
+const colorPickerWidget = function ($) {
 
-/**
- * Update the color preview with the current component values.
- */
-function updateColorPreview() {
-    $("#fg-color").css(
-        "background",
-        "rgba(" +
-            $("#red-value").val()   + "," +
-            $("#green-value").val() + "," +
-            $("#blue-value").val()  + "," +
-            $("#alpha-value").val() / 255 + ")"
-        );
+    "use strict";
 
-    // update cursor
-    setCursor();
-}
+    const cpw = {};
 
-// create slider objects
-$(".color-slider").each(function () {
-    var color = $(this).data("slider-id");
+    const RED = $('input#red-value');
+    const GREEN = $('input#green-value');
+    const BLUE = $('input#blue-value');
+    const ALPHA = $('input#alpha-value');
 
-    $(this).bootstrapSlider({
-        reversed: true,
-        id: $(this).attr("id") + "-x" /** Different id with trailing "-x" **/
-    });
+    /**
+     * Get the red color component from the color picker.
+     * @param {number} v Optional value assigned to the color component.
+     * @return {number} Value of the red color component.
+     */
+    cpw.red = function (v) {
+        if (v !== undefined) {
+            RED.val(parseInt(v));
+        }
+        return RED.val();
+    };
 
-    // bind sliders to spinboxes and save value into local storage
-    $(this).on("slide change", function () {
-        var value = $("#" + color + "-slider").val();
-        $("#" + color + "-value").val(value);
-        localStorage.setItem(color + "-value", value);
-        updateColorPreview();
-    });
-});
+    /**
+     * Get the green color component from the color picker.
+     * @param {number} v Optional value assigned to the color component.
+     * @return {number} Value of the green color component.
+     */
+    cpw.green = function (v) {
+        if (v !== undefined) {
+            GREEN.val(parseInt(v));
+        }
+        return GREEN.val();
+    };
 
-$(".color-value").each(function () {
-    var color = $(this).data("color");
-    var slider = $("#" + color + "-slider");
+    /**
+     * Get the blue color component from the color picker.
+     * @param {number} v Optional value assigned to the color component.
+     * @return {number} Value of the blue color component.
+     */
+    cpw.blue = function (v) {
+        if (v !== undefined) {
+            BLUE.val(parseInt(v));
+        }
+        return BLUE.val();
+    };
 
-    // bind spinbox values to sliders and save value into local storage
-    $(this).on("input", function () {
-        var value = parseInt($(this).val());
-        slider.bootstrapSlider("setValue", value);
-        localStorage.setItem(color + "-value", value);
-        updateColorPreview();
-    });
+    /**
+     * Get the alpha color component from the color picker.
+     * @param {number} v Optional value assigned to the color component.
+     * @return {number} Value of the alpha color component.
+     */
+    cpw.alpha = function (v) {
+        if (v !== undefined) {
+            ALPHA.val(parseInt(v));
+        }
+        return ALPHA.val();
+    };
 
-    // activate and set inptut afford when focused
-    $(this).on("focus", function () {
-        activateInput($(this).parent('.color-item'));
-        setInputAfford();
-    });
+    /**
+     * Get the color from the color picker as hexadecimal RGB string.
+     * @return {string} Hexadecimal RGB string for the color.
+     */
+    cpw.getRGBColor = function () {
+        return '#' +
+            ('00' + parseInt(cpw.red()).toString(16)).slice(-2) +
+            ('00' + parseInt(cpw.green()).toString(16)).slice(-2) +
+            ('00' + parseInt(cpw.blue()).toString(16)).slice(-2);
+    };
 
-    // initial configuration: load value from storage and set it to sliders
-    var value = localStorage.getItem(color + "-value");
-    if (value === null) {
-        value = $(this).attr('value');
+    /**
+     * Update the color preview with the current component values.
+     */
+    function updateColorPreview() {
+        $("#fg-color").css(
+            "background",
+            "rgba(" +
+                $("#red-value").val()   + "," +
+                $("#green-value").val() + "," +
+                $("#blue-value").val()  + "," +
+                $("#alpha-value").val() / 255 + ")"
+            );
+
+        // update cursor
+        cursor.setCursor();
     }
-    $(this).val(value);
-    slider.bootstrapSlider("setValue", parseInt(value));
-    updateColorPreview();
-});
 
-// create the fan selector
-$('#color-selector').fanSelector(60);
+    $(document).ready(function () {
+        // create slider objects
+        $(".color-slider").each(function () {
+            var color = $(this).data("slider-id");
+
+            $(this).bootstrapSlider({
+                reversed: true,
+                id: $(this).attr("id") + "-x" // Different id with trailing "-x"
+            });
+
+            // bind sliders to spinboxes and save value into local storage
+            $(this).on("slide change", function () {
+                var value = $("#" + color + "-slider").val();
+                $("#" + color + "-value").val(value);
+                localStorage.setItem(color + "-value", value);
+                updateColorPreview();
+            });
+        });
+
+        $(".color-value").each(function () {
+            var color = $(this).data("color");
+            var slider = $("#" + color + "-slider");
+
+            // bind spinbox values to sliders and save value into local storage
+            $(this).on("input", function () {
+                var value = parseInt($(this).val());
+                slider.bootstrapSlider("setValue", value);
+                localStorage.setItem(color + "-value", value);
+                updateColorPreview();
+            });
+
+            // activate and set inptut afford when focused
+            $(this).on("focus", function () {
+                toolManagement.activateInput($(this).parent('.color-item'));
+                circularSelector.setInputAfford();
+            });
+
+            // initial configuration: load value from storage and set sliders
+            var value = localStorage.getItem(color + "-value");
+            if (value === null) {
+                value = $(this).attr('value');
+            }
+            $(this).val(value);
+            slider.bootstrapSlider("setValue", parseInt(value));
+            updateColorPreview();
+        });
+
+        // create the fan selector
+        $('#color-selector').fanSelector(60);
+    });
+
+    return cpw;
+
+} (jQuery);
