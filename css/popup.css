@@ -6,6 +6,7 @@
 .popup {
     position: fixed;
     width: 25%;
+    min-width: 50ch;
     padding: 10px;
     display: none;
     background-color: white;
