@@ -118,8 +118,22 @@ const dynamicView = function ($) {
         left = Math.max(0, left);
         selector.css("left", left);
 
+        // set spinbox margin (needed for the input afford)
+        $('.color-value').each(function () {
+            var h = $(this).outerHeight();
+            var w = $(this).outerWidth();
+            var size = Math.hypot(h, w);
+            $(this).css({
+                'margin-left': (size - w) / 2,
+                'margin-right': (size - w) / 2,
+                'margin-top': (size - h) / 2,
+                'margin-bottom': (size - h) / 2
+            });
+        });
+
         // set slider height
-        var h = selector.outerHeight() - display.outerHeight() - aHeight;
+        var h = selector.outerHeight() - display.outerHeight(true) - aHeight;
+        console.log(display.outerHeight(true))
         $('.slider').css('height', h);
     }
 
