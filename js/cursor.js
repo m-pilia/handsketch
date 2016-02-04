@@ -4,120 +4,124 @@
  * @date 2016-01-24
  */
 
-"use strict";
+const cursor = function ($) {
 
-// cursor image object
-const CURSOR = $('#cursor');
+    "use strict";
 
-// margin for the cursor image
-const CURS_MARG = 1;
+    // public interface
+    const pub = {};
 
-// cursor translation to fit the tip of the pointer with the image
-var cursTraX = 0;
-var cursTraY = 0;
+    // cursor image object
+    const CURSOR = $('#cursor');
 
-/**
- * Get the color from the color picker as hexadecimal string.
- * @return {string} Hexadecimal rgb string for the color.
- */
-function getColor() {
-    return '#' +
-        ('00' + parseInt(red.val()).toString(16)).slice(-2) +
-        ('00' + parseInt(green.val()).toString(16)).slice(-2) +
-        ('00' + parseInt(blue.val()).toString(16)).slice(-2);
-}
+    // margin for the cursor image
+    const CURS_MARG = 1;
 
-/**
- * Set the cursor, updating shape, color and size.
- */
-function setCursor() {
-    var svgCode = '';
+    // cursor translation to fit the tip of the pointer with the image
+    var cursTraX = 0;
+    var cursTraY = 0;
 
-    switch (tool) {
+    /**
+     * Set the cursor, updating shape, color and size. The cursor image is
+     * defined dynamically in SVG format.
+     */
+    pub.setCursor = function () {
 
-    case picker:
-        svgCode = '<image width="22" height="22" ' +
-                         'xlink:href="img/icon/white/picker.png" />';
-        cursTraX = 11;
-        cursTraY = -11;
-        CURSOR.css({width: 22, height: 22});
-        break;
+        var svgCode = '';
 
-    case filler:
-        svgCode = '<image width="22" height="22" ' +
-                         'xlink:href="img/icon/white/filler.png" />';
-        cursTraX = -9;
-        cursTraY = -6;
-        CURSOR.css({width: 22, height: 22});
-        break;
+        const tool = drawing.tool();
+        switch (tool) {
 
-    default:
-        cursTraX = cursTraY = 0;
-        var svgColor = (tool == eraser ? '#ffffff' : getColor());
-        var svgOpacity = (opacity / OPACITY_MAX * alpha.val() / 255);
-
-        switch (shape) {
-        case circle:
-            svgCode =
-                '<circle ' +
-                'cx="' + thickness + '" ' +
-                'cy="' + thickness + '" ' +
-                'r="' + thickness + '" ' +
-                'stroke="black" stroke-width="0.5" ' +
-                'fill="' + svgColor + '" ' +
-                'fill-opacity="' + svgOpacity + '" ' +
-                'transform="translate(' + 0 + ' ' + CURS_MARG + ')" ' +
-                '/>'
+        case 'picker':
+            svgCode = '<image width="22" height="22" ' +
+                             'xlink:href="img/icon/white/picker.png" />';
+            cursTraX = 11;
+            cursTraY = -11;
+            CURSOR.css({width: 22, height: 22});
             break;
-        case square:
-            svgCode =
-                '<rect ' +
-                'width="' + 2 * thickness + '" ' +
-                'height="' + 2 * thickness + '" ' +
-                'stroke="black" stroke-width="0.5" ' +
-                'fill="' + svgColor + '" ' +
-                'fill-opacity="' + svgOpacity + '" ' +
-                'transform="translate(' + 0 + ' ' + CURS_MARG + ')" ' +
-                '/>'
+
+        case 'filler':
+            svgCode = '<image width="22" height="22" ' +
+                             'xlink:href="img/icon/white/filler.png" />';
+            cursTraX = -9;
+            cursTraY = -6;
+            CURSOR.css({width: 22, height: 22});
             break;
-        case diamond:
-            var transl = thickness * (Math.sqrt(2) - 1);
-            svgCode =
-                '<rect ' +
-                'width="' + Math.sqrt(2) * thickness + '" ' +
-                'height="' + Math.sqrt(2) * thickness + '" ' +
-                'stroke="black" stroke-width="0.5" ' +
-                'fill="' + svgColor + '" ' +
-                'fill-opacity="' + svgOpacity + '" ' +
-                'transform="rotate(45 ' + thickness + ' ' + thickness + ') ' +
-                'translate(' + transl + ' ' + transl + CURS_MARG + ')" ' +
-                '/>'
+
+        default:
+            cursTraX = cursTraY = 0;
+            const cp = colorPicker;
+            const thickness = drawing.thickness();
+            const svgColor = (tool == 'eraser' ? '#ffffff' : cp.getRGBColor());
+            const svgOpacity = (drawing.opacity() * cp.alpha() / 255);
+
+            switch (drawing.shape()) {
+            case 'circle':
+                svgCode =
+                    '<circle ' +
+                    'cx="' + thickness + '" ' +
+                    'cy="' + thickness + '" ' +
+                    'r="' + thickness + '" ' +
+                    'stroke="black" stroke-width="0.5" ' +
+                    'fill="' + svgColor + '" ' +
+                    'fill-opacity="' + svgOpacity + '" ' +
+                    'transform="translate(' + 0 + ' ' + CURS_MARG + ')" ' +
+                    '/>'
+                break;
+            case 'square':
+                svgCode =
+                    '<rect ' +
+                    'width="' + 2 * thickness + '" ' +
+                    'height="' + 2 * thickness + '" ' +
+                    'stroke="black" stroke-width="0.5" ' +
+                    'fill="' + svgColor + '" ' +
+                    'fill-opacity="' + svgOpacity + '" ' +
+                    'transform="translate(' + 0 + ' ' + CURS_MARG + ')" ' +
+                    '/>'
+                break;
+            case 'diamond':
+                var transl = thickness * (Math.sqrt(2) - 1);
+                svgCode =
+                    '<rect ' +
+                    'width="' + Math.sqrt(2) * thickness + '" ' +
+                    'height="' + Math.sqrt(2) * thickness + '" ' +
+                    'stroke="black" stroke-width="0.5" ' +
+                    'fill="' + svgColor + '" ' +
+                    'fill-opacity="' + svgOpacity + '" ' +
+                    'transform="rotate(45 ' + thickness + ' ' + thickness + ') ' +
+                    'translate(' + transl + ' ' + transl + CURS_MARG + ')" ' +
+                    '/>'
+                break;
+            }
+            CURSOR.css('width', 2 * thickness)
+                  .css('height', 2 * (thickness + CURS_MARG));
             break;
         }
-        CURSOR.css('width', 2 * thickness)
-              .css('height', 2 * (thickness + CURS_MARG));
-        break;
-    }
 
-    CURSOR.html(svgCode);
-}
+        CURSOR.html(svgCode);
+    };
 
-// bind the position of the cursor image to the mouse pointer
-$('#canvas,#cursor').on('mousemove', function(e) {
-    CURSOR.css({
-        left: e.pageX - 0.5 * CURSOR.outerWidth() + cursTraX,
-        top:  e.pageY - 0.5 * CURSOR.outerHeight() + CURS_MARG + cursTraY
+    // bind the position of the cursor image to the mouse pointer
+    $('#canvas,#cursor').on('mousemove', function(e) {
+        CURSOR.css({
+            left: e.pageX - 0.5 * CURSOR.outerWidth() + cursTraX,
+            top:  e.pageY - 0.5 * CURSOR.outerHeight() + CURS_MARG + cursTraY
+        });
     });
-});
 
-// hide pointer and show cursor image inside the canvas
-$(document).on('mousemove', function (e) {
-    if (isOnCanvas(getCoord(e)) && $('.popup-visible').length == 0) {
-        CURSOR.css('display', 'inline');
-        $(document.body).css('cursor', 'none');
-    }
-    else {
-        CURSOR.css('display', 'none');
-        $(document.body).css('cursor', 'default');
-    }
-});
+    // hide pointer and show cursor image inside the canvas
+    $(document).on('mousemove', function (e) {
+        if (canvasCoord.isOnCanvas(canvasCoord.getCoord(e))
+                && $('.popup-visible').length == 0) {
+            CURSOR.css('display', 'inline');
+            $(document.body).css('cursor', 'none');
+        }
+        else {
+            CURSOR.css('display', 'none');
+            $(document.body).css('cursor', 'default');
+        }
+    });
+
+    return pub;
+
+} (jQuery);

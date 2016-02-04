@@ -39,14 +39,14 @@
     opacity: 1
 }
 
-#color-picker-selector label {
-    display: block;
+.tooltip {
+    display: none;
 }
 
-.tooltip {
-    position: absolute;
-    z-index: -1;
-    color: red;
+.color-label {
+    display: block;
+    font-weight: normal;
+    /*font-size: 0.8em;*/
 }
 
 /** Red slider **/

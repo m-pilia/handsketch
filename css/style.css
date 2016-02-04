@@ -64,8 +64,9 @@ html, body {
     width: 60px;
     height: 60px;
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 0;
+    right: 0;
+    margin: 10px;
     opacity: 0.4;
 }
 
@@ -105,7 +106,9 @@ span[data-label] {
 }
 
 input[type=number] {
-    width: 3em;
+    width: 2.5em;
+    border: 0.5px solid lightgrey;
+    text-align: center;
 }
 
 /* no spinbox buttons */
