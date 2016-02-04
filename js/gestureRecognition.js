@@ -107,6 +107,21 @@ const gestureRecognition = function ($, Leap) {
     }
 
     /**
+     * Angle of the fingers respect to the palm normal.
+     * @param  {Hand} hand Hand containing the fingers.
+     * @return {number[]}  Array containing the angles, from thumb to pinky.
+     */
+    function fingerAngles(hand) {
+        return [
+            fingerAngle(hand, 'thumb'),
+            fingerAngle(hand, 'indexFinger'),
+            fingerAngle(hand, 'middleFinger'),
+            fingerAngle(hand, 'ringFinger'),
+            fingerAngle(hand, 'pinky')
+        ];
+    }
+
+    /**
      * Compute the angle between the medial and distal phalanxes for each finger.
      * @param  {Hand}      hand Hand object containing the fingers.
      * @return {number[5]}      Array containing the angles.
@@ -121,6 +136,19 @@ const gestureRecognition = function ($, Leap) {
         return a;
     }
 
+    // afford hints
+    const tAfford = $('#tool-afford');
+    const oAfford = $('#option-afford');
+    const iAfford = $('#input-afford')
+
+    // coefficients
+    const NONE = 0xFFFF; // an unreachable value, used as a null one
+    const RANGE = 360;   // the angle range for the knob is from 0 to this value
+    const tK = 3;
+    const tA = -RANGE / TOOLS_NO;
+    const oK = 3;
+    const kCircle = 0.6;
+
     /*
      * When the hand position is recognized in a rotation gesture first, its
      * rotation angle in that first frame of the gesture is recorded. The angle is
@@ -128,118 +156,36 @@ const gestureRecognition = function ($, Leap) {
      * the last and the first frame of the gesture represents the angle variation
      * for the knob.
      */
-    const NONE = 0xFFFF; // an unreachable value, used as a null one
-    const RANGE = 360;   // the angle range for the knob is from 0 to this value
     var tAngle = 10;     // current tool angle
     var tFirst = NONE;   // angle of the hand at the start of the interaction
     var tLast = 0;       // value read on the last seen frame
     var tLastN = 1;      // last tool index
 
-    // as above, for the option selectors
-    var oAngle = [];
-    var oFirst = [];
-    var oLast = [];
-    var oLastN = [];
-    // init
-    Object.keys(OPT_NO).forEach(function (e) {
-        oAngle[e] = 10;
-        oFirst[e] = NONE;
-        oLast[e] = 0;
-        oLastN[e] = 1;
-    });
-
-    // as above, for the color picker
-    var cAngle = 10;
-    var cFirst = NONE;
-    var cLast = 0;
-    var cLastN = 1;
-
-    // stored value for input gestures
-    var lastVal = 0;
-
-    // coefficients
-    const tK = 3;
-    const tA = -RANGE / TOOLS_NO;
-    const oK = 3;
-    const kCircle = 0.6;
-
-    // afford hints
-    const tAfford = $('#tool-afford');
-    const oAfford = $('#option-afford');
-    const iAfford = $('#input-afford')
-
-    // angle for the input afford rotation
-    var iAngle = 0;
-    // progress at the start of the circle rotation
-    var sP = 0;
-
-    // rotations below this threshold value are ignored
-    const ANGLE_THRESHOLD = 1;
-
-    // temp vector for computations
-    var tmpv = Array(3);
-
-    function frameHandler(hand, gestures) {
-
-        // ensure all the fingers have been recognized
-        if (!(hand.thumb && hand.indexFinger && hand.middleFinger &&
-                hand.ringFinger && hand.pinky)) {
-            return;
-        }
-
-        var r = rotation(hand);
-        var s = spread(hand);
-        var fa = phalanxAngles(hand);
-
-        // thumb-index distance
-        Leap.vec3.sub(
-            tmpv,
-            hand.indexFinger.distal.nextJoint,
-            hand.thumb.distal.nextJoint);
-        var d = Leap.vec3.length(tmpv);
-
-        // thumb-tip - middle-finger-1st-interphalanx distance
-        Leap.vec3.sub(
-            tmpv,
-            hand.middleFinger.proximal.nextJoint,
-            hand.thumb.distal.nextJoint);
-        var d2 = Leap.vec3.length(tmpv);
-
-        // thumb-tip - middle-finger-tip distance
-        Leap.vec3.sub(
-            tmpv,
-            hand.middleFinger.distal.nextJoint,
-            hand.thumb.distal.nextJoint);
-        var d3 = Leap.vec3.length(tmpv);
-
-        // thumb-tip - palm-center distance
-        Leap.vec3.sub(
-            tmpv,
-            hand.thumb.distal.nextJoint,
-            hand.palmPosition);
-        var t = Leap.vec3.length(tmpv);
-
-        // angles of the fingers respect to the palm normal
-        var thumbAngle = fingerAngle(hand, 'thumb');
-        var pinkyAngle = fingerAngle(hand, 'pinky');
-        var ringAngle = fingerAngle(hand, 'ringFinger');
-        var middleAngle = fingerAngle(hand, 'middleFinger');
-        var indexAngle = fingerAngle(hand, 'indexFinger');
-
+    /**
+     * Check for a rotation of the tool know.
+     * @param  {number}   r  Hand rotation angle.
+     * @param  {number}   d  Thumb-tip - middle-tip distance.
+     * @param  {number}   t  thumb-tip - palm-center distance.
+     * @param  {number}   s  Hand spread.
+     * @param  {number[]} pa Angles between the last two phalanxes.
+     * @param  {number[]} fa Angles between the fingers and the palm normal.
+     * @return {bool}        True if a gesture was detected, false otherwise.
+     */
+    function toolRotation(r, d, t, s, pa, fa) {
         // these values define a rotation of the tool knob
         if (
                 d > 45 &&
                 t > 70 &&
                 s > 120 &&
-                fa[1] < 15 &&
-                fa[2] < 15 &&
-                fa[3] < 15 &&
-                fa[4] < 15 &&
-                pinkyAngle > 60 &&
-                ringAngle > 60 &&
-                middleAngle > 60 &&
-                indexAngle > 60 &&
-                thumbAngle > 60
+                pa[1] < 15 &&
+                pa[2] < 15 &&
+                pa[3] < 15 &&
+                pa[4] < 15 &&
+                fa[0] > 60 &&
+                fa[1] > 60 &&
+                fa[2] > 60 &&
+                fa[3] > 60 &&
+                fa[4] > 60
         ) {
             if (tFirst == NONE)
                 tFirst = tLast = r;
@@ -270,13 +216,41 @@ const gestureRecognition = function ($, Leap) {
             }
             // feedback of the detected gesture
             circularSelector.hintHighlight('tool', true);
-            return;
+            return true;
         }
         else {
             tFirst = NONE;
             // cease feedback of the detected gesture
             circularSelector.hintHighlight('tool', false);
+            return false;
         }
+    }
+
+    // as above, for the option selectors
+    var oAngle = [];
+    var oFirst = [];
+    var oLast = [];
+    var oLastN = [];
+    // init
+    Object.keys(OPT_NO).forEach(function (e) {
+        oAngle[e] = 10;
+        oFirst[e] = NONE;
+        oLast[e] = 0;
+        oLastN[e] = 1;
+    });
+
+    /**
+     * Check for a rotation of the option know.
+     * @param  {number}   r  Hand rotation angle.
+     * @param  {number}   d  Thumb-tip - middle-tip distance.
+     * @param  {number}   t  thumb-tip - palm-center distance
+     * @param  {number}   d2 Thumb-tip - middle-finger-1st-interphalanx distance.
+     * @param  {number}   d3 Thumb-tip - middle-finger-tip distance.
+     * @param  {number[]} pa Angles between the last two phalanxes.
+     * @param  {number[]} fa Angles between the fingers and the palm normal.
+     * @return {bool}        True if a gesture was detected, false otherwise.
+     */
+    function optionRotation(r, d, t, d2, d3, pa, fa) {
 
         // get the active tool
         const tool = drawing.tool();
@@ -287,13 +261,13 @@ const gestureRecognition = function ($, Leap) {
                 t > 70 &&
                 d2 > 30 &&
                 d3 > 50 &&
-                fa[0] < 25 &&
-                fa[2] > 30 &&
-                fa[3] > 30 &&
-                fa[4] > 30 &&
-                pinkyAngle > 70 &&
-                ringAngle > 70 &&
-                middleAngle > 70
+                pa[0] < 25 &&
+                pa[2] > 30 &&
+                pa[3] > 30 &&
+                pa[4] > 30 &&
+                fa[2] > 70 &&
+                fa[3] > 70 &&
+                fa[4] > 70
         ) {
             if (oFirst[tool] == NONE)
                 oFirst[tool] = oLast[tool] = r;
@@ -326,27 +300,46 @@ const gestureRecognition = function ($, Leap) {
 
             // feedback of the detected gesture
             circularSelector.hintHighlight('option', true);
-            return;
+            return true;
         }
         else {
             oFirst[tool] = NONE;
             // cease feedback of the detected gesture
             circularSelector.hintHighlight('option', false);
+            return false;
         }
+    }
 
+    // as above, for the color picker
+    var cAngle = 10;
+    var cFirst = NONE;
+    var cLast = 0;
+    var cLastN = 1;
+
+    /**
+     * Check for a rotation of the color picker.
+     * @param  {number}   r  Hand rotation angle.
+     * @param  {number}   d  Thumb-tip - middle-tip distance.
+     * @param  {number}   t  thumb-tip - palm-center distance
+     * @param  {number}   s  Hand spread.
+     * @param  {number[]} pa Angles between the last two phalanxes.
+     * @param  {number[]} fa Angles between the fingers and the palm normal.
+     * @return {bool}        True if a gesture was detected, false otherwise.
+     */
+    function colorPickerRotation(r, d, t, s, pa, fa) {
         // these values define a rotation of the color picker knob
         if (
                 d > 45 &&
                 t < 70 &&
                 s > 120 &&
-                fa[1] < 15 &&
-                fa[2] < 15 &&
-                fa[3] < 15 &&
-                fa[4] < 15 &&
-                pinkyAngle > 60 &&
-                ringAngle > 60 &&
-                middleAngle > 60 &&
-                indexAngle > 60
+                pa[1] < 15 &&
+                pa[2] < 15 &&
+                pa[3] < 15 &&
+                pa[4] < 15 &&
+                fa[1] > 60 &&
+                fa[2] > 60 &&
+                fa[3] > 60 &&
+                fa[4] > 60
         ) {
             if (cFirst == NONE)
                 cFirst = cLast = r;
@@ -399,15 +392,33 @@ const gestureRecognition = function ($, Leap) {
 
             // feedback of the detected gesture
             circularSelector.hintHighlight('color-picker', true);
-            return;
+            return true;
         }
         else {
             cFirst = NONE;
             // cease feedback of the detected gesture
             circularSelector.hintHighlight('color-picker', false);
+            return false;
         }
+    }
 
-        // check gesture for input variation
+    // stored value for input gestures
+    var lastVal = 0;
+    // angle for the input afford rotation
+    var iAngle = 0;
+    // progress at the start of the circle rotation
+    var sP = 0;
+    // rotations below this threshold value are ignored
+    const ANGLE_THRESHOLD = 1;
+
+    /**
+     * Check for a input gesture.
+     * @param  {gesture[]} gestures Array of gestures for the current frame.
+     * @param  {number}    d2       Thumb-tip - middle-finger-1st-interphalanx
+     *                              distance
+     * @param  {number[]}  pa       Angles between the last two phalanxes.
+     */
+    function gestureRotation(gestures, d2, pa) {
         gestures.forEach(function (g) {
             if (g.type != 'circle') {
                 return;
@@ -419,7 +430,7 @@ const gestureRecognition = function ($, Leap) {
                 }
 
                 // check shape of the hand
-                if (d2 > 30 || fa[0] < 25) {
+                if (d2 > 30 || pa[0] < 25) {
                     return;
                 }
 
@@ -478,6 +489,7 @@ const gestureRecognition = function ($, Leap) {
                     if (((lastVal + sign * kCircle * g.progress) | 0) % 2 == 0) {
                         lastVal += sign;
                         v += sign * k;
+                        v -= v % k; // ensure the value is a multiple of k
                         // limit v to the input bounds
                         v = v > max ? max : v;
                         v = v < min ? min : v;
@@ -489,6 +501,74 @@ const gestureRecognition = function ($, Leap) {
                 }
             });
         });
+    }
+
+    // temp vector for computations
+    var tmpv = Array(3);
+
+    /**
+     * Frame handler.
+     * @param  {Hand}      hand     Hand detected in the frame.
+     * @param  {Gesture[]} gestures Array of gestures detected in the frame.
+     */
+    function frameHandler(hand, gestures) {
+
+        // ensure all the fingers have been recognized
+        if (!(hand.thumb && hand.indexFinger && hand.middleFinger &&
+                hand.ringFinger && hand.pinky)) {
+            return;
+        }
+
+        var r = rotation(hand);
+        var s = spread(hand);
+        var pa = phalanxAngles(hand);
+        var fa = fingerAngles(hand);
+
+        // thumb-index distance
+        Leap.vec3.sub(
+            tmpv,
+            hand.indexFinger.distal.nextJoint,
+            hand.thumb.distal.nextJoint);
+        var d = Leap.vec3.length(tmpv);
+
+        // thumb-tip - middle-finger-1st-interphalanx distance
+        Leap.vec3.sub(
+            tmpv,
+            hand.middleFinger.proximal.nextJoint,
+            hand.thumb.distal.nextJoint);
+        var d2 = Leap.vec3.length(tmpv);
+
+        // thumb-tip - middle-finger-tip distance
+        Leap.vec3.sub(
+            tmpv,
+            hand.middleFinger.distal.nextJoint,
+            hand.thumb.distal.nextJoint);
+        var d3 = Leap.vec3.length(tmpv);
+
+        // thumb-tip - palm-center distance
+        Leap.vec3.sub(
+            tmpv,
+            hand.thumb.distal.nextJoint,
+            hand.palmPosition);
+        var t = Leap.vec3.length(tmpv);
+
+        // check for a rotation of the tool knob
+        if (toolRotation(r, d, t, s, pa, fa)) {
+            return;
+        }
+
+        // check for a rotation of the option knob
+        if (optionRotation(r, d, t, d2, d3, pa, fa)) {
+            return;
+        }
+
+        // check for a rotation of the color picker
+        if (colorPickerRotation(r, d, t, s, pa, fa)) {
+            return;
+        }
+
+        // check gesture for input variation
+        gestureRotation(gestures, d2, pa);
     }
 
 } (jQuery, Leap);
