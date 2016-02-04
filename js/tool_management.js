@@ -9,7 +9,7 @@ const toolManagement = function ($) {
     "use strict";
 
     // public interface
-    const tm = {};
+    const pub = {};
 
     // undo and redo buttons
     const UNDO_BUTTON = $('#undo');
@@ -78,7 +78,7 @@ const toolManagement = function ($) {
      * Set the input inside the container as the active one for gestures.
      * @param  {Object} o JQuery selection of the container.
      */
-    tm.activateInput = function (o) {
+    pub.activateInput = function (o) {
         // activate input field if it is an option or color selector
         if (o.find('input').length || o.attr('data-entry') == 'shape') {
             $("[data-active]").removeAttr('data-active');
@@ -95,7 +95,7 @@ const toolManagement = function ($) {
      * Set the tool function.
      * @param {string} f Selected tool.
      */
-    tm.setTool = function (f) {
+    pub.setTool = function (f) {
         drawing.tool(f);
         // enable option selector for the tool and disable others
         var wrapper = $('.option-widget-wrapper');
@@ -272,7 +272,7 @@ const toolManagement = function ($) {
     // option for each selector
     $(document).on('ready', function (e) {
         $('[data-shape="circle"]').trigger('click');
-        circularSelector.selectEntry('tool', 1, tm.setTool);
+        circularSelector.selectEntry('tool', 1, pub.setTool);
         circularSelector.selectEntry('airbrush', 1, null);
         circularSelector.selectEntry('eraser', 1, null);
         circularSelector.selectEntry('filler', 1, null);
@@ -280,6 +280,6 @@ const toolManagement = function ($) {
         circularSelector.selectEntry('brush', 1, null);
     });
 
-    return tm;
+    return pub;
 
 } (jQuery);

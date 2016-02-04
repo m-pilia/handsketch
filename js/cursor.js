@@ -8,7 +8,8 @@ const cursor = function ($) {
 
     "use strict";
 
-    const c = {};
+    // public interface
+    const pub = {};
 
     // cursor image object
     const CURSOR = $('#cursor');
@@ -24,7 +25,7 @@ const cursor = function ($) {
      * Set the cursor, updating shape, color and size. The cursor image is
      * defined dynamically in SVG format.
      */
-    c.setCursor = function () {
+    pub.setCursor = function () {
 
         var svgCode = '';
 
@@ -121,6 +122,6 @@ const cursor = function ($) {
         }
     });
 
-    return c;
+    return pub;
 
 } (jQuery);

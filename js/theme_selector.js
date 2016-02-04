@@ -8,7 +8,8 @@ const themeSelector = function ($) {
 
     "use strict";
 
-    const ts = {};
+    // public interface
+    const pub = {};
 
     // name for the theme settings saved in the local storage
     var themeStorageName = "theme";
@@ -17,7 +18,7 @@ const themeSelector = function ($) {
      * Apply the theme and save the setting in the local storage.
      * @param  {string} t Value of the data-theme attribute for the theme css.
      */
-    ts.applyTheme = function (t) {
+    pub.applyTheme = function (t) {
         $("link[data-theme][data-theme!=\""+ t +"\"]").prop("disabled", "true");
         $("link[data-theme=\""+ t +"\"]").removeProp("disabled");
         localStorage.setItem(themeStorageName, t);
@@ -29,8 +30,8 @@ const themeSelector = function ($) {
         theme = $("link[data-theme-default]").attr("data-theme");
 
     // apply the theme from saved settings or default
-    ts.applyTheme(theme);
+    pub.applyTheme(theme);
 
-    return ts;
+    return pub;
 
 } (jQuery);

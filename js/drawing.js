@@ -9,7 +9,7 @@
 const drawing = function ($) {
 
     // public interface
-    const d = {};
+    const pub = {};
 
     // private and dynamically callable interface
     const pvt = {};
@@ -53,7 +53,7 @@ const drawing = function ($) {
      * @param  {string} t Tool name.
      * @return {string}   Tool name.
      */
-    d.tool = function (t) {
+    pub.tool = function (t) {
         if (t !== undefined) {
             try {
                 if ($.type(pvt[t]) !== 'function' && $.type(d[t]) !== 'function')
@@ -73,7 +73,7 @@ const drawing = function ($) {
      * @param  {string} s Shape name.
      * @return {string}   Shape name.
      */
-    d.shape = function (s) {
+    pub.shape = function (s) {
         if (s !== undefined) {
             try {
                 // set shape
@@ -94,7 +94,7 @@ const drawing = function ($) {
      * @param  {number} o Opacity value in the `0..OPACITY_MAX` range.
      * @return {number}   Opacity value in the [0,1] range.
      */
-    d.opacity = function (o) {
+    pub.opacity = function (o) {
         if (o !== undefined) {
             mOpacity = o / OPACITY_MAX;
         }
@@ -106,7 +106,7 @@ const drawing = function ($) {
      * @param  {number} d Density value in the `0..DENSITY_MAX` range.
      * @return {number}   Density value in the [0,1] range.
      */
-    d.density = function (d) {
+    pub.density = function (d) {
         if (d !== undefined) {
             mDensity = d / DENSITY_MAX;
         }
@@ -118,7 +118,7 @@ const drawing = function ($) {
      * @param  {number} t Threshold value in the `0..THRESH_MAX` range.
      * @return {number}   Threshold value in the [0,1] range.
      */
-    d.threshold = function (t) {
+    pub.threshold = function (t) {
         if (t !== undefined) {
             mThreshold = t / THRESH_MAX;
         }
@@ -130,7 +130,7 @@ const drawing = function ($) {
      * @param  {number} t Thickness value.
      * @return {number}   Thickness value.
      */
-    d.thickness = function (t) {
+    pub.thickness = function (t) {
         if (t !== undefined) {
             mThickness = t;
         }
@@ -142,7 +142,7 @@ const drawing = function ($) {
      * @param  {Canvas} c Canvas object to use.
      * @return {Canvas}   Canvas object in use.
      */
-    d.canvas = function (c) {
+    pub.canvas = function (c) {
         if (c !== undefined) {
             canvas = c;
             ctx = canvas.getContext('2d');
@@ -157,7 +157,7 @@ const drawing = function ($) {
      * @param  {number} height Height for the canvas.
      * @param  {Image}  img    Optional image to be drawn inside the canvas.
      */
-    d.canvasResize = function (width, height, img) {
+    pub.canvasResize = function (width, height, img) {
         // clear and resize
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         canvas.width = width;
@@ -334,7 +334,7 @@ const drawing = function ($) {
      * @param  {number} x X coordinate.
      * @param  {number} y Y coordinate.
      */
-    d.filler = function (x, y) {
+    pub.filler = function (x, y) {
         // canvas size
         const WW = canvas.width;
         const HH = canvas.height;
@@ -424,7 +424,7 @@ const drawing = function ($) {
      * @param  {number} x X coordinate.
      * @param  {number} y Y coordinate.
      */
-    d.picker = function (x, y) {
+    pub.picker = function (x, y) {
         var k = canvas.width * y + x;
         var m = k * 4;
 
@@ -477,7 +477,7 @@ const drawing = function ($) {
      * @param  {number} x X coordinate.
      * @param  {number} y Y coordinate.
      */
-    d.toolAction = function (x, y) {
+    pub.toolAction = function (x, y) {
         var y0 = Math.max(0, y - mThickness);
         var y1 = Math.min(canvas.height, y + mThickness);
         var x0 = Math.max(0, x - mThickness);
@@ -494,7 +494,7 @@ const drawing = function ($) {
     /**
      * Start a new stroke with a drawing tool.
      */
-    d.startStroke = function () {
+    pub.startStroke = function () {
         done.fill(false);
     }
 
@@ -503,7 +503,7 @@ const drawing = function ($) {
      * @param  {string} s Name of the current shape.
      * @return {string}   Name of the following shape.
      */
-    d.nextShape = function (s) {
+    pub.nextShape = function (s) {
         switch (s) {
         case 'circle':
             return 'square';
@@ -521,7 +521,7 @@ const drawing = function ($) {
      * @param  {string} s Name of the current shape.
      * @return {string}   Name of the preceeding shape.
      */
-    d.prevShape = function (s) {
+    pub.prevShape = function (s) {
         switch (s) {
         case 'circle':
             return 'diamond';
@@ -539,7 +539,7 @@ const drawing = function ($) {
      * @return {bool}      True if an action was successfully undone, false if
      *                     there was not any undoable action.
      */
-    d.undo = function () {
+    pub.undo = function () {
         if (UNDO_STACK.length < 1) {
             return false;
         }
@@ -560,7 +560,7 @@ const drawing = function ($) {
      * @return {bool}      True if an action was successfully redone, false if
      *                     there was not any redoable action.
      */
-    d.redo = function () {
+    pub.redo = function () {
         if (REDO_STACK.length < 1) {
             return false;
         }
@@ -580,7 +580,7 @@ const drawing = function ($) {
      * Check if there are undoable actions.
      * @return {bool} True if there is at least one undoable action.
      */
-    d.undoable = function () {
+    pub.undoable = function () {
         return UNDO_STACK.length > 0;
     };
 
@@ -588,18 +588,18 @@ const drawing = function ($) {
      * Check if there are redoable actions.
      * @return {bool} True if there is at least one redoable action.
      */
-    d.redoable = function () {
+    pub.redoable = function () {
         return REDO_STACK.length > 0;
     };
 
     /**
      * Create a snapshot of the current canvas in the undo stack.
      */
-    d.snapshot = function () {
+    pub.snapshot = function () {
         UNDO_STACK.push(new ImageData(data.slice(), canvas.width, canvas.height));
         REDO_STACK.length = 0;
     };
 
-    return d;
+    return pub;
 
 } (jQuery);

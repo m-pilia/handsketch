@@ -8,26 +8,27 @@ const popup = function ($) {
 
     "use strict";
 
-    const p = {};
+    // public interface
+    const pub = {};
 
     /**
      * Open the popup with the specified id.
      * @param  {string} popupName The id for the popup div.
      */
-    p.openPopup = function (popupName) {
+    pub.openPopup = function (popupName) {
         $('#' + popupName).addClass('popup-visible');
         $('.body-wrapper')
                 .addClass('overlay')
                 .add('.popup-cancel')
                 .click(function () {
-            p.closePopup();
+            pub.closePopup();
         });
     };
 
     /**
      * Close any open popup.
      */
-    p.closePopup = function () {
+    pub.closePopup = function () {
         $('.popup-visible').removeClass('popup-visible');
         $('.overlay').removeClass('overlay');
     };
@@ -39,7 +40,7 @@ const popup = function ($) {
      * @return {Boolean} True if the specified popup (or any popup, if
      *                   not specified) is open.
      */
-    p.isPopupOpen = function (name) {
+    pub.isPopupOpen = function (name) {
         if (name === undefined || name === null || $.type(name) !== "string")
             name = '';
         else
@@ -47,6 +48,6 @@ const popup = function ($) {
         return $(name + '.popup-visible').length > 0;
     };
 
-    return p;
+    return pub;
 
 } (jQuery);

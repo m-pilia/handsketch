@@ -8,7 +8,8 @@ const canvasCoord = function ($) {
 
     "use strict";
 
-    const cc = {};
+    // public interface
+    const pub = {};
 
     // canvas object
     const canvas = document.getElementById('canvas');
@@ -24,7 +25,7 @@ const canvasCoord = function ($) {
      * Get the canvas object in use.
      * @return {Canvas} Canvas object in use.
      */
-    cc.getCanvas = function () {
+    pub.getCanvas = function () {
         return canvas;
     }
 
@@ -33,7 +34,7 @@ const canvasCoord = function ($) {
      * @param  {DOMRect} cbcr The bounding client rectancle for the canvas.
      * @return {DOMRect}      Current BCR for the canvas.
      */
-    cc.canvasBCR = function (cbcr) {
+    pub.canvasBCR = function (cbcr) {
         if (cbcr !== undefined) {
             mCanvasBCR = cbcr;
         }
@@ -44,7 +45,7 @@ const canvasCoord = function ($) {
      * Update the canvas bounding client rectangle.
      * @return {DOMRect} Updated BCR for the canvas.
      */
-    cc.updateCanvasBCR = function () {
+    pub.updateCanvasBCR = function () {
         mCanvasBCR = canvas.getBoundingClientRect();
         return mCanvasBCR;
     }
@@ -56,7 +57,7 @@ const canvasCoord = function ($) {
      *                   whose values are referred to the canvas coordinate
      *                   system.
      */
-    cc.getCoord = function (e) {
+    pub.getCoord = function (e) {
         return {
             'x': (e.clientX - mCanvasBCR.left + scrollLeft) | 0,
             'y': (e.clientY - mCanvasBCR.top + scrollTop) | 0
@@ -68,7 +69,7 @@ const canvasCoord = function ($) {
      * @param  {Object}  p A point whose coordinates are the x and y attributes.
      * @return {Boolean}   True if the point lies inside the canvas.
      */
-    cc.isOnCanvas = function (p) {
+    pub.isOnCanvas = function (p) {
         return (p.x >= 0 &&
                 p.x < canvas.width &&
                 p.y >= 0 &&
@@ -76,7 +77,7 @@ const canvasCoord = function ($) {
     };
 
     // set the canvas object for the drawing tools
-    drawing.canvas(canvas);    
+    drawing.canvas(canvas);
 
     // prepare default white canvas on loading
     $(document).ready(function (e) {
@@ -92,6 +93,6 @@ const canvasCoord = function ($) {
         });
     });
 
-    return cc;
+    return pub;
 
 } (jQuery);

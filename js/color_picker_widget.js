@@ -8,8 +8,10 @@ const colorPickerWidget = function ($) {
 
     "use strict";
 
-    const cpw = {};
+    // public interface
+    const pub = {};
 
+    // input spinboxes
     const RED = $('input#red-value');
     const GREEN = $('input#green-value');
     const BLUE = $('input#blue-value');
@@ -20,7 +22,7 @@ const colorPickerWidget = function ($) {
      * @param {number} v Optional value assigned to the color component.
      * @return {number} Value of the red color component.
      */
-    cpw.red = function (v) {
+    pub.red = function (v) {
         if (v !== undefined) {
             RED.val(parseInt(v));
         }
@@ -32,7 +34,7 @@ const colorPickerWidget = function ($) {
      * @param {number} v Optional value assigned to the color component.
      * @return {number} Value of the green color component.
      */
-    cpw.green = function (v) {
+    pub.green = function (v) {
         if (v !== undefined) {
             GREEN.val(parseInt(v));
         }
@@ -44,7 +46,7 @@ const colorPickerWidget = function ($) {
      * @param {number} v Optional value assigned to the color component.
      * @return {number} Value of the blue color component.
      */
-    cpw.blue = function (v) {
+    pub.blue = function (v) {
         if (v !== undefined) {
             BLUE.val(parseInt(v));
         }
@@ -56,7 +58,7 @@ const colorPickerWidget = function ($) {
      * @param {number} v Optional value assigned to the color component.
      * @return {number} Value of the alpha color component.
      */
-    cpw.alpha = function (v) {
+    pub.alpha = function (v) {
         if (v !== undefined) {
             ALPHA.val(parseInt(v));
         }
@@ -67,11 +69,11 @@ const colorPickerWidget = function ($) {
      * Get the color from the color picker as hexadecimal RGB string.
      * @return {string} Hexadecimal RGB string for the color.
      */
-    cpw.getRGBColor = function () {
+    pub.getRGBColor = function () {
         return '#' +
-            ('00' + parseInt(cpw.red()).toString(16)).slice(-2) +
-            ('00' + parseInt(cpw.green()).toString(16)).slice(-2) +
-            ('00' + parseInt(cpw.blue()).toString(16)).slice(-2);
+            ('00' + parseInt(pub.red()).toString(16)).slice(-2) +
+            ('00' + parseInt(pub.green()).toString(16)).slice(-2) +
+            ('00' + parseInt(pub.blue()).toString(16)).slice(-2);
     };
 
     /**
@@ -142,6 +144,6 @@ const colorPickerWidget = function ($) {
         $('#color-selector').fanSelector(60);
     });
 
-    return cpw;
+    return pub;
 
 } (jQuery);

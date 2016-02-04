@@ -11,7 +11,8 @@ const circularSelector = function ($) {
 
     "use strict";
 
-    const cs = {};
+    // public interface
+    const pub = {};
 
     /**
      * Apply style to the selected tool entry.
@@ -21,7 +22,7 @@ const circularSelector = function ($) {
      *                           a function taking as a parameter the
      *                            'data-entry' attribute
      */
-    cs.selectEntry = function (name, i, handler) {
+    pub.selectEntry = function (name, i, handler) {
         // disable selection from previously selected item, and select the
         // current one
         $("#" + name + "-selector .selected-tool").removeClass("selected-tool");
@@ -34,13 +35,13 @@ const circularSelector = function ($) {
         if (handler)
             handler(li.attr('data-entry'));
         // set input afford
-        cs.setInputAfford();
+        pub.setInputAfford();
     };
 
     /**
      * Set the input afford position and size for the selected input.
      */
-    cs.setInputAfford = function () {
+    pub.setInputAfford = function () {
         var o = $('[data-active] input, [data-active] .shape-entry');
         if (!o.length) {
             return;
@@ -66,7 +67,7 @@ const circularSelector = function ($) {
      * @param {string} name Name of the selector.
      * @param {bool}   val  True to highlight, false to remove highlighting.
      */
-    cs.hintHighlight = function (name, val) {
+    pub.hintHighlight = function (name, val) {
         if (val)
             $("#" + name + "-selector-hint,#" + name + "-afford")
                 .addClass("highlighted-selector");
@@ -85,7 +86,7 @@ const circularSelector = function ($) {
      *                            associated to the entry ('data-entry'
      *                            attribute).
      */
-    cs.setupSelector = function (name, handler) {
+    pub.setupSelector = function (name, handler) {
         // selector entries
         var tools = $("#" + name + "-selector li");
 
@@ -142,6 +143,6 @@ const circularSelector = function ($) {
         circularSelector.selectEntry(name, 1, handler);
     };
 
-    return cs;
+    return pub;
 
 } (jQuery);

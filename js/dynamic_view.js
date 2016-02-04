@@ -9,7 +9,7 @@ const dynamicView = function ($) {
     "use strict";
 
     // public interface
-    const dv = {};
+    const pub = {};
 
     /**
      * Fit the size of a selector in order to fill the available space in the
@@ -221,7 +221,7 @@ const dynamicView = function ($) {
     /**
      * Fit all the sizes which need a dynamic adjustment.
      */
-    dv.fitSizes = function () {
+    pub.fitSizes = function () {
         fitColumns();
         fitCanvas();
         fitSelector("tool", true);
@@ -293,10 +293,10 @@ const dynamicView = function ($) {
         circularSelector.setupSelector("picker", null);
 
         // fit sizes on load and on resize
-        dv.fitSizes();
-        window.addEventListener('resize', dv.fitSizes);
+        pub.fitSizes();
+        window.addEventListener('resize', pub.fitSizes);
     });
 
-    return dv;
+    return pub;
 
 } (jQuery);
