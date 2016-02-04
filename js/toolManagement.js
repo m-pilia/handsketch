@@ -188,6 +188,13 @@ const toolManagement = function ($) {
         }
     });
 
+    // save image from the canvas
+    $('#save-file').click(function (e) {
+        $('#image-save')
+            .attr('href', $('#canvas')[0].toDataURL("image/png"))[0]
+            .click();
+    });
+
     // event handler to draw on mouse clik
     $('#canvas').on('mousedown', function (e) {
         // forbid input when a popup is open or with buttons different than left

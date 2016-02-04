@@ -16,6 +16,10 @@
     display: none;
 }
 
+#image-save {
+    display: none;
+}
+
 #cursor {
     position: fixed;
     pointer-events: none;
