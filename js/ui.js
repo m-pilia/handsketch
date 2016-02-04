@@ -1,10 +1,10 @@
 /**
- * Dynamic view settings.
+ * Dynamic user interface settings.
  *
  * @date 2016-01-02
  */
 
-const dynamicView = function ($) {
+const ui = function ($) {
 
     "use strict";
 
@@ -133,7 +133,6 @@ const dynamicView = function ($) {
 
         // set slider height
         var h = selector.outerHeight() - display.outerHeight(true) - aHeight;
-        console.log(display.outerHeight(true))
         $('.slider').css('height', h);
     }
 
@@ -264,7 +263,7 @@ const dynamicView = function ($) {
                     <a  id="` + theme + `-theme"
                         tabindex="0"
                         onclick="themeSelector.applyTheme('` + theme + `');
-                                 dynamicView.fitSizes();">
+                                 ui.fitSizes();">
                             <span class="glyphicon glyphicon-eye-open"
                                   aria-hidden="true"></span>&nbsp;` +
                             theme + `

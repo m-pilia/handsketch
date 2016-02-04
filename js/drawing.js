@@ -15,7 +15,7 @@ const drawing = function ($) {
     const pvt = {};
 
     // shorter alias for the color picker widget
-    const cpw = colorPickerWidget;
+    const cp = colorPicker;
 
     // canvas, context, image data, data array
     var canvas = null;
@@ -252,14 +252,14 @@ const drawing = function ($) {
     function alphaBlend(k) {
         // alpha blending
         var m = k * 4;
-        var a = cpw.alpha() / 255 * mOpacity;
+        var a = cp.alpha() / 255 * mOpacity;
         var na = (1 - a) * data[m + 3] / 255;
         var da = a + na; // computed alpha
         data[m + 3] = 255 * da | 0;
         if (da) {
-            data[m + 0] = (data[m + 0] * na + cpw.red() * a) | 0;
-            data[m + 1] = (data[m + 1] * na + cpw.green() * a) | 0;
-            data[m + 2] = (data[m + 2] * na + cpw.blue() * a) | 0;
+            data[m + 0] = (data[m + 0] * na + cp.red() * a) | 0;
+            data[m + 1] = (data[m + 1] * na + cp.green() * a) | 0;
+            data[m + 2] = (data[m + 2] * na + cp.blue() * a) | 0;
         }
         else {
             data[m] = data[m + 1] = data[m + 2] = 0;
@@ -350,10 +350,10 @@ const drawing = function ($) {
         const A0 = data[m + 3];
 
         // fill color
-        const RR = cpw.red();
-        const GG = cpw.green();
-        const BB = cpw.blue();
-        const AA = cpw.alpha() * mOpacity;
+        const RR = cp.red();
+        const GG = cp.green();
+        const BB = cp.blue();
+        const AA = cp.alpha() * mOpacity;
 
         // squared threshold for the color distance
         const THRESHOLD = mThreshold * mThreshold * MAX_DISTANCE;
@@ -454,17 +454,17 @@ const drawing = function ($) {
                 }
             }
 
-            cpw.red((r / n) | 0);
-            cpw.green((g / n) | 0);
-            cpw.blue((b / n) | 0);
-            cpw.alpha((a / n) | 0);
+            cp.red((r / n) | 0);
+            cp.green((g / n) | 0);
+            cp.blue((b / n) | 0);
+            cp.alpha((a / n) | 0);
         }
         else {
             // pick the exact color from a pixel
-            cpw.red(data[m + 0]);
-            cpw.green(data[m + 1]);
-            cpw.blue(data[m + 2]);
-            cpw.alpha(data[m + 3]);
+            cp.red(data[m + 0]);
+            cp.green(data[m + 1]);
+            cp.blue(data[m + 2]);
+            cp.alpha(data[m + 3]);
         }
 
         // trigger event to update the sliders

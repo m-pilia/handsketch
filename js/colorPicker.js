@@ -4,7 +4,7 @@
  * @date 2016-01-03
  */
 
-const colorPickerWidget = function ($) {
+const colorPicker = function ($) {
 
     "use strict";
 

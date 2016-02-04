@@ -50,10 +50,10 @@ const cursor = function ($) {
 
         default:
             cursTraX = cursTraY = 0;
-            const cpw = colorPickerWidget;
+            const cp = colorPicker;
             const thickness = drawing.thickness();
-            const svgColor = (tool == 'eraser' ? '#ffffff' : cpw.getRGBColor());
-            const svgOpacity = (drawing.opacity() * cpw.alpha() / 255);
+            const svgColor = (tool == 'eraser' ? '#ffffff' : cp.getRGBColor());
+            const svgOpacity = (drawing.opacity() * cp.alpha() / 255);
 
             switch (drawing.shape()) {
             case 'circle':
