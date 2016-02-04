@@ -56,7 +56,7 @@ const drawing = function ($) {
     pub.tool = function (t) {
         if (t !== undefined) {
             try {
-                if ($.type(pvt[t]) !== 'function' && $.type(d[t]) !== 'function')
+                if ($.type(pvt[t]) !== 'function' && $.type(pub[t]) !== 'function')
                     throw new Error('The selected object is not a function');
                 mTool = t;
             }
