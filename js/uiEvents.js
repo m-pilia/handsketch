@@ -1,10 +1,10 @@
 /**
- * Drawing tools switch and setup.
+ * Handle events from the UI and from the model.
  *
  * @date 2016-01-20
  */
 
-const toolManagement = function ($) {
+const uiEvents = function ($) {
 
     "use strict";
 
@@ -160,7 +160,7 @@ const toolManagement = function ($) {
     // select color channel input on event
     $(document).on('selectColor', function (e) {
         var o = colorInput[e.originalEvent.detail.n];
-        toolManagement.activateInput(o);
+        uiEvents.activateInput(o);
         circularSelector.setInputAfford();
     });
 
@@ -346,28 +346,6 @@ const toolManagement = function ($) {
         var parent = $(this).closest('li[data-entry=shape]');
         parent.find('[data-shape]').addClass('inactive');
         $(this).removeClass('inactive');
-    });
-
-    // startup
-    // select circle as default shape for each tool, and activate the default
-    // option for each selector
-    $(document).on('ready', function (e) {
-        $('[data-shape="circle"]').trigger('click');
-        circularSelector.selectEntry('tool', 1, pub.setTool);
-        circularSelector.selectEntry('airbrush', 1, null);
-        circularSelector.selectEntry('eraser', 1, null);
-        circularSelector.selectEntry('filler', 1, null);
-        circularSelector.selectEntry('picker', 1, null);
-        circularSelector.selectEntry('brush', 1, null);
-
-        // set number of tools and the number of options for each tool
-        var tn = $('#tool-selector li').length;
-        var on = {};
-        $('#tool-selector li').each(function () {
-            var val = $(this).attr('data-entry');
-            on[val] = $('#' + val + '-selector li').length;
-        });
-        gestureRecognition.setToolAndOptNo(tn, on);
     });
 
     return pub;

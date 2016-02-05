@@ -142,7 +142,7 @@ const colorPicker = function ($) {
 
             // activate and set inptut afford when focused
             $(this).on("focus", function () {
-                toolManagement.activateInput($(this).parent('.color-item'));
+                uiEvents.activateInput($(this).parent('.color-item'));
                 circularSelector.setInputAfford();
             });
 
