@@ -79,19 +79,35 @@ const colorPicker = function ($) {
     /**
      * Update the color preview with the current component values.
      */
-    function updateColorPreview() {
+    function updateColor() {
         $("#fg-color").css(
             "background",
             "rgba(" +
-                $("#red-value").val()   + "," +
-                $("#green-value").val() + "," +
-                $("#blue-value").val()  + "," +
-                $("#alpha-value").val() / 255 + ")"
+                RED.val()   + "," +
+                GREEN.val() + "," +
+                BLUE.val()  + "," +
+                ALPHA.val() / 255 + ")"
             );
+
+        // update drawing color
+        drawing.red(RED.val());
+        drawing.green(GREEN.val());
+        drawing.blue(BLUE.val());
+        drawing.alpha(ALPHA.val());
 
         // update cursor
         cursor.setCursor();
     }
+
+    // update color on event
+    $(document).on('updateColor', function (e) {
+        var c = e.originalEvent.detail.color;
+        RED.val(c.r);
+        GREEN.val(c.g);
+        BLUE.val(c.b);
+        ALPHA.val(c.a);
+        $('.color-value').trigger('input');
+    });
 
     $(document).ready(function () {
         // create slider objects
@@ -108,7 +124,7 @@ const colorPicker = function ($) {
                 var value = $("#" + color + "-slider").val();
                 $("#" + color + "-value").val(value);
                 localStorage.setItem(color + "-value", value);
-                updateColorPreview();
+                updateColor();
             });
         });
 
@@ -121,7 +137,7 @@ const colorPicker = function ($) {
                 var value = parseInt($(this).val());
                 slider.bootstrapSlider("setValue", value);
                 localStorage.setItem(color + "-value", value);
-                updateColorPreview();
+                updateColor();
             });
 
             // activate and set inptut afford when focused
@@ -137,7 +153,7 @@ const colorPicker = function ($) {
             }
             $(this).val(value);
             slider.bootstrapSlider("setValue", parseInt(value));
-            updateColorPreview();
+            updateColor();
         });
 
         // create the fan selector
