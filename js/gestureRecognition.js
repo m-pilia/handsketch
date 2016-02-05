@@ -277,8 +277,8 @@ const gestureRecognition = function ($, Leap) {
      * @param  {number}   r  Hand rotation angle.
      * @param  {number}   d  Thumb-tip - middle-tip distance.
      * @param  {number}   t  thumb-tip - palm-center distance
-     * @param  {number}   d2 Thumb-tip - middle-finger-1st-interphalanx distance.
-     * @param  {number}   d3 Thumb-tip - middle-finger-tip distance.
+     * @param  {number}   d2 Thumb-tip - middle-1st-interphalanx distance.
+     * @param  {number}   d3 Thumb-tip - middle-tip distance.
      * @param  {number[]} pa Angles between the last two phalanxes.
      * @param  {number[]} fa Angles between the fingers and the palm normal.
      * @return {bool}        True if a gesture was detected, false otherwise.
@@ -462,15 +462,18 @@ const gestureRecognition = function ($, Leap) {
     var sP = 0;
     // rotations below this threshold value are ignored
     const ANGLE_THRESHOLD = 1;
+    // variable for gesture id
+    var gestureId = null;
 
     /**
      * Check for a input gesture.
      * @param  {gesture[]} gestures Array of gestures for the current frame.
-     * @param  {number}    d2       Thumb-tip - middle-finger-1st-interphalanx
+     * @param  {number}    d2       Thumb-tip - middle-1st-interphalanx
      *                              distance
+     * @param  {number}    d3       Thumb-tip - middle-tip distance.
      * @param  {number[]}  pa       Angles between the last two phalanxes.
      */
-    function gestureRotation(gestures, d2, pa) {
+    function gestureRotation(gestures, d2, d3, pa) {
         gestures.forEach(function (g) {
             if (g.type != 'circle') {
                 return;
@@ -482,7 +485,7 @@ const gestureRecognition = function ($, Leap) {
                 }
 
                 // check shape of the hand
-                if (d2 > 30 || pa[0] < 25) {
+                if ((d2 > 30 && d3 > 30) || pa[0] < 25) {
                     return;
                 }
 
@@ -495,6 +498,8 @@ const gestureRecognition = function ($, Leap) {
                 var detail = null;
                 switch (g.state) {
                 case 'start':
+                    // memorize gesture id
+                    gestureId = g.id;
                     // reset variable
                     lastVal = 0;
                     // get progress angle at gesture beginning
@@ -505,12 +510,23 @@ const gestureRecognition = function ($, Leap) {
                     break;
 
                 case 'update':
+                    // re-enable hint highlighting if it was wrongly disabled
+                    // because of inconsistent data from the leap
+                    if (gestureId === null) {
+                        var d = {'hint': 'input', 'value': true};
+                        var e = new CustomEvent('toggleHint', {'detail': d});
+                        document.dispatchEvent(e);
+                    }
+                    // memorize gesture id
+                    gestureId = g.id;
                     // event parameters to update afford hint position
                     eventType = 'rotateAfford';
                     detail = {'name': 'input', 'angle': iAngle + a};
                     break;
 
                 case 'stop':
+                    // discard gesture id
+                    gestureId = null;
                     // update actual angle
                     iAngle += a;
                     // event parameters for highlighting deactivation
@@ -532,6 +548,17 @@ const gestureRecognition = function ($, Leap) {
                 }
             });
         });
+
+        // terminate a gesture if it was not correctly stopped due to
+        // inconsistent frame data
+        const f = function (e) {return e.id === gestureId;};
+        if (gestureId !== null && gestures.find(f) === undefined) {
+            gestureId = null;
+            // send event to disable input hint highlighting
+            var detail = {'hint': 'input', 'value': false};
+            var e = new CustomEvent('toggleHint', {'detail': detail});
+            document.dispatchEvent(e);
+        }
     }
 
     // temp vector for computations
@@ -599,7 +626,7 @@ const gestureRecognition = function ($, Leap) {
         }
 
         // check gesture for input variation
-        gestureRotation(gestures, d2, pa);
+        gestureRotation(gestures, d2, d3, pa);
     }
 
     return pub;
