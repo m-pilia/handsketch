@@ -230,9 +230,18 @@ const gestureRecognition = function ($, Leap) {
             // obtained projecting the knob angle in that interval
             var n = Math.floor(tAngle * tK * TOOLS_NO / RANGE) % TOOLS_NO + 1;
             if (n != tLastN) {
-                circularSelector.selectEntry('tool', n, toolManagement.setTool);
+                // deliver event for tool selection
+                var detail = {
+                    'selector': 'tool',
+                    'entry': n,
+                };
+                var e = new CustomEvent('selectEntry', {'detail': detail});
+                document.dispatchEvent(e);
+
+                // update variable
                 tLastN = n;
             }
+
             // feedback of the detected gesture
             var det = {
                 'hint': 'tool',
@@ -318,13 +327,20 @@ const gestureRecognition = function ($, Leap) {
                 oLast[tool] = r;
             }
 
+            // update variable
+            oLastN[tool] = n;
+
             // compute option index
             var n = Math.floor(oAngle[tool] * oK * OPT_NO[tool] / RANGE)
                     % OPT_NO[tool] + 1;
 
-            // select entry
-            circularSelector.selectEntry(tool, n, null);
-            oLastN[tool] = n;
+            // deliver event for entry selection
+            var detail = {
+                'selector': tool,
+                'entry': n,
+            };
+            var e = new CustomEvent('selectEntry', {'detail': detail});
+            document.dispatchEvent(e);
 
             // feedback of the detected gesture
             var det = {

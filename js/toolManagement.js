@@ -196,6 +196,14 @@ const toolManagement = function ($) {
         }
     });
 
+    // select an entry on event
+    $(document).on('selectEntry', function (e) {
+        var selector = e.originalEvent.detail.selector;
+        var entry = e.originalEvent.detail.entry;
+        var handler = (selector === 'tool' ? pub.setTool : null);
+        circularSelector.selectEntry(selector, entry, handler);
+    });
+
     // keyboard event handler
     $(document).keydown(function (e) {
         switch (e.which) {
