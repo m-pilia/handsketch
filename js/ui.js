@@ -298,12 +298,31 @@ const ui = function ($) {
         $("#canvas-area").ruler();
 
         // setup selectors
-        circularSelector.setupSelector("tool", toolManagement.setTool);
+        circularSelector.setupSelector("tool", uiEvents.setTool);
         circularSelector.setupSelector("brush", null);
         circularSelector.setupSelector("airbrush", null);
         circularSelector.setupSelector("eraser", null);
         circularSelector.setupSelector("filler", null);
         circularSelector.setupSelector("picker", null);
+
+        // select circle as default shape for each tool, and activate the
+        // default option for each selector
+        $('[data-shape="circle"]').trigger('click');
+        circularSelector.selectEntry('tool', 1, pub.setTool);
+        circularSelector.selectEntry('airbrush', 1, null);
+        circularSelector.selectEntry('eraser', 1, null);
+        circularSelector.selectEntry('filler', 1, null);
+        circularSelector.selectEntry('picker', 1, null);
+        circularSelector.selectEntry('brush', 1, null);
+
+        // set number of tools and the number of options for each tool
+        var tn = $('#tool-selector li').length;
+        var on = {};
+        $('#tool-selector li').each(function () {
+            var val = $(this).attr('data-entry');
+            on[val] = $('#' + val + '-selector li').length;
+        });
+        gestureRecognition.setToolAndOptNo(tn, on);
 
         // fit sizes on load and on resize
         pub.fitSizes();

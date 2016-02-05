@@ -14,9 +14,6 @@ const drawing = function ($) {
     // private and dynamically callable interface
     const pvt = {};
 
-    // shorter alias for the color picker widget
-    const cp = colorPicker;
-
     // canvas, context, image data, data array
     var canvas = null;
     var ctx = null;
@@ -34,6 +31,12 @@ const drawing = function ($) {
     const THRESH_MAX = 100;
     const DENSITY_MAX = 100;
 
+    // color components
+    var mR = null;
+    var mG = null;
+    var mB = null;
+    var mA = null;
+
     // current tool and its properties
     var mTool = null;
     var mThickness = null;
@@ -47,6 +50,54 @@ const drawing = function ($) {
     // enough for this application prototype
     const UNDO_STACK = [];
     const REDO_STACK = [];
+
+    /**
+     * Get and set the red color component.
+     * @param  {number} v New value for the red component.
+     * @return {number}   Value of the red component.
+     */
+    pub.red = function (v) {
+        if (v !== undefined) {
+            mR = parseInt(v);
+        }
+        return mR;
+    };
+
+    /**
+     * Get and set the green color component.
+     * @param  {number} v New value for the green component.
+     * @return {number}   Value of the green component.
+     */
+    pub.green = function (v) {
+        if (v !== undefined) {
+            mG = parseInt(v);
+        }
+        return mG;
+    };
+
+    /**
+     * Get and set the blue color component.
+     * @param  {number} v New value for the blue component.
+     * @return {number}   Value of the blue component.
+     */
+    pub.blue = function (v) {
+        if (v !== undefined) {
+            mB = parseInt(v);
+        }
+        return mB;
+    };
+
+    /**
+     * Get and set the alpha color component.
+     * @param  {number} v New value for the alpha component.
+     * @return {number}   Value of the alpha component.
+     */
+    pub.alpha = function (v) {
+        if (v !== undefined) {
+            mA = parseInt(v);
+        }
+        return mA;
+    };
 
     /**
      * Get or set the active drawing tool.
@@ -252,14 +303,14 @@ const drawing = function ($) {
     function alphaBlend(k) {
         // alpha blending
         var m = k * 4;
-        var a = cp.alpha() / 255 * mOpacity;
+        var a = mA / 255 * mOpacity;
         var na = (1 - a) * data[m + 3] / 255;
         var da = a + na; // computed alpha
         data[m + 3] = 255 * da | 0;
         if (da) {
-            data[m + 0] = (data[m + 0] * na + cp.red() * a) | 0;
-            data[m + 1] = (data[m + 1] * na + cp.green() * a) | 0;
-            data[m + 2] = (data[m + 2] * na + cp.blue() * a) | 0;
+            data[m + 0] = (data[m + 0] * na + mR * a) | 0;
+            data[m + 1] = (data[m + 1] * na + mG * a) | 0;
+            data[m + 2] = (data[m + 2] * na + mB * a) | 0;
         }
         else {
             data[m] = data[m + 1] = data[m + 2] = 0;
@@ -350,10 +401,10 @@ const drawing = function ($) {
         const A0 = data[m + 3];
 
         // fill color
-        const RR = cp.red();
-        const GG = cp.green();
-        const BB = cp.blue();
-        const AA = cp.alpha() * mOpacity;
+        const RR = mR;
+        const GG = mG;
+        const BB = mB;
+        const AA = mA * mOpacity;
 
         // squared threshold for the color distance
         const THRESHOLD = mThreshold * mThreshold * MAX_DISTANCE;
@@ -427,6 +478,7 @@ const drawing = function ($) {
     pub.picker = function (x, y) {
         var k = canvas.width * y + x;
         var m = k * 4;
+        var c = {}; // picked color
 
         if (mThickness > 1) {
             // pick the average color from an area
@@ -454,21 +506,22 @@ const drawing = function ($) {
                 }
             }
 
-            cp.red((r / n) | 0);
-            cp.green((g / n) | 0);
-            cp.blue((b / n) | 0);
-            cp.alpha((a / n) | 0);
+            c.r = (r / n) | 0;
+            c.g = (g / n) | 0;
+            c.b = (b / n) | 0;
+            c.a = (a / n) | 0;
         }
         else {
             // pick the exact color from a pixel
-            cp.red(data[m + 0]);
-            cp.green(data[m + 1]);
-            cp.blue(data[m + 2]);
-            cp.alpha(data[m + 3]);
+            c.r = data[m + 0];
+            c.g = data[m + 1];
+            c.b = data[m + 2];
+            c.a = data[m + 3];
         }
 
-        // trigger event to update the sliders
-        $('.color-value').trigger('input');
+        // trigger event to update the ui
+        var e = new CustomEvent('updateColor', {detail: {'color': c}});
+        document.dispatchEvent(e);
     };
 
     /**
@@ -566,7 +619,8 @@ const drawing = function ($) {
         }
 
         // keep a copy of redone image for undo
-        UNDO_STACK.push(new ImageData(data.slice(), canvas.width, canvas.height));
+        var d = new ImageData(data.slice(), canvas.width, canvas.height);
+        UNDO_STACK.push(d);
 
         // restore canvas
         imageData = REDO_STACK.pop();
@@ -596,7 +650,8 @@ const drawing = function ($) {
      * Create a snapshot of the current canvas in the undo stack.
      */
     pub.snapshot = function () {
-        UNDO_STACK.push(new ImageData(data.slice(), canvas.width, canvas.height));
+        var d = new ImageData(data.slice(), canvas.width, canvas.height);
+        UNDO_STACK.push(d);
         REDO_STACK.length = 0;
     };
 

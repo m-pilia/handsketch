@@ -8,6 +8,9 @@
 
 const gestureRecognition = function ($, Leap) {
 
+    // public interface
+    const pub = {};
+
     // capture device options
     var options = {enableGestures: true};
 
@@ -22,7 +25,8 @@ const gestureRecognition = function ($, Leap) {
         }
         else {
             // disable hints when no gesture is detected
-            $('.highlighted-selector').removeClass('highlighted-selector');
+            var e = new Event('disableHints');
+            document.dispatchEvent(e);
         }
     });
 
@@ -44,13 +48,30 @@ const gestureRecognition = function ($, Leap) {
         'pinky'
     ];
 
-    // get tools and the number of options for each tool
-    var OPT_NO = {};
-    $('#tool-selector li').each(function () {
-        var val = $(this).attr('data-entry');
-        OPT_NO[val] = $('#' + val + '-selector li').length;
-    });
-    const TOOLS_NO = $('#tool-selector li').length;
+    // number of tools and number of options for each tool
+    var OPT_NO = null;
+    var TOOLS_NO = null;
+
+    /**
+     * Set the number of tools and of options for each tool.
+     * @param {number}   tn Number of tools.
+     * @param {number[]} on Number of options for each tool (tool name as
+     *                      label).
+     */
+    pub.setToolAndOptNo = function (tn, on) {
+        if (tn !== undefined) {
+            TOOLS_NO = parseInt(tn);
+        }
+        if (on !== undefined) {
+            OPT_NO = on;
+            Object.keys(OPT_NO).forEach(function (e) {
+                oAngle[e] = 10;
+                oFirst[e] = NONE;
+                oLast[e] = 0;
+                oLastN[e] = 1;
+            });
+        }
+    };
 
     /**
      * Apply the sign of one variable to another.
@@ -136,25 +157,19 @@ const gestureRecognition = function ($, Leap) {
         return a;
     }
 
-    // afford hints
-    const tAfford = $('#tool-afford');
-    const oAfford = $('#option-afford');
-    const iAfford = $('#input-afford')
-
     // coefficients
     const NONE = 0xFFFF; // an unreachable value, used as a null one
     const RANGE = 360;   // the angle range for the knob is from 0 to this value
     const tK = 3;
-    const tA = -RANGE / TOOLS_NO;
     const oK = 3;
     const kCircle = 0.6;
 
     /*
      * When the hand position is recognized in a rotation gesture first, its
-     * rotation angle in that first frame of the gesture is recorded. The angle is
-     * tracked up to the end of the gesture, and then the angle difference between
-     * the last and the first frame of the gesture represents the angle variation
-     * for the knob.
+     * rotation angle in that first frame of the gesture is recorded. The
+     * angle is tracked up to the end of the gesture, and then the angle
+     * difference between the last and the first frame of the gesture
+     * represents the angle variation for the knob.
      */
     var tAngle = 10;     // current tool angle
     var tFirst = NONE;   // angle of the hand at the start of the interaction
@@ -197,8 +212,12 @@ const gestureRecognition = function ($, Leap) {
                     // limit the angle into [0,RANGE]
                     tAngle = (tAngle < 0 ? RANGE + tAngle : tAngle) % RANGE;
                     // update afford hint position
-                    var affAngle = tAngle * tK + tA;
-                    tAfford.css('transform', 'rotate(' + affAngle + 'deg)');
+                    var obj = {
+                        'name': 'tool',
+                        'angle': tAngle * tK - RANGE / TOOLS_NO
+                    };
+                    var e = new CustomEvent('rotateAfford', {detail: obj});
+                    document.dispatchEvent(e);
                 }
                 else {
                     tFirst = r;
@@ -211,17 +230,38 @@ const gestureRecognition = function ($, Leap) {
             // obtained projecting the knob angle in that interval
             var n = Math.floor(tAngle * tK * TOOLS_NO / RANGE) % TOOLS_NO + 1;
             if (n != tLastN) {
-                circularSelector.selectEntry('tool', n, toolManagement.setTool);
+                // deliver event for tool selection
+                var detail = {
+                    'selector': 'tool',
+                    'entry': n,
+                };
+                var e = new CustomEvent('selectEntry', {'detail': detail});
+                document.dispatchEvent(e);
+
+                // update variable
                 tLastN = n;
             }
+
             // feedback of the detected gesture
-            circularSelector.hintHighlight('tool', true);
+            var det = {
+                'hint': 'tool',
+                'value': true
+            };
+            var e = new CustomEvent('toggleHint', {detail: det});
+            document.dispatchEvent(e);
+
             return true;
         }
         else {
             tFirst = NONE;
             // cease feedback of the detected gesture
-            circularSelector.hintHighlight('tool', false);
+            var det = {
+                'hint': 'tool',
+                'value': false
+            };
+            var e = new CustomEvent('toggleHint', {detail: det});
+            document.dispatchEvent(e);
+
             return false;
         }
     }
@@ -231,21 +271,14 @@ const gestureRecognition = function ($, Leap) {
     var oFirst = [];
     var oLast = [];
     var oLastN = [];
-    // init
-    Object.keys(OPT_NO).forEach(function (e) {
-        oAngle[e] = 10;
-        oFirst[e] = NONE;
-        oLast[e] = 0;
-        oLastN[e] = 1;
-    });
 
     /**
      * Check for a rotation of the option know.
      * @param  {number}   r  Hand rotation angle.
      * @param  {number}   d  Thumb-tip - middle-tip distance.
      * @param  {number}   t  thumb-tip - palm-center distance
-     * @param  {number}   d2 Thumb-tip - middle-finger-1st-interphalanx distance.
-     * @param  {number}   d3 Thumb-tip - middle-finger-tip distance.
+     * @param  {number}   d2 Thumb-tip - middle-1st-interphalanx distance.
+     * @param  {number}   d3 Thumb-tip - middle-tip distance.
      * @param  {number[]} pa Angles between the last two phalanxes.
      * @param  {number[]} fa Angles between the fingers and the palm normal.
      * @return {bool}        True if a gesture was detected, false otherwise.
@@ -281,8 +314,12 @@ const gestureRecognition = function ($, Leap) {
                         RANGE + oAngle[tool] : oAngle[tool]) % RANGE;
                     // update afford hint position
                     var oA = -RANGE / OPT_NO[tool];
-                    var affAngle = oAngle[tool] * oK + oA;
-                    oAfford.css('transform', 'rotate(' + affAngle + 'deg)');
+                    var obj = {
+                        'name': 'option',
+                        'angle': oAngle[tool] * oK + oA
+                    };
+                    var e = new CustomEvent('rotateAfford', {detail: obj});
+                    document.dispatchEvent(e);
                 }
                 else {
                     oFirst[tool] = r;
@@ -290,22 +327,41 @@ const gestureRecognition = function ($, Leap) {
                 oLast[tool] = r;
             }
 
+            // update variable
+            oLastN[tool] = n;
+
             // compute option index
             var n = Math.floor(oAngle[tool] * oK * OPT_NO[tool] / RANGE)
                     % OPT_NO[tool] + 1;
 
-            // select entry
-            circularSelector.selectEntry(tool, n, null);
-            oLastN[tool] = n;
+            // deliver event for entry selection
+            var detail = {
+                'selector': tool,
+                'entry': n,
+            };
+            var e = new CustomEvent('selectEntry', {'detail': detail});
+            document.dispatchEvent(e);
 
             // feedback of the detected gesture
-            circularSelector.hintHighlight('option', true);
+            var det = {
+                'hint': 'option',
+                'value': true
+            };
+            var e = new CustomEvent('toggleHint', {detail: det});
+            document.dispatchEvent(e);
+
             return true;
         }
         else {
             oFirst[tool] = NONE;
             // cease feedback of the detected gesture
-            circularSelector.hintHighlight('option', false);
+            var det = {
+                'hint': 'option',
+                'value': false
+            };
+            var e = new CustomEvent('toggleHint', {detail: det});
+            document.dispatchEvent(e);
+
             return false;
         }
     }
@@ -314,7 +370,6 @@ const gestureRecognition = function ($, Leap) {
     var cAngle = 10;
     var cFirst = NONE;
     var cLast = 0;
-    var cLastN = 1;
 
     /**
      * Check for a rotation of the color picker.
@@ -351,10 +406,13 @@ const gestureRecognition = function ($, Leap) {
                     // limit the angle into [0,RANGE/4]
                     cAngle = cAngle < 0 ? 0 : cAngle;
                     cAngle = cAngle > RANGE / 4 ? RANGE / 4 : cAngle;
-                    // rotate afford
-                    var rA = cAngle / 4 - RANGE / 32 | 0;
-                    $('#color-picker-afford')
-                        .css('transform', 'rotate(' + rA + 'deg)');
+                    // update afford hint position
+                    var obj = {
+                        'name': 'color-picker',
+                        'angle': cAngle / 4 - RANGE / 32 | 0
+                    };
+                    var e = new CustomEvent('rotateAfford', {detail: obj});
+                    document.dispatchEvent(e);
                 }
                 else {
                     cFirst = r;
@@ -367,37 +425,31 @@ const gestureRecognition = function ($, Leap) {
             // obtained projecting the knob angle in that interval
             var n = Math.floor(cAngle * 3.2 * 4 / RANGE) % 4;
 
-            // find right color channel
-            var o = null;
-            switch (n) {
-            case 0:
-                o = $('.color-item.red');
-                break;
-
-            case 1:
-                o = $('.color-item.green');
-                break;
-
-            case 2:
-                o = $('.color-item.blue');
-                break;
-
-            case 3:
-                o = $('.color-item.alpha');
-                break;
-            }
-            toolManagement.activateInput(o);
-            circularSelector.setInputAfford();
-            cLastN = n;
+            // send event to activate input
+            var e = new CustomEvent('selectColor', {detail: {'n': n}});
+            document.dispatchEvent(e);
 
             // feedback of the detected gesture
-            circularSelector.hintHighlight('color-picker', true);
+            var det = {
+                'hint': 'color-picker',
+                'value': true
+            };
+            var e = new CustomEvent('toggleHint', {detail: det});
+            document.dispatchEvent(e);
+
             return true;
         }
         else {
             cFirst = NONE;
+
             // cease feedback of the detected gesture
-            circularSelector.hintHighlight('color-picker', false);
+            var det = {
+                'hint': 'color-picker',
+                'value': false
+            };
+            var e = new CustomEvent('toggleHint', {detail: det});
+            document.dispatchEvent(e);
+
             return false;
         }
     }
@@ -410,15 +462,18 @@ const gestureRecognition = function ($, Leap) {
     var sP = 0;
     // rotations below this threshold value are ignored
     const ANGLE_THRESHOLD = 1;
+    // variable for gesture id
+    var gestureId = null;
 
     /**
      * Check for a input gesture.
      * @param  {gesture[]} gestures Array of gestures for the current frame.
-     * @param  {number}    d2       Thumb-tip - middle-finger-1st-interphalanx
+     * @param  {number}    d2       Thumb-tip - middle-1st-interphalanx
      *                              distance
+     * @param  {number}    d3       Thumb-tip - middle-tip distance.
      * @param  {number[]}  pa       Angles between the last two phalanxes.
      */
-    function gestureRotation(gestures, d2, pa) {
+    function gestureRotation(gestures, d2, d3, pa) {
         gestures.forEach(function (g) {
             if (g.type != 'circle') {
                 return;
@@ -430,77 +485,80 @@ const gestureRecognition = function ($, Leap) {
                 }
 
                 // check shape of the hand
-                if (d2 > 30 || pa[0] < 25) {
+                if ((d2 > 30 && d3 > 30) || pa[0] < 25) {
                     return;
                 }
 
                 // sign for the rotation
                 var sign = Leap.vec3.dot(p.direction, g.normal) > 0 ? +1 : -1;
 
-                // highlight affordance for input gesture
+                // manage highlighting of the affordance for the input gesture
                 var a = 180 * sign * (g.progress - sP);
+                var eventType = null;
+                var detail = null;
                 switch (g.state) {
                 case 'start':
+                    // memorize gesture id
+                    gestureId = g.id;
+                    // reset variable
+                    lastVal = 0;
+                    // get progress angle at gesture beginning
                     sP = g.progress;
-                    circularSelector.hintHighlight('input', true);
+                    // event parameters for highlighting activation
+                    eventType = 'toggleHint';
+                    detail = {'hint': 'input', 'value': true};
                     break;
 
                 case 'update':
-                    iAfford.css('transform', 'rotate(' + (iAngle + a) + 'deg)');
+                    // re-enable hint highlighting if it was wrongly disabled
+                    // because of inconsistent data from the leap
+                    if (gestureId === null) {
+                        var d = {'hint': 'input', 'value': true};
+                        var e = new CustomEvent('toggleHint', {'detail': d});
+                        document.dispatchEvent(e);
+                    }
+                    // memorize gesture id
+                    gestureId = g.id;
+                    // event parameters to update afford hint position
+                    eventType = 'rotateAfford';
+                    detail = {'name': 'input', 'angle': iAngle + a};
                     break;
 
                 case 'stop':
+                    // discard gesture id
+                    gestureId = null;
+                    // update actual angle
                     iAngle += a;
-                    circularSelector.hintHighlight('input', false);
+                    // event parameters for highlighting deactivation
+                    eventType = 'toggleHint';
+                    detail = {'hint': 'input', 'value': false};
                     break;
                 }
+                // send event for ui update
+                var e = new CustomEvent(eventType, {'detail': detail});
+                document.dispatchEvent(e);
 
-                // active input entry
-                var active = $('[data-active]');
-
-                if (active.attr('data-entry') === 'shape') {
-                    var currentShape = active.find('[data-shape]:not(.inactive)');
-
-                    if (g.state === 'start') {
-                        lastVal = 0;
-                    }
-
-                    // change tool once each two finger rotations
-                    if (((lastVal + sign * kCircle * g.progress) | 0) % 2 == 0) {
-                        lastVal += sign;
-                        var f = sign > 0 ? drawing.nextShape : drawing.prevShape;
-                        var s = f(currentShape.attr('data-shape'));
-                        active.find('[data-shape="' + s + '"]').trigger('click');
-                    }
-                }
-                else {
-                    var input = active.find('input');
-                    var max = parseInt(input.attr('max'));
-                    var min = parseInt(input.attr('min'));
-
-                    if (g.state === 'start') {
-                        lastVal = 0;
-                    }
-
-                    const k = max / 10 | 0;
-                    var v = parseInt(input.val());
-
-                    // increase of k each two finger rotations
-                    if (((lastVal + sign * kCircle * g.progress) | 0) % 2 == 0) {
-                        lastVal += sign;
-                        v += sign * k;
-                        v -= v % k; // ensure the value is a multiple of k
-                        // limit v to the input bounds
-                        v = v > max ? max : v;
-                        v = v < min ? min : v;
-                    }
-
-                    input.val(v);
-                    input.trigger('change');
-                    input.trigger('input')
+                // change input once each two finger rotations
+                if (((lastVal + sign * kCircle * g.progress) | 0) % 2 == 0) {
+                    lastVal += sign;
+                    // deliver event for input change
+                    var detail = {'sign': sign};
+                    var e = new CustomEvent('inputChange', {'detail': detail});
+                    document.dispatchEvent(e);
                 }
             });
         });
+
+        // terminate a gesture if it was not correctly stopped due to
+        // inconsistent frame data
+        const f = function (e) {return e.id === gestureId;};
+        if (gestureId !== null && gestures.find(f) === undefined) {
+            gestureId = null;
+            // send event to disable input hint highlighting
+            var detail = {'hint': 'input', 'value': false};
+            var e = new CustomEvent('toggleHint', {'detail': detail});
+            document.dispatchEvent(e);
+        }
     }
 
     // temp vector for computations
@@ -568,7 +626,9 @@ const gestureRecognition = function ($, Leap) {
         }
 
         // check gesture for input variation
-        gestureRotation(gestures, d2, pa);
+        gestureRotation(gestures, d2, d3, pa);
     }
+
+    return pub;
 
 } (jQuery, Leap);

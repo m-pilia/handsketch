@@ -91,6 +91,7 @@ html, body {
 
 #input-afford {
     position: fixed;
+    z-index: 999;
 }
 
 #color-picker-afford {

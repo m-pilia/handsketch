@@ -1,10 +1,10 @@
 /**
- * Drawing tools switch and setup.
+ * Handle events from the UI and from the model.
  *
  * @date 2016-01-20
  */
 
-const toolManagement = function ($) {
+const uiEvents = function ($) {
 
     "use strict";
 
@@ -21,6 +21,14 @@ const toolManagement = function ($) {
     // save last coordinates for interpolation
     var lastX = null;
     var lastY = null;
+
+    // color input items
+    const colorInput = [
+        $('.color-item.red'),
+        $('.color-item.green'),
+        $('.color-item.blue'),
+        $('.color-item.alpha')
+    ];
 
     /**
      * Insert intermediate strokes between the current and the last tool
@@ -129,6 +137,72 @@ const toolManagement = function ($) {
     // disable undo and redo buttons on startup
     UNDO_BUTTON.addClass('inactive-button');
     REDO_BUTTON.addClass('inactive-button');
+
+    // disable hints on event
+    $(document).on('disableHints', function (e) {
+        $('.highlighted-selector').removeClass('highlighted-selector');
+    });
+
+    // toggle hint highlightment on event
+    $(document).on('toggleHint', function (e) {
+        var hint = e.originalEvent.detail.hint;
+        var value = e.originalEvent.detail.value;
+        circularSelector.hintHighlight(hint, value);
+    });
+
+    // rotate afford on event
+    $(document).on('rotateAfford', function (e) {
+        var name = e.originalEvent.detail.name;
+        var angle = e.originalEvent.detail.angle;
+        $('#' + name + '-afford').css('transform', 'rotate(' + angle + 'deg)');
+    });
+
+    // select color channel input on event
+    $(document).on('selectColor', function (e) {
+        var o = colorInput[e.originalEvent.detail.n];
+        uiEvents.activateInput(o);
+        circularSelector.setInputAfford();
+    });
+
+    // change input value on event
+    $(document).on('inputChange', function (e) {
+        var sign = e.originalEvent.detail.sign;
+
+        // active input entry
+        var active = $('[data-active]');
+
+        if (active.attr('data-entry') === 'shape') {
+            var currentShape = active.find('[data-shape]:not(.inactive)');
+            var f = sign > 0 ? drawing.nextShape : drawing.prevShape;
+            var s = f(currentShape.attr('data-shape'));
+            active.find('[data-shape="' + s + '"]').trigger('click');
+        }
+        else {
+            var input = active.find('input');
+            var max = parseInt(input.attr('max'));
+            var min = parseInt(input.attr('min'));
+            var k = max / 10 | 0;
+            var v = parseInt(input.val());
+
+            v += sign * k;
+            v -= v % k; // ensure the value is a multiple of k
+            // limit v to the input bounds
+            v = v > max ? max : v;
+            v = v < min ? min : v;
+
+            input.val(v);
+            input.trigger('change');
+            input.trigger('input')
+        }
+    });
+
+    // select an entry on event
+    $(document).on('selectEntry', function (e) {
+        var selector = e.originalEvent.detail.selector;
+        var entry = e.originalEvent.detail.entry;
+        var handler = (selector === 'tool' ? pub.setTool : null);
+        circularSelector.selectEntry(selector, entry, handler);
+    });
 
     // keyboard event handler
     $(document).keydown(function (e) {
@@ -272,19 +346,6 @@ const toolManagement = function ($) {
         var parent = $(this).closest('li[data-entry=shape]');
         parent.find('[data-shape]').addClass('inactive');
         $(this).removeClass('inactive');
-    });
-
-    // startup
-    // select circle as default shape for each tool, and activate the default
-    // option for each selector
-    $(document).on('ready', function (e) {
-        $('[data-shape="circle"]').trigger('click');
-        circularSelector.selectEntry('tool', 1, pub.setTool);
-        circularSelector.selectEntry('airbrush', 1, null);
-        circularSelector.selectEntry('eraser', 1, null);
-        circularSelector.selectEntry('filler', 1, null);
-        circularSelector.selectEntry('picker', 1, null);
-        circularSelector.selectEntry('brush', 1, null);
     });
 
     return pub;

@@ -30,7 +30,7 @@ const circularSelector = function ($) {
         li.addClass("selected-tool");
         // remove activity from previously active item, and activate the
         // current one
-        toolManagement.activateInput(li);
+        uiEvents.activateInput(li);
         // launch handler function if present
         if (handler)
             handler(li.attr('data-entry'));
