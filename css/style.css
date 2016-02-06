@@ -133,4 +133,5 @@ img[data-shape] {
 #about-popup p {
     text-align: justify;
     font-size: 1.2em;
+    color: black;
 }

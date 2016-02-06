@@ -5,5 +5,5 @@
 |hint/\*/rot1.svg<br/>hint/\*/rot2.svg<br/>hint/\*/rot3.svg<br/>afford/\*/r2.svg<br/>afford/\*/r5.svg      | Custom | [fcole90](https://github.com/fcole90) |[CC-BY 4.0](http://creativecommons.org/licenses/by/4.0/)         | |
 |logo-light.png<br/>logo-dark.png      | Custom | [flamel13](https://github.com/flamel13) |[CC-BY 4.0](http://creativecommons.org/licenses/by/4.0/)         | |
 |check.svg       | | [User:House](https://commons.wikimedia.org/wiki/User:House) |Public domain |[Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Yes_Check_Circle.svg) |
-|cross.svg<br/>afford/\*/c.svg<br/>afford/\*/h.svg       | Custom | [m-pilia](https://github.com/m-pilia) | Public domain | |
+|cross.svg<br/>afford/\*/c.svg<br/>afford/\*/h.svg<br/>empty.png       | Custom | [m-pilia](https://github.com/m-pilia) | Public domain | |
 |icon/white/airbrush.png<br/>icon/white/brush.png<br/>icon/white/eraser.png<br/>icon/white/filler.png<br/>icon/white/picker.png  | Outline Iconset | [Design Contest](https://www.designcontest.com/) |[CC-BY 4.0](http://creativecommons.org/licenses/by/4.0/) | [IconArchive](http://www.iconarchive.com/show/outline-icons-by-designcontest.html) |
