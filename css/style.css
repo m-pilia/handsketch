@@ -135,3 +135,7 @@ img[data-shape] {
     font-size: 1.2em;
     color: black;
 }
+
+#size-popup {
+    color: black;
+}
