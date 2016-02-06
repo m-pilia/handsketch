@@ -110,6 +110,7 @@ input[type=number] {
     width: 2.5em;
     border: 0.5px solid lightgrey;
     text-align: center;
+    color: black;
 }
 
 /* no spinbox buttons */

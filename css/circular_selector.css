@@ -8,7 +8,7 @@
 }
 
 .circular-selector li {
-    background-color: #A5E2F3; /* TEMP */
+    background-color: #A5E2F3;
     position: absolute;
     top: 0;
     left: 0;
@@ -30,7 +30,6 @@
     position: absolute;
     right: 15%;
     top: 20%;
-    color: blue;
     text-align: center;
 }
 
