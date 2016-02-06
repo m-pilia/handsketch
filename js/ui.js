@@ -98,25 +98,6 @@ const ui = function ($) {
         var afford = $("#color-picker-afford");
         var display = $("#color-display");
         var selector = $("#color-picker-selector");
-        var wrapper = selector.parent();
-        var wWidth = wrapper.width();
-        var wHeight = wrapper.height();
-        var aHeight = afford.outerHeight();
-
-        // expand height
-        var height = wHeight - aHeight - 2 * margin;
-        selector.css("height", height);
-
-        // set top
-        var top = (wHeight - selector.height() + aHeight) / 2;
-        top = Math.max(0, top);
-        selector.css("top", top);
-
-        // set left
-        var left = (wWidth - $(".selector-hint").outerWidth(true)
-            - selector.width()) / 2;
-        left = Math.max(0, left);
-        selector.css("left", left);
 
         // set spinbox margin (needed for the input afford)
         $('.color-value').each(function () {
@@ -131,9 +112,32 @@ const ui = function ($) {
             });
         });
 
+        var wrapper = selector.parent();
+        var wWidth = wrapper.width();
+        var wHeight = wrapper.height();
+        var aHeight = afford.outerHeight();
+
+        // expand height
+        var height = wHeight - aHeight - 2 * margin;
+        selector.css("height", height);
+        console.log(selector.outerHeight())
+
         // set slider height
         var h = selector.outerHeight() - display.outerHeight(true) - aHeight;
         $('.slider').css('height', h);
+        console.log(selector.outerHeight())
+
+        // set top
+        var top = (wHeight - selector.height() + aHeight) / 2;
+        top = Math.max(0, top);
+        selector.css("top", top);
+
+        // set left
+        console.log(wWidth, $(".selector-hint").outerWidth(true), selector.width())
+        var left = (wWidth - $(".selector-hint").outerWidth(true)
+            - selector.width()) / 2;
+        left = Math.max(0, left);
+        selector.css("left", left);
     }
 
     /**
@@ -227,7 +231,7 @@ const ui = function ($) {
         var h = $('#color-picker-selector-hint');
         var pWidth = parseInt(w.css('width'));
         a.css('width', s.outerWidth() * 0.8 | 0);
-        a.css('left', (w.outerWidth() - a.outerWidth() - h.outerWidth()) / 2 | 0);
+        a.css('left', parseInt(s.css('left')) + s.outerWidth() * 0.1 | 0);
         a.css('top', s.position().top - a.outerHeight() / 2);
     }
 

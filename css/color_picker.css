@@ -46,7 +46,10 @@
 .color-label {
     display: block;
     font-weight: normal;
-    /*font-size: 0.8em;*/
+}
+
+#color-picker-afford {
+    height: 18px;
 }
 
 /** Red slider **/

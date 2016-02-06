@@ -56,11 +56,11 @@ html, body {
 }
 
 .circular-selector li {
-  background-color: #CCC;
+  background-color: #555;
 }
 
 .circular-selector .selected-tool {
-  background-color: #0CF;
+  background-color: #656565;
 }
 
 .tool-entry {
@@ -105,7 +105,10 @@ html, body {
     background-size: 22px 22px;
     width: 22px;
     height: 22px;
+    background-repeat: no-repeat;
 }
+
+/* tool images */
 
 #tool-selector li[data-entry="brush"] .selector-entry {
 	background: url('../img/icon/dark/brush.png') no-repeat;
@@ -125,4 +128,50 @@ html, body {
 
 #tool-selector li[data-entry="picker"] .selector-entry {
 	background: url('../img/icon/dark/picker.png') no-repeat;
+}
+
+/* hint images */
+
+#tool-selector-hint {
+    background: url('../img/hint/dark/rot1.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+#option-selector-hint {
+    background: url('../img/hint/dark/rot2.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+#color-picker-selector-hint {
+    background: url('../img/hint/dark/rot3.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+/* afford images */
+
+#tool-afford {
+    background: url('../img/afford/dark/r5.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+#option-afford {
+    background: url('../img/afford/dark/r2.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+#color-picker-afford {
+    background: url('../img/afford/dark/h.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+#input-afford {
+    background: url('../img/afford/dark/c.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
 }

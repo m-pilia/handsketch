@@ -1,7 +1,10 @@
 #tool-selector li .selector-entry {
     width: 30px;
     height: 30px;
+    background-repeat: no-repeat;
 }
+
+/* tool images */
 
 #tool-selector li[data-entry="brush"] .selector-entry {
 	background: url('../img/icon/white/brush.png') no-repeat;
@@ -26,4 +29,50 @@
 #tool-selector li[data-entry="picker"] .selector-entry {
 	background: url('../img/icon/white/picker.png') no-repeat;
     background-size: contain;
+}
+
+/* hint images */
+
+#tool-selector-hint {
+    background: url('../img/hint/white/rot1.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+#option-selector-hint {
+    background: url('../img/hint/white/rot2.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+#color-picker-selector-hint {
+    background: url('../img/hint/white/rot3.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+/* afford images */
+
+#tool-afford {
+    background: url('../img/afford/white/r5.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+#option-afford {
+    background: url('../img/afford/white/r2.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+#color-picker-afford {
+    background: url('../img/afford/white/h.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+#input-afford {
+    background: url('../img/afford/white/c.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
 }
