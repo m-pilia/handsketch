@@ -333,8 +333,21 @@ const uiEvents = function ($) {
 
     // get numeric options
     $('.circular-selector li[data-entry] input').on('input change', function (e) {
+        // get value
+        var val = parseInt($(this).val());
+
+        // do a minimum data validation
+        const min = $(this).attr('min');
+        const max = $(this).attr('max');
+        if (val != val || val < min)
+            val = min;
+        if (val > max)
+            val = max;
+
+        // set value
         var entry = $(this).closest('li[data-entry]').attr('data-entry');
-        drawing[entry](parseInt($(this).val()));
+        drawing[entry](val);
+        
         // update cursor
         cursor.setCursor();
     });
