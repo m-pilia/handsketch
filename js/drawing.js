@@ -126,15 +126,7 @@ const drawing = function ($) {
      */
     pub.shape = function (s) {
         if (s !== undefined) {
-            try {
-                // set shape
-                if ($.type(pvt[s]) !== 'function')
-                    throw new Error('The selected object is not a function');
-                mShape = s;
-            }
-            catch (e) {
-                console.log('Error: invalid shape ' + s + '\n' + e);
-            }
+            mShape = s;
         }
 
         return mShape;
@@ -237,44 +229,6 @@ const drawing = function ($) {
     };
 
     /**
-     * Check if a pixel is inside a circle.
-     * @param  {number} x  X coordinate of the pixel in the canvas.
-     * @param  {number} y  Y coordinate of the pixel in the canvas.
-     * @param  {number} x0 X coordinate of the circle's centre.
-     * @param  {number} y0 Y coordinate of the circle's centre.
-     * @return {bool}      True if the pixel is inside the circle.
-     */
-    pvt.circle = function (x, y, x0, y0) {
-        var dx = x - x0;
-        var dy = y - y0;
-        return dx * dx + dy * dy <= mRadius * mRadius;
-    };
-
-    /**
-     * Check if a pixel is inside a square.
-     * @param  {number} x  X coordinate of the pixel in the canvas.
-     * @param  {number} y  Y coordinate of the pixel in the canvas.
-     * @param  {number} x0 X coordinate of the square's centre.
-     * @param  {number} y0 Y coordinate of the square's centre.
-     * @return {bool}      True if the pixel is inside the square.
-     */
-    pvt.square = function (x, y, x0, y0) {
-        return true;
-    };
-
-    /**
-     * Check if a pixel is inside a diamond.
-     * @param  {number} x  X coordinate of the pixel in the canvas.
-     * @param  {number} y  Y coordinate of the pixel in the canvas.
-     * @param  {number} x0 X coordinate of the diamond's centre.
-     * @param  {number} y0 Y coordinate of the diamond's centre.
-     * @return {bool}      True if the pixel is inside the diamond.
-     */
-    pvt.diamond = function (x, y, x0, y0) {
-        return Math.abs(x - x0) + Math.abs(y - y0) < mRadius;
-    };
-
-    /**
      * Distance from the centre of the tool, using a different metric according
      * to the tool's shape.
      * @param  {number} x  X coordinate of the pixel in the canvas.
@@ -327,18 +281,10 @@ const drawing = function ($) {
      */
     pvt.brush = function (i, j, x, y) {
         const k = canvas.width * i + j;
-        const cRadius = Math.floor(mRadius) + 0.5;
-        if (!done[k]) {
-            // try a bit of coarse antialiasing
-            var d = distance(j, i, x, y);
-            if (d < mRadius) {
-                alphaBlend(k, 1);
-                done[k] = true;
-            }
-            else if (d < cRadius){
-                alphaBlend(k, 0.5);
-                // do not mark as done
-            }
+        const d = distance(j, i, x, y);
+        if (!done[k] && d < mRadius) {
+            alphaBlend(k, 1);
+            done[k] = true;
         }
     };
 
@@ -351,7 +297,8 @@ const drawing = function ($) {
      */
     pvt.airbrush = function (i, j, x, y) {
         var k = canvas.width * i + j;
-        if (pvt[mShape](j, i, x, y) && !done[k]) {
+        const d = distance(j, i, x, y);
+        if (!done[k] && d < mRadius) {
             if (Math.random() < mDensity) {
                 alphaBlend(k, 1);
             }
@@ -368,7 +315,8 @@ const drawing = function ($) {
      */
     pvt.eraser = function (i, j, x, y) {
         var k = canvas.width * i + j;
-        if (pvt[mShape](j, i, x, y) && !done[k]) {
+        const d = distance(j, i, x, y);
+        if (!done[k] && d < mRadius) {
             var m = k * 4;
             data[m + 3] = (data[m + 3] * (1 - mOpacity)) | 0;
             done[k] = true;
@@ -508,7 +456,8 @@ const drawing = function ($) {
 
             for (var i = y0; i <= y1; i++) {
                 for (var j = x0; j <= x1; j++) {
-                    if (pvt[mShape](j, i, x, y)) {
+                    const d = distance(j, i, x, y);
+                    if (d < mRadius) {
                         var m = 4 * (canvas.width * i + j);
                         r += data[m + 0];
                         g += data[m + 1];
