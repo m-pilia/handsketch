@@ -14,9 +14,6 @@ const cursor = function ($) {
     // cursor image object
     const CURSOR = $('#cursor');
 
-    // margin for the cursor image
-    const CURS_MARG = 1;
-
     // cursor translation to fit the tip of the pointer with the image
     var cursTraX = 0;
     var cursTraY = 0;
@@ -52,6 +49,7 @@ const cursor = function ($) {
             cursTraX = cursTraY = 0;
             const cp = colorPicker;
             const thickness = drawing.thickness();
+            const radius = thickness / 2;
             const svgColor = (tool == 'eraser' ? '#ffffff' : cp.getRGBColor());
             const svgOpacity = (drawing.opacity() * cp.alpha() / 255);
 
@@ -59,42 +57,40 @@ const cursor = function ($) {
             case 'circle':
                 svgCode =
                     '<circle ' +
-                    'cx="' + thickness + '" ' +
-                    'cy="' + thickness + '" ' +
-                    'r="' + thickness + '" ' +
+                    'cx="' + radius + '" ' +
+                    'cy="' + radius + '" ' +
+                    'r="' + radius + '" ' +
                     'stroke="black" stroke-width="0.5" ' +
                     'fill="' + svgColor + '" ' +
                     'fill-opacity="' + svgOpacity + '" ' +
-                    'transform="translate(' + 0 + ' ' + CURS_MARG + ')" ' +
                     '/>'
                 break;
             case 'square':
                 svgCode =
                     '<rect ' +
-                    'width="' + 2 * thickness + '" ' +
-                    'height="' + 2 * thickness + '" ' +
+                    'width="' + thickness + '" ' +
+                    'height="' + thickness + '" ' +
                     'stroke="black" stroke-width="0.5" ' +
                     'fill="' + svgColor + '" ' +
                     'fill-opacity="' + svgOpacity + '" ' +
-                    'transform="translate(' + 0 + ' ' + CURS_MARG + ')" ' +
                     '/>'
                 break;
             case 'diamond':
-                var transl = thickness * (Math.sqrt(2) - 1);
+                var transl = radius * (Math.sqrt(2) - 1) * 0.75;
                 svgCode =
                     '<rect ' +
-                    'width="' + Math.sqrt(2) * thickness + '" ' +
-                    'height="' + Math.sqrt(2) * thickness + '" ' +
+                    'width="' + Math.sqrt(2) * radius + '" ' +
+                    'height="' + Math.sqrt(2) * radius + '" ' +
                     'stroke="black" stroke-width="0.5" ' +
                     'fill="' + svgColor + '" ' +
                     'fill-opacity="' + svgOpacity + '" ' +
-                    'transform="rotate(45 ' + thickness + ' ' + thickness + ') ' +
-                    'translate(' + transl + ' ' + transl + CURS_MARG + ')" ' +
+                    'transform="rotate(45 ' + radius + ' ' + radius + ') ' +
+                    'translate(' + transl + ' ' + transl + ')" ' +
                     '/>'
                 break;
             }
-            CURSOR.css('width', 2 * thickness)
-                  .css('height', 2 * (thickness + CURS_MARG));
+            CURSOR.css('width', thickness)
+                  .css('height', thickness);
             break;
         }
 
@@ -105,7 +101,7 @@ const cursor = function ($) {
     $('#canvas,#cursor').on('mousemove', function(e) {
         CURSOR.css({
             left: e.pageX - 0.5 * CURSOR.outerWidth() + cursTraX,
-            top:  e.pageY - 0.5 * CURSOR.outerHeight() + CURS_MARG + cursTraY
+            top:  e.pageY - 0.5 * CURSOR.outerHeight() + cursTraY
         });
     });
 

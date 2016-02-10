@@ -120,12 +120,10 @@ const ui = function ($) {
         // expand height
         var height = wHeight - aHeight - 2 * margin;
         selector.css("height", height);
-        console.log(selector.outerHeight())
 
         // set slider height
         var h = selector.outerHeight() - display.outerHeight(true) - aHeight;
         $('.slider').css('height', h);
-        console.log(selector.outerHeight())
 
         // set top
         var top = (wHeight - selector.height() + aHeight) / 2;
@@ -133,7 +131,6 @@ const ui = function ($) {
         selector.css("top", top);
 
         // set left
-        console.log(wWidth, $(".selector-hint").outerWidth(true), selector.width())
         var left = (wWidth - $(".selector-hint").outerWidth(true)
             - selector.width()) / 2;
         left = Math.max(0, left);

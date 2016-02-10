@@ -39,7 +39,7 @@ const drawing = function ($) {
 
     // current tool and its properties
     var mTool = null;
-    var mThickness = null;
+    var mRadius = null;
     var mDensity = null;
     var mShape = null;
     var mOpacity = null;
@@ -94,9 +94,9 @@ const drawing = function ($) {
      */
     pub.alpha = function (v) {
         if (v !== undefined) {
-            mA = parseInt(v);
+            mA = parseInt(v) / 255;
         }
-        return mA;
+        return parseInt(mA * 255);
     };
 
     /**
@@ -126,15 +126,7 @@ const drawing = function ($) {
      */
     pub.shape = function (s) {
         if (s !== undefined) {
-            try {
-                // set shape
-                if ($.type(pvt[s]) !== 'function')
-                    throw new Error('The selected object is not a function');
-                mShape = s;
-            }
-            catch (e) {
-                console.log('Error: invalid shape ' + s + '\n' + e);
-            }
+            mShape = s;
         }
 
         return mShape;
@@ -183,9 +175,9 @@ const drawing = function ($) {
      */
     pub.thickness = function (t) {
         if (t !== undefined) {
-            mThickness = t;
+            mRadius = t / 2;
         }
-        return mThickness;
+        return  2 * mRadius;
     };
 
     /**
@@ -237,44 +229,6 @@ const drawing = function ($) {
     };
 
     /**
-     * Check if a pixel is inside a circle.
-     * @param  {number} x  X coordinate of the pixel in the canvas.
-     * @param  {number} y  Y coordinate of the pixel in the canvas.
-     * @param  {number} x0 X coordinate of the circle's centre.
-     * @param  {number} y0 Y coordinate of the circle's centre.
-     * @return {bool}      True if the pixel is inside the circle.
-     */
-    pvt.circle = function (x, y, x0, y0) {
-        var dx = x - x0;
-        var dy = y - y0;
-        return dx * dx + dy * dy <= mThickness * mThickness;
-    };
-
-    /**
-     * Check if a pixel is inside a square.
-     * @param  {number} x  X coordinate of the pixel in the canvas.
-     * @param  {number} y  Y coordinate of the pixel in the canvas.
-     * @param  {number} x0 X coordinate of the square's centre.
-     * @param  {number} y0 Y coordinate of the square's centre.
-     * @return {bool}      True if the pixel is inside the square.
-     */
-    pvt.square = function (x, y, x0, y0) {
-        return true;
-    };
-
-    /**
-     * Check if a pixel is inside a diamond.
-     * @param  {number} x  X coordinate of the pixel in the canvas.
-     * @param  {number} y  Y coordinate of the pixel in the canvas.
-     * @param  {number} x0 X coordinate of the diamond's centre.
-     * @param  {number} y0 Y coordinate of the diamond's centre.
-     * @return {bool}      True if the pixel is inside the diamond.
-     */
-    pvt.diamond = function (x, y, x0, y0) {
-        return Math.abs(x - x0) + Math.abs(y - y0) < mThickness;
-    };
-
-    /**
      * Distance from the centre of the tool, using a different metric according
      * to the tool's shape.
      * @param  {number} x  X coordinate of the pixel in the canvas.
@@ -285,12 +239,12 @@ const drawing = function ($) {
      */
     function distance(x, y, x0, y0) {
         switch (mShape) {
-            case circle:
+            case 'circle':
                 return Math.hypot(x - x0, y - y0);
-            case square:
+            case 'square':
                 return Math.max(x - x0, y - y0);
-            case diamond:
-                return Math.abs(x - x0, y - y0);
+            case 'diamond':
+                return Math.abs(x - x0) + Math.abs(y - y0);
             default:
                 throw "Invalid shape";
         }
@@ -299,11 +253,12 @@ const drawing = function ($) {
     /**
      * Perform alpha blending on the selected pixel.
      * @param  {number} k Index of the pixel in the data array.
+     * @param  {number} o Coefficient to scale the alpha.
      */
-    function alphaBlend(k) {
+    function alphaBlend(k, o) {
         // alpha blending
         var m = k * 4;
-        var a = mA / 255 * mOpacity;
+        var a = mA * mOpacity * o;
         var na = (1 - a) * data[m + 3] / 255;
         var da = a + na; // computed alpha
         data[m + 3] = 255 * da | 0;
@@ -325,9 +280,10 @@ const drawing = function ($) {
      * @param  {number} y Y coordinate for the centre of the tool.
      */
     pvt.brush = function (i, j, x, y) {
-        var k = canvas.width * i + j;
-        if (pvt[mShape](j, i, x, y) && !done[k]) {
-            alphaBlend(k);
+        const k = canvas.width * i + j;
+        const d = distance(j, i, x, y);
+        if (!done[k] && d < mRadius) {
+            alphaBlend(k, 1);
             done[k] = true;
         }
     };
@@ -341,9 +297,10 @@ const drawing = function ($) {
      */
     pvt.airbrush = function (i, j, x, y) {
         var k = canvas.width * i + j;
-        if (pvt[mShape](j, i, x, y) && !done[k]) {
+        const d = distance(j, i, x, y);
+        if (!done[k] && d < mRadius) {
             if (Math.random() < mDensity) {
-                alphaBlend(k);
+                alphaBlend(k, 1);
             }
             done[k] = true;
         }
@@ -358,7 +315,8 @@ const drawing = function ($) {
      */
     pvt.eraser = function (i, j, x, y) {
         var k = canvas.width * i + j;
-        if (pvt[mShape](j, i, x, y) && !done[k]) {
+        const d = distance(j, i, x, y);
+        if (!done[k] && d < mRadius) {
             var m = k * 4;
             data[m + 3] = (data[m + 3] * (1 - mOpacity)) | 0;
             done[k] = true;
@@ -480,7 +438,7 @@ const drawing = function ($) {
         var m = k * 4;
         var c = {}; // picked color
 
-        if (mThickness > 1) {
+        if (mRadius > 1) {
             // pick the average color from an area
             var n = 0;
             var r = 0;
@@ -488,14 +446,18 @@ const drawing = function ($) {
             var b = 0;
             var a = 0;
 
-            var y0 = Math.max(0, y - mThickness);
-            var y1 = Math.min(canvas.height, y + mThickness);
-            var x0 = Math.max(0, x - mThickness);
-            var x1 = Math.min(canvas.width, x + mThickness);
+            const cRadius = Math.ceil(mRadius);
+            const fRadius = Math.floor(mRadius);
+
+            var y0 = Math.max(0, y - cRadius);
+            var y1 = Math.min(canvas.height, y + fRadius);
+            var x0 = Math.max(0, x - cRadius);
+            var x1 = Math.min(canvas.width, x + fRadius);
 
             for (var i = y0; i <= y1; i++) {
                 for (var j = x0; j <= x1; j++) {
-                    if (pvt[mShape](j, i, x, y)) {
+                    const d = distance(j, i, x, y);
+                    if (d < mRadius) {
                         var m = 4 * (canvas.width * i + j);
                         r += data[m + 0];
                         g += data[m + 1];
@@ -531,10 +493,13 @@ const drawing = function ($) {
      * @param  {number} y Y coordinate.
      */
     pub.toolAction = function (x, y) {
-        var y0 = Math.max(0, y - mThickness);
-        var y1 = Math.min(canvas.height, y + mThickness);
-        var x0 = Math.max(0, x - mThickness);
-        var x1 = Math.min(canvas.width, x + mThickness);
+        const cRadius = Math.ceil(mRadius);
+        const fRadius = Math.floor(mRadius);
+
+        var y0 = Math.max(0, y - cRadius);
+        var y1 = Math.min(canvas.height, y + fRadius);
+        var x0 = Math.max(0, x - cRadius);
+        var x1 = Math.min(canvas.width, x + fRadius);
 
         for (var i = y0; i <= y1; i++) {
             for (var j = x0; j <= x1; j++) {

@@ -37,11 +37,13 @@ const uiEvents = function ($) {
      * @param  {number} y Y coordinate for the current position.
      */
     function interpolation(x, y) {
+        // number of stroke points inside a tool thickness distance
+        const k = 4;
         if (lastX === null || lastY === null)
             return;
         var deltaX = lastX - x;
         var deltaY = lastY - y;
-        var d = (Math.hypot(deltaX, deltaY) / drawing.thickness() * 2) | 0;
+        var d = (Math.hypot(deltaX, deltaY) / drawing.thickness() * k) | 0;
         if (d < 1)
             return;
         var dx = deltaX / d;
@@ -331,8 +333,21 @@ const uiEvents = function ($) {
 
     // get numeric options
     $('.circular-selector li[data-entry] input').on('input change', function (e) {
+        // get value
+        var val = parseInt($(this).val());
+
+        // do a minimum data validation
+        const min = $(this).attr('min');
+        const max = $(this).attr('max');
+        if (val != val || val < min)
+            val = min;
+        if (val > max)
+            val = max;
+
+        // set value
         var entry = $(this).closest('li[data-entry]').attr('data-entry');
-        drawing[entry](parseInt($(this).val()));
+        drawing[entry](val);
+        
         // update cursor
         cursor.setCursor();
     });
