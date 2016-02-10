@@ -362,7 +362,7 @@ const drawing = function ($) {
         const RR = mR;
         const GG = mG;
         const BB = mB;
-        const AA = mA * mOpacity;
+        const AA = mA * mOpacity * 255 | 0;
 
         // squared threshold for the color distance
         const THRESHOLD = mThreshold * mThreshold * MAX_DISTANCE;
