@@ -37,11 +37,13 @@ const uiEvents = function ($) {
      * @param  {number} y Y coordinate for the current position.
      */
     function interpolation(x, y) {
+        // number of stroke points inside a tool thickness distance
+        const k = 4;
         if (lastX === null || lastY === null)
             return;
         var deltaX = lastX - x;
         var deltaY = lastY - y;
-        var d = (Math.hypot(deltaX, deltaY) / drawing.thickness() * 2) | 0;
+        var d = (Math.hypot(deltaX, deltaY) / drawing.thickness() * k) | 0;
         if (d < 1)
             return;
         var dx = deltaX / d;

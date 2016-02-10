@@ -39,7 +39,7 @@ const drawing = function ($) {
 
     // current tool and its properties
     var mTool = null;
-    var mThickness = null;
+    var mRadius = null;
     var mDensity = null;
     var mShape = null;
     var mOpacity = null;
@@ -183,9 +183,9 @@ const drawing = function ($) {
      */
     pub.thickness = function (t) {
         if (t !== undefined) {
-            mThickness = t;
+            mRadius = t / 2;
         }
-        return mThickness;
+        return  2 * mRadius;
     };
 
     /**
@@ -247,7 +247,7 @@ const drawing = function ($) {
     pvt.circle = function (x, y, x0, y0) {
         var dx = x - x0;
         var dy = y - y0;
-        return dx * dx + dy * dy <= mThickness * mThickness;
+        return dx * dx + dy * dy <= mRadius * mRadius;
     };
 
     /**
@@ -271,7 +271,7 @@ const drawing = function ($) {
      * @return {bool}      True if the pixel is inside the diamond.
      */
     pvt.diamond = function (x, y, x0, y0) {
-        return Math.abs(x - x0) + Math.abs(y - y0) < mThickness;
+        return Math.abs(x - x0) + Math.abs(y - y0) < mRadius;
     };
 
     /**
@@ -285,12 +285,12 @@ const drawing = function ($) {
      */
     function distance(x, y, x0, y0) {
         switch (mShape) {
-            case circle:
+            case 'circle':
                 return Math.hypot(x - x0, y - y0);
-            case square:
+            case 'square':
                 return Math.max(x - x0, y - y0);
-            case diamond:
-                return Math.abs(x - x0, y - y0);
+            case 'diamond':
+                return Math.abs(x - x0) + Math.abs(y - y0);
             default:
                 throw "Invalid shape";
         }
@@ -299,11 +299,12 @@ const drawing = function ($) {
     /**
      * Perform alpha blending on the selected pixel.
      * @param  {number} k Index of the pixel in the data array.
+     * @param  {number} o Coefficient to scale the alpha.
      */
-    function alphaBlend(k) {
+    function alphaBlend(k, o) {
         // alpha blending
         var m = k * 4;
-        var a = mA / 255 * mOpacity;
+        var a = mA / 255 * mOpacity * o;
         var na = (1 - a) * data[m + 3] / 255;
         var da = a + na; // computed alpha
         data[m + 3] = 255 * da | 0;
@@ -325,10 +326,19 @@ const drawing = function ($) {
      * @param  {number} y Y coordinate for the centre of the tool.
      */
     pvt.brush = function (i, j, x, y) {
-        var k = canvas.width * i + j;
-        if (pvt[mShape](j, i, x, y) && !done[k]) {
-            alphaBlend(k);
-            done[k] = true;
+        const k = canvas.width * i + j;
+        const cRadius = Math.floor(mRadius) + 0.5;
+        if (!done[k]) {
+            // try a bit of coarse antialiasing
+            var d = distance(j, i, x, y);
+            if (d < mRadius) {
+                alphaBlend(k, 1);
+                done[k] = true;
+            }
+            else if (d < cRadius){
+                alphaBlend(k, 0.5);
+                // does not mark as done
+            }
         }
     };
 
@@ -343,7 +353,7 @@ const drawing = function ($) {
         var k = canvas.width * i + j;
         if (pvt[mShape](j, i, x, y) && !done[k]) {
             if (Math.random() < mDensity) {
-                alphaBlend(k);
+                alphaBlend(k, 1);
             }
             done[k] = true;
         }
@@ -480,7 +490,7 @@ const drawing = function ($) {
         var m = k * 4;
         var c = {}; // picked color
 
-        if (mThickness > 1) {
+        if (mRadius > 1) {
             // pick the average color from an area
             var n = 0;
             var r = 0;
@@ -488,10 +498,13 @@ const drawing = function ($) {
             var b = 0;
             var a = 0;
 
-            var y0 = Math.max(0, y - mThickness);
-            var y1 = Math.min(canvas.height, y + mThickness);
-            var x0 = Math.max(0, x - mThickness);
-            var x1 = Math.min(canvas.width, x + mThickness);
+            const cRadius = Math.ceil(mRadius);
+            const fRadius = Math.floor(mRadius);
+
+            var y0 = Math.max(0, y - cRadius);
+            var y1 = Math.min(canvas.height, y + fRadius);
+            var x0 = Math.max(0, x - cRadius);
+            var x1 = Math.min(canvas.width, x + fRadius);
 
             for (var i = y0; i <= y1; i++) {
                 for (var j = x0; j <= x1; j++) {
@@ -531,10 +544,13 @@ const drawing = function ($) {
      * @param  {number} y Y coordinate.
      */
     pub.toolAction = function (x, y) {
-        var y0 = Math.max(0, y - mThickness);
-        var y1 = Math.min(canvas.height, y + mThickness);
-        var x0 = Math.max(0, x - mThickness);
-        var x1 = Math.min(canvas.width, x + mThickness);
+        const cRadius = Math.ceil(mRadius);
+        const fRadius = Math.floor(mRadius);
+
+        var y0 = Math.max(0, y - cRadius);
+        var y1 = Math.min(canvas.height, y + fRadius);
+        var x0 = Math.max(0, x - cRadius);
+        var x1 = Math.min(canvas.width, x + fRadius);
 
         for (var i = y0; i <= y1; i++) {
             for (var j = x0; j <= x1; j++) {
