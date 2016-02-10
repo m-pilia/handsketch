@@ -94,9 +94,9 @@ const drawing = function ($) {
      */
     pub.alpha = function (v) {
         if (v !== undefined) {
-            mA = parseInt(v);
+            mA = parseInt(v) / 255;
         }
-        return mA;
+        return parseInt(mA * 255);
     };
 
     /**
@@ -304,7 +304,7 @@ const drawing = function ($) {
     function alphaBlend(k, o) {
         // alpha blending
         var m = k * 4;
-        var a = mA / 255 * mOpacity * o;
+        var a = mA * mOpacity * o;
         var na = (1 - a) * data[m + 3] / 255;
         var da = a + na; // computed alpha
         data[m + 3] = 255 * da | 0;
@@ -337,7 +337,7 @@ const drawing = function ($) {
             }
             else if (d < cRadius){
                 alphaBlend(k, 0.5);
-                // does not mark as done
+                // do not mark as done
             }
         }
     };
