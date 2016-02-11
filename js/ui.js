@@ -98,6 +98,7 @@ const ui = function ($) {
         var afford = $("#color-picker-afford");
         var display = $("#color-display");
         var selector = $("#color-picker-selector");
+        var handleSize = $('#red-slider-x .slider-handle').outerHeight();
 
         // set spinbox margin (needed for the input afford)
         $('.color-value').each(function () {
@@ -107,7 +108,7 @@ const ui = function ($) {
             $(this).css({
                 'margin-left': (size - w) / 2,
                 'margin-right': (size - w) / 2,
-                'margin-top': (size - h) / 2,
+                'margin-top': (size - h + handleSize) / 2,
                 'margin-bottom': (size - h) / 2
             });
         });
@@ -115,7 +116,7 @@ const ui = function ($) {
         var wrapper = selector.parent();
         var wWidth = wrapper.width();
         var wHeight = wrapper.height();
-        var aHeight = afford.outerHeight();
+        var aHeight = afford.outerHeight(true);
 
         // expand height
         var height = wHeight - aHeight - 2 * margin;
