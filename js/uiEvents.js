@@ -85,6 +85,34 @@ const uiEvents = function ($) {
     }
 
     /**
+     * Open an overlay popup to get the size for a new image.
+     * @param  {Event} e Event (unused).
+     */
+    function newImage(e) {
+        popup.openPopup('size-popup');
+    }
+
+    /**
+     * Open in the canvas an image from file.
+     * @param  {Event} e Event (unused).
+     */
+    function openImage(e) {
+        var inputImage = $('#image-file');
+        inputImage.val(null);
+        inputImage.trigger('click');
+    }
+
+    /**
+     * Export the image from the canvas to file.
+     * @param  {Event} e Event (unused).
+     */
+    function saveImage(e) {
+        $('#image-save')
+            .attr('href', $('#canvas')[0].toDataURL("image/png"))[0]
+            .click();
+    }
+
+    /**
      * Set the input inside the container as the active one for gestures.
      * @param  {Object} o JQuery selection of the container.
      */
@@ -212,11 +240,37 @@ const uiEvents = function ($) {
         case 90: // z key
             if (e.ctrlKey) {
                 if  (e.shiftKey) {
+                    e.preventDefault();
                     redoTool();
                 }
                 else {
+                    e.preventDefault();
                     undoTool();
                 }
+            }
+            break;
+        case 83: // s key
+            if (e.ctrlKey) {
+                e.preventDefault();
+                saveImage();
+            }
+            break;
+        case 79: // o key
+            if (e.ctrlKey) {
+                e.preventDefault();
+                openImage();
+            }
+            break;
+        case 65: // a key
+            if (e.ctrlKey) {
+                e.preventDefault();
+                newImage();
+            }
+            break;
+        case 27: // esc key
+            if (popup.isPopupOpen()) {
+                e.preventDefault();
+                popup.closePopup();
             }
             break;
         }
@@ -234,10 +288,7 @@ const uiEvents = function ($) {
     });
 
     // new image from menu
-    $('#new-image').click(function (e) {
-        // open overlay popup to get size
-        popup.openPopup('size-popup');
-    });
+    $('#new-image').click(newImage);
 
     // create new image with input size
     $('#size-popup .popup-exit').click(function (e) {
@@ -248,11 +299,7 @@ const uiEvents = function ($) {
     });
 
     // open image from menu
-    $('#open-file').click(function (e) {
-        var inputImage = $('#image-file');
-        inputImage.val(null);
-        inputImage.trigger('click');
-    });
+    $('#open-file').click(openImage);
 
     // put the opened image into the canvas
     $('#image-file').on('change', function (e) {
@@ -265,11 +312,7 @@ const uiEvents = function ($) {
     });
 
     // save image from the canvas
-    $('#save-file').click(function (e) {
-        $('#image-save')
-            .attr('href', $('#canvas')[0].toDataURL("image/png"))[0]
-            .click();
-    });
+    $('#save-file').click(saveImage);
 
     // event handler to draw on mouse clik
     $('#canvas').on('mousedown', function (e) {
@@ -347,7 +390,7 @@ const uiEvents = function ($) {
         // set value
         var entry = $(this).closest('li[data-entry]').attr('data-entry');
         drawing[entry](val);
-        
+
         // update cursor
         cursor.setCursor();
     });

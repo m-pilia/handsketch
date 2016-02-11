@@ -1,9 +1,11 @@
 # HandSketch - HCI Class Final Project
 
-# Overview
-HandSketch is a prototype of application intended as an experiment of Human-Computer interaction. The idea behind it is to develop a set of toolbars for a raster drawing application which rely only on gestual interaction to switch drawing instruments and their settings, allowing the mouse cursor to not leave the canvas during drawing.
+![Screenshot](http://i1383.photobucket.com/albums/ah312/m-programmer/handsketch_zpstswtz9wk.png)
 
-The gestual input is provided by a Leap Motion sensor.
+# Overview
+HandSketch is a prototype of application intended as an experiment of Human-Computer interaction. The idea behind it is to develop a set of toolbars for a raster drawing application which rely only on gestual interaction to switch drawing instruments and their settings, allowing the mouse cursor to not leave the canvas during drawing. The gestual input is provided through a Leap Motion sensor.
+
+The program provides very basic drawing instuments on a raster canvas. It has a side toolbar whose widgets provide the selection of the active drawing tool, the color and the tool options. Each widget is activated and controlled through a proper rotation gesture, and the numeric value of the settings is controlled with a circle gesture.
 
 # Compile and run
 Just make the application, running on the command line (requires `make` and `awk`):
@@ -91,6 +93,7 @@ The maximum length for code lines is peremptorily of 80 characters for JavaScrip
 | bootstrap slider  | Kyle J. Kemp                         | MIT        | https://github.com/seiyria/bootstrap-slider |
 | jQueryUI.Ruler    | Emanuel Fernandes                    | MIT        | https://github.com/efernandesng/jquery-ui.ruler |
 | LeapJS            | Leap Motion, Inc                     | Apache 2.0 | https://github.com/leapmotion/leapjs |
+| Google Fonts      | Google, Inc                          | [SIL OFL 1.1](http://scripts.sil.org/cms/scripts/page.php?item_id=OFL_web) | https://github.com/google/fonts
 
 # License
 The project is licensed under GPL 3. See [LICENSE](/LICENSE) file for the full
