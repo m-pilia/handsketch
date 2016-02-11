@@ -168,6 +168,21 @@ const uiEvents = function ($) {
     UNDO_BUTTON.addClass('inactive-button');
     REDO_BUTTON.addClass('inactive-button');
 
+    // show/hide input hint on mouse over/out
+    $('input,.shape-entry').mouseover(function (e) {
+        if ($(this).closest('[data-active]').length === 0) {
+            return;
+        }
+        $('body').append(
+            `<div id="input-selector-hint"
+                  style="position: fixed;
+                         top: `+ e.pageY +`px;
+                         left: `+ e.pageX +`px">
+             </div>`);
+    }).mouseout(function (e) {
+        $('#input-selector-hint').remove();
+    });
+
     // disable hints on event
     $(document).on('disableHints', function (e) {
         $('.highlighted-selector').removeClass('highlighted-selector');
