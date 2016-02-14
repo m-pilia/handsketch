@@ -1,6 +1,6 @@
 # HandSketch - HCI Class Final Project
 
-![Screenshot](http://i1383.photobucket.com/albums/ah312/m-programmer/handsketch_zpstswtz9wk.png)
+![Screenshot](http://i1383.photobucket.com/albums/ah312/m-programmer/handsketch_zpsqpojkxep.png)
 
 # Overview
 HandSketch is a prototype of application intended as an experiment of Human-Computer interaction. The idea behind it is to develop a set of toolbars for a raster drawing application which rely only on gestual interaction to switch drawing instruments and their settings, allowing the mouse cursor to not leave the canvas during drawing. The gestual input is provided through a Leap Motion sensor.
