@@ -168,18 +168,20 @@ const uiEvents = function ($) {
     UNDO_BUTTON.addClass('inactive-button');
     REDO_BUTTON.addClass('inactive-button');
 
-    // show/hide input hint on mouse over/out
-    $('input,.shape-entry').mouseover(function (e) {
+    // show/hide input hint on mouse enter/leave
+    // track all input fields: quite ugly, but the actual afford has mouse
+    // events disabled by css, so it cannot handle this directly
+    $('input,.shape-entry').mouseenter(function (e) {
         if ($(this).closest('[data-active]').length === 0) {
             return;
         }
         $('body').append(
             `<div id="input-selector-hint"
                   style="position: fixed;
-                         top: `+ e.pageY +`px;
-                         left: `+ e.pageX +`px">
+                         top: ` + e.pageY + `px;
+                         left: ` + e.pageX + `px">
              </div>`);
-    }).mouseout(function (e) {
+    }).mouseleave(function (e) {
         $('#input-selector-hint').remove();
     });
 
