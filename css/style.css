@@ -71,6 +71,16 @@ html, body {
     opacity: 0.4;
 }
 
+#input-selector-hint {
+    pointer-events: none;
+    width: 60px;
+    height: 60px;
+}
+
+.ui-helper-hidden-accessible {
+    display: none;
+}
+
 /* this class is toggled to control the opacity */
 .highlighted-selector {
     opacity: 1 !important;

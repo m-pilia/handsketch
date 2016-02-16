@@ -168,6 +168,23 @@ const uiEvents = function ($) {
     UNDO_BUTTON.addClass('inactive-button');
     REDO_BUTTON.addClass('inactive-button');
 
+    // show/hide input hint on mouse enter/leave
+    // track all input fields: quite ugly, but the actual afford has mouse
+    // events disabled by css, so it cannot handle this directly
+    $('input,.shape-entry').mouseenter(function (e) {
+        if ($(this).closest('[data-active]').length === 0) {
+            return;
+        }
+        $('body').append(
+            `<div id="input-selector-hint"
+                  style="position: fixed;
+                         top: ` + e.pageY + `px;
+                         left: ` + e.pageX + `px">
+             </div>`);
+    }).mouseleave(function (e) {
+        $('#input-selector-hint').remove();
+    });
+
     // disable hints on event
     $(document).on('disableHints', function (e) {
         $('.highlighted-selector').removeClass('highlighted-selector');
@@ -208,17 +225,28 @@ const uiEvents = function ($) {
             active.find('[data-shape="' + s + '"]').trigger('click');
         }
         else {
-            var input = active.find('input');
-            var max = parseInt(input.attr('max'));
-            var min = parseInt(input.attr('min'));
+            const input = active.find('input');
+            const max = parseInt(input.attr('max'));
+            const min = parseInt(input.attr('min'));
             var k = max / 10 | 0;
             var v = parseInt(input.val());
 
             v += sign * k;
             v -= v % k; // ensure the value is a multiple of k
-            // limit v to the input bounds
-            v = v > max ? max : v;
-            v = v < min ? min : v;
+
+            if (v > max || v < min) {
+                // limit v to the input bounds
+                v = v > max ? max : min;
+
+                // feedback the reaching of the input limit
+                const color = input.css('background-color');
+                input.css('background-color', '#F99');
+
+                // restore background after timeout
+                window.setTimeout(function () {
+                    input.css('background-color', color);
+                }, 200);
+            }
 
             input.val(v);
             input.trigger('change');

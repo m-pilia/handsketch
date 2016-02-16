@@ -150,6 +150,12 @@ html, body {
     background-repeat: no-repeat;
 }
 
+#input-selector-hint {
+    background: url('../img/hint/dark/rot4.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
 /* afford images */
 
 #tool-afford {
