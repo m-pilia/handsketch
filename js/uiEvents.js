@@ -239,12 +239,11 @@ const uiEvents = function ($) {
                 v = v > max ? max : min;
 
                 // feedback the reaching of the input limit
-                const color = input.css('background-color');
                 input.css('background-color', '#F99');
 
                 // restore background after timeout
                 window.setTimeout(function () {
-                    input.css('background-color', color);
+                    input.css('background-color', '#FFF');
                 }, 200);
             }
 
