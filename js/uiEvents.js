@@ -225,17 +225,28 @@ const uiEvents = function ($) {
             active.find('[data-shape="' + s + '"]').trigger('click');
         }
         else {
-            var input = active.find('input');
-            var max = parseInt(input.attr('max'));
-            var min = parseInt(input.attr('min'));
+            const input = active.find('input');
+            const max = parseInt(input.attr('max'));
+            const min = parseInt(input.attr('min'));
             var k = max / 10 | 0;
             var v = parseInt(input.val());
 
             v += sign * k;
             v -= v % k; // ensure the value is a multiple of k
-            // limit v to the input bounds
-            v = v > max ? max : v;
-            v = v < min ? min : v;
+
+            if (v > max || v < min) {
+                // limit v to the input bounds
+                v = v > max ? max : min;
+
+                // feedback the reaching of the input limit
+                const color = input.css('background-color');
+                input.css('background-color', '#F99');
+
+                // restore background after timeout
+                window.setTimeout(function () {
+                    input.css('background-color', color);
+                }, 200);
+            }
 
             input.val(v);
             input.trigger('change');
